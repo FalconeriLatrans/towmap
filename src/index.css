@@ -64,6 +64,22 @@
 
 body {
   margin: 0;
+  font-family: sans-serif;
+}
+
+.seat {
+  width: 70px;
+  height: 70px;
+
+  border: 1px solid #888;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 12px;
+
+  background: white;
 }
 
 h1,
@@ -108,4 +124,36 @@ code {
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
+}
+.map {
+  width: 100vw;
+  height: 100vh;
+
+  overflow: auto;
+
+  background: #f3f4f6;
+}
+
+.seat {
+  width: 70px;
+  height: 70px;
+
+  border-radius: 8px;
+
+  border: 1px solid #999;
+
+  background: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  font-size: 12px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  user-select: none;
 }
