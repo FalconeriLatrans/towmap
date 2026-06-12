@@ -3,7 +3,7 @@ import Seat from "./Seat";
 
 export default function Map() {
     
-    alert("Map executou");
+//    alert("Map executou");
     console.log(seats[0]);
 
   const minX = Math.min(...seats.map((s) => s.x));
@@ -19,7 +19,6 @@ export default function Map() {
         display: "grid",
         gridTemplateColumns: `repeat(${maxX - minX + 3}, 40px)`,
         gridTemplateRows: `repeat(${maxY - minY + 3}, 40px)`,
-        backgroundColor: colors[category],
         gap: "4px",
         padding: "20px",
       }}
