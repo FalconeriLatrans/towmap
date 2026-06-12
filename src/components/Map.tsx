@@ -1,5 +1,10 @@
 import seats from "../data/seats.json";
 import Seat from "./Seat";
+import {
+  TransformWrapper,
+  TransformComponent,
+} from "react-zoom-pan-pinch";
+
 
 export default function Map() {
     
@@ -13,6 +18,13 @@ export default function Map() {
   const maxY = Math.max(...seats.map((s) => s.y));
 
   return (
+    <TransformWrapper
+    initialScale={0.3}
+    minScale={0.1}
+    maxScale={5}
+    centerOnInit
+  >
+    <TransformComponent>
     <div
       className="map"
       style={{
@@ -35,5 +47,7 @@ export default function Map() {
         </div>
       ))}
     </div>
+        </TransformComponent>
+        </TransformWrapper>
   );
 }
