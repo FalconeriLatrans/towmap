@@ -27,7 +27,7 @@ export default function Map() {
       }}
     >
       <TransformWrapper
-        initialScale={.5}
+        initialScale={0.5}
         minScale={0.2}
         maxScale={8}
         centerOnInit
