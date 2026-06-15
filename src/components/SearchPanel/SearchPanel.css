@@ -1,0 +1,9 @@
+.search-panel {
+    width: 300px;
+  
+    padding: 20px;
+  
+    background: white;
+  
+    border-right: 1px solid #ddd;
+  }
