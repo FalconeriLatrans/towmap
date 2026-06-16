@@ -1,6 +1,5 @@
 import seats from "../../data/seats.json";
 import Seat from "../Elements/Seat/Seat";
-import SeatAllocationModal from "../SeatAllocationModal/SeatAllocationModal";
 import "./Map.css";
 import { subscribeAllocations } from "../../services/AllocationService";
 import { useEffect, useState } from "react";
