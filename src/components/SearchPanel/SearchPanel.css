@@ -1,9 +1,9 @@
 .search-panel {
-    width: 300px;
+    width: 250px;
   
     padding: 20px;
   
-    background: white;
+    background: rgb(61, 161, 106);
   
     border-right: 1px solid #ddd;
   }

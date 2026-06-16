@@ -1,3 +1,5 @@
+import "./SearchPanel.css";
+
 export default function SearchPanel() {
     return (
       <div className="search-panel">

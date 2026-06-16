@@ -1,3 +1,0 @@
-<Trap
-  name="Bear Trap"
-/>
