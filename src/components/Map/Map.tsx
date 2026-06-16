@@ -2,8 +2,22 @@ import seats from "../../data/seats.json";
 import Seat from "../Elements/Seat/Seat";
 import SeatAllocationModal from "../SeatAllocationModal/SeatAllocationModal";
 import "./Map.css";
-import { getAllocations, subscribeAllocations } from "../../services/AllocationService";
+import { subscribeAllocations } from "../../services/AllocationService";
 import { useEffect, useState } from "react";
+
+type Props = {
+  selectedSeat: string | null;
+
+  setSelectedSeat:
+    (seat: string | null)
+    => void;
+
+  editingSeat: string | null;
+
+  setEditingSeat:
+    (seat: string | null)
+    => void;
+};
 
 export default function Map({
   selectedSeat,
@@ -22,18 +36,6 @@ export default function Map({
 
   const maxX = Math.max(...seats.map((s) => s.x));
   const maxY = Math.max(...seats.map((s) => s.y));
-
-  type Props = {
-    selectedSeat: string | null;
-    setSelectedSeat: (
-      seat: string | null
-    ) => void;
-
-    editingSeat: string | null;
-    setEditingSeat: (
-      seat: string | null
-    ) => void;
-  };
 
   useEffect(() => {
 //

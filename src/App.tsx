@@ -1,6 +1,5 @@
 import MapViewport from "./components/Map/MapViewport";
 import SearchPanel from "./components/SearchPanel/SearchPanel";
-import { allocate } from "./services/AllocationService";
 import { useState } from "react";
 
 export default function App() {

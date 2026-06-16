@@ -5,6 +5,11 @@ import {
 
 import Map from "./Map";
 
+type Props =
+  React.ComponentProps<
+    typeof Map
+  >;
+
 export default function MapViewport(props: Props) {
     return (
         <TransformWrapper
