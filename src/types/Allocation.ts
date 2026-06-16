@@ -1,4 +1,4 @@
-export default interface Allocation {
+export interface Allocation {
   seat: string;
   participant: string;
   updatedAt: number;

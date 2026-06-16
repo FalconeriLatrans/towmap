@@ -14,8 +14,7 @@ export default function MapViewport() {
             centerOnInit
             limitToBounds={false}
             wheel={{
-                step: 0.002,
-                smoothStep: 0.005
+                step: 0.002
               }}
         >
             <TransformComponent

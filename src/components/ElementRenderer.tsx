@@ -13,7 +13,7 @@ export default function ElementRenderer({
   switch (element.type) {
 
     case "seat":
-      return <Seat element={element} />;
+      return <Seat seat={element.seat} />;
 
   /*  case "trap":
       return <Trap element={element} />;
