@@ -13,6 +13,7 @@ export default function App() {
   <SearchPanel
     selectedSeat={selectedSeat}
     editingSeat={editingSeat}
+    setSelectedSeat={setSelectedSeat}
   />
 
   <MapViewport
