@@ -136,12 +136,6 @@ export default function Map({
           </div>
         ))}
       </div>
-      {selectedSeat && (
-        <SeatAllocationModal
-          seat={selectedSeat}
-          onClose={() => setSelectedSeat(null)}
-        />
-      )}
-    </div>
+      </div>
   );
 }
