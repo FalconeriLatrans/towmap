@@ -4,7 +4,12 @@ import SeatAllocationModal from "../SeatAllocationModal/SeatAllocationModal";
 import "./Map.css";
 import { useState } from "react";
 
-export default function Map() {
+export default function Map({
+  selectedSeat,
+  setSelectedSeat,
+  editingSeat,
+  setEditingSeat,
+}: Props) {
 
   const minX = Math.min(...seats.map((s) => s.x));
   const minY = Math.min(...seats.map((s) => s.y));
@@ -12,8 +17,20 @@ export default function Map() {
   const maxX = Math.max(...seats.map((s) => s.x));
   const maxY = Math.max(...seats.map((s) => s.y));
 
-  const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
-  const [editingSeat, setEditingSeat] =   useState<string | null>(null);
+  type Props = {
+    selectedSeat: string | null;
+    setSelectedSeat: (
+      seat: string | null
+    ) => void;
+  
+    editingSeat: string | null;
+    setEditingSeat: (
+      seat: string | null
+    ) => void;
+  };
+
+  //const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
+  //const [editingSeat, setEditingSeat] =   useState<string | null>(null);
 
   return (
     <div className="map-container">

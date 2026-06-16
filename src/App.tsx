@@ -1,35 +1,26 @@
 import MapViewport from "./components/Map/MapViewport";
 import SearchPanel from "./components/SearchPanel/SearchPanel";
 import { allocate } from "./services/AllocationService";
+import { useState } from "react";
 
 export default function App() {
 
-  return (
-    <>
-      <button
-        onClick={() =>
-          allocate(
-            "B1 101",
-            "João"
-          )
-        }
-      >
-        TESTAR ALOCAÇÃO
-      </button>
+  const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
+  const [editingSeat, setEditingSeat] = useState<string | null>(null);
 
-      <SearchPanel />
-      <MapViewport />
-    </>
+  return (
+<>
+  <SearchPanel
+    selectedSeat={selectedSeat}
+    editingSeat={editingSeat}
+  />
+
+  <MapViewport
+    selectedSeat={selectedSeat}
+    setSelectedSeat={setSelectedSeat}
+    editingSeat={editingSeat}
+    setEditingSeat={setEditingSeat}
+  />
+</>
   );
 }
-
-/*
-export default function App() {
-  return (
-    <div className="app">
-      <SearchPanel />
-      <MapViewport />
-    </div>
-  );
-}
-*/

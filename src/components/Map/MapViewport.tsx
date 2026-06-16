@@ -5,7 +5,7 @@ import {
 
 import Map from "./Map";
 
-export default function MapViewport() {
+export default function MapViewport(props: Props) {
     return (
         <TransformWrapper
             initialScale={1}
@@ -15,7 +15,7 @@ export default function MapViewport() {
             limitToBounds={false}
             wheel={{
                 step: 0.002
-              }}
+            }}
         >
             <TransformComponent
                 wrapperStyle={{
@@ -23,7 +23,7 @@ export default function MapViewport() {
                     height: "100%",
                 }}
             >
-                <Map />
+                <Map  {...props} />
             </TransformComponent>
         </TransformWrapper>
     );
