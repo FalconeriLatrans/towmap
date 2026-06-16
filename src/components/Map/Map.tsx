@@ -2,7 +2,8 @@ import seats from "../../data/seats.json";
 import Seat from "../Elements/Seat/Seat";
 import SeatAllocationModal from "../SeatAllocationModal/SeatAllocationModal";
 import "./Map.css";
-import { useState } from "react";
+import { getAllocations, subscribeAllocations } from "../../services/AllocationService";
+import { useEffect, useState } from "react";
 
 export default function Map({
   selectedSeat,
@@ -10,6 +11,11 @@ export default function Map({
   editingSeat,
   setEditingSeat,
 }: Props) {
+
+  const [allocations, setAllocations] =
+  useState<
+    Record<string, string>
+  >({});
 
   const minX = Math.min(...seats.map((s) => s.x));
   const minY = Math.min(...seats.map((s) => s.y));
@@ -22,15 +28,72 @@ export default function Map({
     setSelectedSeat: (
       seat: string | null
     ) => void;
-  
+
     editingSeat: string | null;
     setEditingSeat: (
       seat: string | null
     ) => void;
   };
 
-  //const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
-  //const [editingSeat, setEditingSeat] =   useState<string | null>(null);
+  useEffect(() => {
+//
+    const unsubscribe =
+    subscribeAllocations(
+      allocations => {
+
+        const map:
+          Record<string,string>
+          = {};
+
+        allocations.forEach(
+          allocation => {
+
+            map[
+              allocation.seat
+            ] =
+              allocation.participant;
+
+          }
+        );
+
+        setAllocations(map);
+
+      }
+    );
+
+  return unsubscribe;
+
+}, []);
+
+/*
+    async function load() {
+  
+      const data =
+        await getAllocations();
+  
+      const map:
+        Record<string, string>
+        = {};
+  
+      data.forEach(
+        allocation => {
+  
+          map[
+            allocation.seat
+          ] =
+            allocation.participant;
+  
+        }
+      );
+  
+      setAllocations(map);
+  
+    }
+  
+    load();
+  
+  }, []);
+  */
 
   return (
     <div className="map-container">
@@ -53,6 +116,11 @@ export default function Map({
           >
             <Seat
               seat={seat.seat}
+              occupant={
+                allocations[
+                seat.seat
+                ]
+              }
               selected={selectedSeat === seat.seat}
               editing={editingSeat === seat.seat}
               onClick={(seat) => {

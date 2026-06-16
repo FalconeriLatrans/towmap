@@ -3,6 +3,7 @@ import {
   doc,
   getDocs,
   setDoc,
+  onSnapshot
 } from "firebase/firestore";
 
 import { db } from "./Firebase";
@@ -69,6 +70,34 @@ export async function getAllocation(
 
   return allocations.find(
     a => a.seat === seat
+  );
+
+}
+
+export function subscribeAllocations(
+  callback: (
+    allocations: Allocation[]
+  ) => void
+) {
+
+  return onSnapshot(
+    collection(
+      db,
+      "allocations"
+    ),
+    snapshot => {
+      const allocations =
+        snapshot.docs.map(
+          doc => ({
+            seat: doc.id,
+            ...doc.data()
+          })
+        );
+
+      callback(
+        allocations as Allocation[]
+      );
+    }
   );
 
 }

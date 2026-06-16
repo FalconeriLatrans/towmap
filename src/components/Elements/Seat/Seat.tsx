@@ -2,6 +2,7 @@ import "./Seat.css";
 
 type SeatProps = {
   seat: string;
+  occupant?: string;
   selected?: boolean;
   editing?: boolean;
   onClick?: (seat: string) => void;
@@ -9,6 +10,7 @@ type SeatProps = {
 
 export default function Seat({
   seat,
+  occupant,
   selected,
   editing,
   onClick,
@@ -43,7 +45,7 @@ export default function Seat({
           colors[category] || "#ffffff",
       }}
     >
-      {seat}
+      {occupant || seat}
     </div>
   );
 }
