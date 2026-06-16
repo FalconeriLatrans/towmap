@@ -1,6 +1,8 @@
 import seats from "../../data/seats.json";
 import Seat from "../Elements/Seat/Seat";
+import SeatAllocationModal from "../SeatAllocationModal/SeatAllocationModal";
 import "./Map.css";
+import { useState } from "react";
 
 export default function Map() {
 
@@ -9,6 +11,9 @@ export default function Map() {
 
   const maxX = Math.max(...seats.map((s) => s.x));
   const maxY = Math.max(...seats.map((s) => s.y));
+
+  const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
+  const [editingSeat, setEditingSeat] =   useState<string | null>(null);
 
   return (
     <div className="map-container">
@@ -29,10 +34,28 @@ export default function Map() {
               gridRow: `${seat.y - minY + 1} / span ${seat.height}`,
             }}
           >
-            <Seat seat={seat.seat} />
+            <Seat
+              seat={seat.seat}
+              selected={selectedSeat === seat.seat}
+              editing={editingSeat === seat.seat}
+              onClick={(seat) => {
+                if (selectedSeat === seat) {
+                  setEditingSeat(seat);
+                } else {
+                  setSelectedSeat(seat);
+                  setEditingSeat(null);
+                }
+              }}
+            />
           </div>
         ))}
       </div>
+      {selectedSeat && (
+        <SeatAllocationModal
+          seat={selectedSeat}
+          onClose={() => setSelectedSeat(null)}
+        />
+      )}
     </div>
   );
 }

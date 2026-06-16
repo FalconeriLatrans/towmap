@@ -32,3 +32,10 @@
     border-color: #2563eb;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
   }
+  .seat.selected {
+    outline: 4px solid #ffcc00;
+    z-index: 10;
+  }
+  .seat.editing {
+    outline: 4px solid #ff4444;
+  }

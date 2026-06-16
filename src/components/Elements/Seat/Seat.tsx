@@ -2,10 +2,16 @@ import "./Seat.css";
 
 type SeatProps = {
   seat: string;
+  selected?: boolean;
+  editing?: boolean;
+  onClick?: (seat: string) => void;
 };
 
 export default function Seat({
   seat,
+  selected,
+  editing,
+  onClick,
 }: SeatProps) {
 
   const seatNumber =
@@ -27,7 +33,11 @@ export default function Seat({
 
   return (
     <div
-      className="seat"
+      className={`seat
+        ${selected ? "selected" : ""}
+        ${editing ? "editing" : ""}
+      `}
+      onClick={() => onClick?.(seat)}
       style={{
         backgroundColor:
           colors[category] || "#ffffff",
