@@ -8,13 +8,13 @@ type Props = {
   selectedSeat: string | null;
 
   setSelectedSeat:
-    (seat: string | null)
+  (seat: string | null)
     => void;
 
   editingSeat: string | null;
 
   setEditingSeat:
-    (seat: string | null)
+  (seat: string | null)
     => void;
 };
 
@@ -26,9 +26,9 @@ export default function Map({
 }: Props) {
 
   const [allocations, setAllocations] =
-  useState<
-    Record<string, string>
-  >({});
+    useState<
+      Record<string, string>
+    >({});
 
   const minX = Math.min(...seats.map((s) => s.x));
   const minY = Math.min(...seats.map((s) => s.y));
@@ -37,64 +37,39 @@ export default function Map({
   const maxY = Math.max(...seats.map((s) => s.y));
 
   useEffect(() => {
-//
     const unsubscribe =
-    subscribeAllocations(
-      allocations => {
-
-        const map:
-          Record<string,string>
-          = {};
-
-        allocations.forEach(
-          allocation => {
-
-            map[
-              allocation.seat
-            ] =
-              allocation.participant;
-
-          }
-        );
-
-        setAllocations(map);
-
-      }
-    );
-
-  return unsubscribe;
-
-}, []);
-
-/*
-    async function load() {
-  
-      const data =
-        await getAllocations();
-  
-      const map:
-        Record<string, string>
-        = {};
-  
-      data.forEach(
-        allocation => {
-  
-          map[
-            allocation.seat
-          ] =
-            allocation.participant;
-  
+      subscribeAllocations(
+        allocations => {
+          const map:
+            Record<string, string>
+            = {};
+          allocations.forEach(
+            allocation => {
+              map[
+                allocation.seat
+              ] =
+                allocation.participant;
+            }
+          );
+          setAllocations(map);
         }
       );
-  
-      setAllocations(map);
-  
-    }
-  
-    load();
-  
+    return unsubscribe;
   }, []);
-  */
+
+  useEffect(() => {
+    if (!selectedSeat)
+      return;
+    const element =
+      document.getElementById(
+        `seat-${selectedSeat}`
+      );
+    element?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+      inline: "center",
+    });
+  }, [selectedSeat]);
 
   return (
     <div className="map-container">
@@ -109,6 +84,7 @@ export default function Map({
       >
         {seats.map((seat) => (
           <div
+            id={`seat-${seat.seat}`}
             key={seat.seat}
             style={{
               gridColumn: `${seat.x - minX + 1} / span ${seat.width}`,
@@ -136,6 +112,6 @@ export default function Map({
           </div>
         ))}
       </div>
-      </div>
+    </div>
   );
 }

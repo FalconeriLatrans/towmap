@@ -1,17 +1,8 @@
 import participants from "../../data/participants.json";
-import {
-  allocate,
-  getAllocations,
-} from "../../services/AllocationService";
-
+import { allocate, getAllocations } from "../../services/AllocationService";
 import type { Allocation } from "../../types/Allocation";
-
 import "./SearchPanel.css";
-
-import {
-  useEffect,
-  useState,
-} from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
   selectedSeat: string | null;
@@ -32,19 +23,17 @@ export default function SearchPanel({
     setAllocations,
   ] = useState<Allocation[]>([]);
 
+  const [
+    participantsOpen,
+    setParticipantsOpen
+  ] = useState(false);
   useEffect(() => {
-
     async function load() {
-
       const data =
         await getAllocations();
-
       setAllocations(data);
-
     }
-
     load();
-
   }, [selectedSeat]);
 
   const occupant =
@@ -72,19 +61,19 @@ export default function SearchPanel({
   const availableParticipants =
     participants.filter(
       participant =>
-
         participant.name === occupant ||
-
         !allocatedNames.includes(
           participant.name
         )
     );
 
+  const allocatedCount = allocatedNames.length;
+  const totalCount = participants.length;
+  const pendingCount = totalCount - allocatedCount;
+
   return (
     <div>
-
       <h2>Painel</h2>
-
       <p>
         Assento:
         {" "}
@@ -96,41 +85,30 @@ export default function SearchPanel({
         {" "}
         {occupant || "Nenhum"}
       </p>
-
       {editingSeat && (
-
         <select
           value={occupant}
           onChange={async (e) => {
-
             if (!selectedSeat)
               return;
-
             const participant =
               e.target.value;
-
             await allocate(
               selectedSeat,
               participant
             );
-
             const data =
               await getAllocations();
-
             setAllocations(
               data
             );
-
           }}
         >
-
           <option value="">
             Nenhum
           </option>
-
           {availableParticipants.map(
             participant => (
-
               <option
                 key={
                   participant.name
@@ -141,63 +119,59 @@ export default function SearchPanel({
               >
                 {participant.name}
               </option>
-
             )
           )}
-
         </select>
-
       )}
 
       <hr />
+      <button
+        onClick={() =>
+          setParticipantsOpen(
+            !participantsOpen
+          )
+        }
+      >
+        Participantes
+        {" "}
+        {participantsOpen
+          ? "▲"
+          : "▼"}
+        {" "}
+        ({allocatedCount}/{totalCount})
+      </button>
 
-      <h3>Participantes</h3>
-
-      <div>
-
-        {participants.map(
-          participant => {
-
-            const seat =
-              participantSeats[
+      {participantsOpen && (
+        <div>
+          {participants.map(
+            participant => {
+              const seat =
+                participantSeats[
                 participant.name
-              ];
+                ];
 
-            return (
-
-              <button
-                key={
-                  participant.name
-                }
-                onClick={() => {
-
-                  if (seat) {
-
-                    setSelectedSeat(
-                      seat
-                    );
-
-                  }
-
-                }}
-              >
-                {seat
-                  ? "✓"
-                  : "○"}
-
-                {" "}
-
-                {participant.name}
-
-              </button>
-
-            );
-
-          }
-        )}
-
+              return (
+                <button
+                  key={participant.name}
+                  onClick={() => {
+                    if (seat) {
+                      setSelectedSeat(
+                        seat
+                      );
+                    }
+                  }}
+                >
+                  {seat
+                    ? "✓"
+                    : "○"}
+                  {" "}
+                  {participant.name}
+                </button>
+              );
+            }
+          )}
+        </div>
+      )}
       </div>
-
-    </div>
-  );
+    );
 }
