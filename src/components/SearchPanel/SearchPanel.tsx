@@ -69,7 +69,7 @@ export default function SearchPanel({
 
   const allocatedCount = allocatedNames.length;
   const totalCount = participants.length;
-  const pendingCount = totalCount - allocatedCount;
+  //const pendingCount = totalCount - allocatedCount;
 
   return (
     <div>
