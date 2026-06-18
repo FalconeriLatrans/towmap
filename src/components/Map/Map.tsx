@@ -6,16 +6,10 @@ import { useEffect, useState } from "react";
 
 type Props = {
   selectedSeat: string | null;
-
-  setSelectedSeat:
-  (seat: string | null)
-    => void;
-
+  setSelectedSeat: (seat: string | null) => void;
   editingSeat: string | null;
-
-  setEditingSeat:
-  (seat: string | null)
-    => void;
+  setEditingSeat: (seat: string | null) => void;
+  editorMode: boolean;
 };
 
 export default function Map({
@@ -23,10 +17,10 @@ export default function Map({
   setSelectedSeat,
   editingSeat,
   setEditingSeat,
+  editorMode,
 }: Props) {
 
-  const [allocations, setAllocations] =
-    useState<
+  const [allocations, setAllocations] = useState<
       Record<string, string>
     >({});
 
@@ -101,7 +95,10 @@ export default function Map({
               selected={selectedSeat === seat.seat}
               editing={editingSeat === seat.seat}
               onClick={(seat) => {
-                if (selectedSeat === seat) {
+                if (
+                  editorMode &&
+                  selectedSeat === seat
+                ) {
                   setEditingSeat(seat);
                 } else {
                   setSelectedSeat(seat);

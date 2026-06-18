@@ -7,6 +7,7 @@ export default function App() {
 
   const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
   const [editingSeat, setEditingSeat] = useState<string | null>(null);
+  const [editorMode, setEditorMode] = useState(false);
 
   return (
 <div className="app">
@@ -14,6 +15,8 @@ export default function App() {
     selectedSeat={selectedSeat}
     editingSeat={editingSeat}
     setSelectedSeat={setSelectedSeat}
+    editorMode={editorMode}
+    setEditorMode={setEditorMode}
   />
 
   <MapViewport
@@ -21,6 +24,7 @@ export default function App() {
     setSelectedSeat={setSelectedSeat}
     editingSeat={editingSeat}
     setEditingSeat={setEditingSeat}
+    editorMode={editorMode}
   />
 </div>
   );

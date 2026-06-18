@@ -7,15 +7,17 @@ import { useEffect, useState } from "react";
 type Props = {
   selectedSeat: string | null;
   editingSeat: string | null;
-  setSelectedSeat: (
-    seat: string | null
-  ) => void;
+  setSelectedSeat: (seat: string | null) => void;
+  editorMode: boolean;
+  setEditorMode: (value: boolean) => void;
 };
 
 export default function SearchPanel({
   selectedSeat,
   editingSeat,
   setSelectedSeat,
+  editorMode,
+  setEditorMode,
 }: Props) {
 
   const [
@@ -73,17 +75,48 @@ export default function SearchPanel({
 
   return (
     <div>
-      <h2>Painel</h2>
+      <h2>TOW Map</h2>
+      {editorMode ? (
+        <button
+          onClick={() => {
+            setEditorMode(false);
+          }}
+        >
+          🔓 Editor mode
+        </button>
+      ) : (
+
+        <button
+          onClick={() => {
+            const password =
+              prompt(
+                "Digite a senha"
+              );
+            if (
+              password ===
+              "R4towR5"
+            ) {
+              setEditorMode(true);
+            } else {
+              alert(
+                "Senha incorreta"
+              );
+            }
+          }}
+        >
+          🔒 Enter Editor mode
+        </button>
+      )}
       <p>
-        Assento:
+        Spot:
         {" "}
         {selectedSeat || "-"}
       </p>
 
       <p>
-        Ocupante:
+        Occupant:
         {" "}
-        {occupant || "Nenhum"}
+        {occupant || "Empty"}
       </p>
       {editingSeat && (
         <select
@@ -105,7 +138,7 @@ export default function SearchPanel({
           }}
         >
           <option value="">
-            Nenhum
+            Empty
           </option>
           {availableParticipants.map(
             participant => (
@@ -132,7 +165,7 @@ export default function SearchPanel({
           )
         }
       >
-        Participantes
+        Players
         {" "}
         {participantsOpen
           ? "▲"
@@ -172,6 +205,6 @@ export default function SearchPanel({
           )}
         </div>
       )}
-      </div>
-    );
+    </div>
+  );
 }
