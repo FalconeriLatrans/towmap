@@ -1,6 +1,7 @@
 import MapViewport from "./components/Map/MapViewport";
 import SearchPanel from "./components/SearchPanel/SearchPanel";
 import { useState } from "react";
+import "./App.css";
 
 export default function App() {
 
@@ -8,7 +9,7 @@ export default function App() {
   const [editingSeat, setEditingSeat] = useState<string | null>(null);
 
   return (
-<>
+<div className="app">
   <SearchPanel
     selectedSeat={selectedSeat}
     editingSeat={editingSeat}
@@ -21,6 +22,6 @@ export default function App() {
     editingSeat={editingSeat}
     setEditingSeat={setEditingSeat}
   />
-</>
+</div>
   );
 }

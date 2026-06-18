@@ -34,8 +34,24 @@
 .seat.selected {
   outline: 4px solid #ffcc00;
   z-index: 10;
+  animation:
+    pulseSeat 0.6s ease-in-out 3;
 }
 
 .seat.editing {
   outline: 4px solid #ff4444;
+}
+
+@keyframes pulseSeat {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.15);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
