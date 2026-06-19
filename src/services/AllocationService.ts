@@ -74,6 +74,20 @@ export async function getAllocation(
 
 }
 
+export async function exportBackup() {
+
+  const allocations =
+    await getAllocations();
+
+  return {
+    version: 1,
+    exportedAt:
+      new Date().toISOString(),
+    allocations,
+  };
+
+}
+
 export function subscribeAllocations(
   callback: (
     allocations: Allocation[]

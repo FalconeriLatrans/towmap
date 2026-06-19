@@ -1,0 +1,38 @@
+[
+    {
+        "id": "B1 101",
+        "type": "seat",
+        "seat": "B1 101",
+        "x": 21,
+        "y": 20,
+        "width": 2,
+        "height": 2
+    },
+    {
+        "id": "B1 102",
+        "type": "seat",
+        "seat": "B1 102",
+        "x": 23,
+        "y": 20,
+        "width": 2,
+        "height": 2
+    },
+    {
+        "id": "stage-main",
+        "type": "trap",
+        "label": "BEAR TRAP 1",
+        "x": 30,
+        "y": 5,
+        "width": 20,
+        "height": 8
+    },
+    {
+        "id": "trap-2",
+        "type": "trap",
+        "label": "TRAP 2",
+        "x": 10,
+        "y": 10,
+        "width": 10,
+        "height": 4
+      }
+]

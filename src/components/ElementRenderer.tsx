@@ -1,28 +1,38 @@
 import Seat from "./Elements/Seat/Seat";
-//import Stage from "./Elements/Trap/Trap";
+import Trap from "./Elements/Trap/Trap";
 //import Flag from "./Elements/Banner/Banner";
 
 type Props = {
   element: any;
 };
 
+
 export default function ElementRenderer({
   element,
-}: Props) {
+  occupant,
+  selected,
+  editing,
+  onClick,
+}: any) {
 
   switch (element.type) {
-
     case "seat":
-      return <Seat seat={element.seat} />;
-
-  /*  case "trap":
-      return <Trap element={element} />;
-
-    case "banner":
-      return <Flag element={element} />;
-*/
+      return (
+        <Seat
+          seat={element.seat}
+          occupant={occupant}
+          selected={selected}
+          editing={editing}
+          onClick={onClick}
+        />
+      );
+    case "trap":
+      return (
+        <Trap
+          label={element.label}
+        />
+      );
     default:
       return null;
   }
-
 }

@@ -1,5 +1,5 @@
 import participants from "../../data/participants.json";
-import { allocate, getAllocations } from "../../services/AllocationService";
+import { allocate, getAllocations, exportBackup } from "../../services/AllocationService";
 import type { Allocation } from "../../types/Allocation";
 import "./SearchPanel.css";
 import { useEffect, useState } from "react";
@@ -83,14 +83,109 @@ export default function SearchPanel({
           }}
         >
           🔓 Editor mode
+          
+          <button
+  onClick={async () => {
+
+    const backup =
+      await exportBackup();
+
+    const blob =
+      new Blob(
+        [
+          JSON.stringify(
+            backup,
+            null,
+            2
+          )
+        ],
+        {
+          type:
+            "application/json"
+        }
+      );
+
+    const url =
+      URL.createObjectURL(
+        blob
+      );
+
+    const link =
+      document.createElement(
+        "a"
+      );
+
+    link.href = url;
+
+    link.download =
+      `towmap-backup-${Date.now()}.json`;
+
+    link.click();
+
+    URL.revokeObjectURL(
+      url
+    );
+
+  }}
+>
+  💾 Export Backup
+</button>
+<input
+  type="file"
+  accept=".json"
+  onChange={async (e) => {
+
+    const file =
+      e.target.files?.[0];
+
+    if (!file)
+      return;
+
+    const text =
+      await file.text();
+
+    const backup =
+      JSON.parse(text);
+
+    const confirmImport =
+      confirm(
+        "Import backup e replace actual data?"
+      );
+
+    if (!confirmImport)
+      return;
+
+    for (
+      const allocation
+      of backup.allocations
+    ) {
+
+      await allocate(
+        allocation.seat,
+        allocation.participant
+      );
+
+    }
+
+    const data =
+      await getAllocations();
+
+    setAllocations(
+      data
+    );
+
+  }}
+/>
         </button>
+        
+        
       ) : (
 
         <button
           onClick={() => {
             const password =
               prompt(
-                "Digite a senha"
+                "Password"
               );
             if (
               password ===
@@ -99,7 +194,7 @@ export default function SearchPanel({
               setEditorMode(true);
             } else {
               alert(
-                "Senha incorreta"
+                "Incorrect password"
               );
             }
           }}

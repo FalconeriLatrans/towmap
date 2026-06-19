@@ -1,5 +1,5 @@
-import seats from "../../data/seats.json";
-import Seat from "../Elements/Seat/Seat";
+import elements from "../../data/mapelements.json";
+import ElementRenderer from "../ElementRenderer";
 import "./Map.css";
 import { subscribeAllocations } from "../../services/AllocationService";
 import { useEffect, useState } from "react";
@@ -21,14 +21,13 @@ export default function Map({
 }: Props) {
 
   const [allocations, setAllocations] = useState<
-      Record<string, string>
-    >({});
+    Record<string, string>
+  >({});
 
-  const minX = Math.min(...seats.map((s) => s.x));
-  const minY = Math.min(...seats.map((s) => s.y));
-
-  const maxX = Math.max(...seats.map((s) => s.x));
-  const maxY = Math.max(...seats.map((s) => s.y));
+  const minX = Math.min(...elements.map((e) => e.x));
+  const minY = Math.min(...elements.map((e) => e.y));
+  const maxX = Math.max(...elements.map((e) => e.x + e.width));
+  const maxY = Math.max(...elements.map((e) => e.y + e.height));
 
   useEffect(() => {
     const unsubscribe =
@@ -38,12 +37,7 @@ export default function Map({
             Record<string, string>
             = {};
           allocations.forEach(
-            allocation => {
-              map[
-                allocation.seat
-              ] =
-                allocation.participant;
-            }
+            allocation => { map[allocation.seat] = allocation.participant; }
           );
           setAllocations(map);
         }
@@ -55,15 +49,24 @@ export default function Map({
     if (!selectedSeat)
       return;
     const element =
-      document.getElementById(
-        `seat-${selectedSeat}`
-      );
+      document.getElementById(`seat-${selectedSeat}`);
     element?.scrollIntoView({
       behavior: "smooth",
       block: "center",
       inline: "center",
     });
   }, [selectedSeat]);
+
+  function handleSeatClick(seat: string) {
+    if (
+      editorMode &&
+      selectedSeat === seat
+    ) { setEditingSeat(seat);} 
+    else {
+      setSelectedSeat(seat);
+      setEditingSeat(null);
+    }
+  }
 
   return (
     <div className="map-container">
@@ -76,37 +79,49 @@ export default function Map({
           padding: "20px",
         }}
       >
-        {seats.map((seat) => (
-          <div
-            id={`seat-${seat.seat}`}
-            key={seat.seat}
-            style={{
-              gridColumn: `${seat.x - minX + 1} / span ${seat.width}`,
-              gridRow: `${seat.y - minY + 1} / span ${seat.height}`,
-            }}
-          >
-            <Seat
-              seat={seat.seat}
-              occupant={
-                allocations[
-                seat.seat
-                ]
-              }
-              selected={selectedSeat === seat.seat}
-              editing={editingSeat === seat.seat}
-              onClick={(seat) => {
-                if (
-                  editorMode &&
-                  selectedSeat === seat
-                ) {
-                  setEditingSeat(seat);
-                } else {
-                  setSelectedSeat(seat);
-                  setEditingSeat(null);
-                }
-              }}
-            />
-          </div>
+        {elements.map((element) => (<div
+          id={
+            element.type === "seat"
+              ? `seat-${element.seat}`
+              : undefined
+          }
+          key={element.id}
+          style={{
+            gridColumn:
+              `${element.x - minX + 1}
+       / span ${element.width}`,
+
+            gridRow:
+              `${element.y - minY + 1}
+       / span ${element.height}`,
+          }}
+        >
+          <ElementRenderer
+            element={element}
+
+            occupant={
+              element.type === "seat"
+                ? allocations[element.seat]
+                : undefined
+            }
+
+            selected={
+              element.type === "seat" &&
+              selectedSeat === element.seat
+            }
+
+            editing={
+              element.type === "seat" &&
+              editingSeat === element.seat
+            }
+
+            onClick={
+              element.type === "seat"
+                ? handleSeatClick
+                : undefined
+            }
+          />
+        </div>
         ))}
       </div>
     </div>
