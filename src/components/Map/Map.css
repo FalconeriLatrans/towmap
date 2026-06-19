@@ -1,9 +1,9 @@
 .map-container {
     flex: 1;
-  
     overflow: hidden;
-  
-    background: #d7ead3;
+    background: #1e293b;
+    border-radius: 20px;
+    padding: 16px;
   }
   
   .map {

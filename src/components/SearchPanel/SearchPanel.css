@@ -1,9 +1,110 @@
+body {
+  font-family:
+    Roboto,
+    sans-serif;
+}
 .search-panel {
-    width: 250px;
-  
-    padding: 20px;
-  
-    background: rgb(61, 161, 106);
-  
-    border-right: 1px solid #ddd;
-  }
+  background: #1e293b;
+  border-radius: 16px;
+  padding: 16px;
+  margin: 12px;
+  box-shadow:
+    0 4px 12px
+    rgba(0,0,0,0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.search-panel h2 {
+  margin: 0;
+  letter-spacing: 1px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #60a5fa;
+}
+
+.panel-info {
+  background: #f5f7fa;
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+.editor-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.search-panel button {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 0.95rem;
+}
+
+.search-panel button:hover {
+  transform:
+    translateY(-1px);
+}
+
+.editor-button {
+  background: #2d5fb8;
+  color: white;
+}
+
+.secondary-button {
+  background: #eef3ff;
+}
+
+.file-input {
+  padding: 6px;
+}
+
+.participants-toggle {
+  background: #eef3ff;
+}
+
+.participant-list {
+  background: #1e293b;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.participant-button {
+  background: transparent;
+  color: #f8fafc;
+  text-align: left;
+  border: 1px solid #d9d9d9 !important;
+}
+
+.participant-button:hover {
+  background: #334155;
+}
+
+.top-bar {
+  display: flex;
+  gap: 8px;
+}
+
+.participant-selector {
+  background: transparent;
+  color: #f8fafc;
+  flex: 1;
+  text-align: left;
+}
+
+.lock-button {
+  background: transparent;
+  color: white;
+  width: 44px;
+  height: 40px;
+  min-width: 44px;
+  padding: 0;
+}

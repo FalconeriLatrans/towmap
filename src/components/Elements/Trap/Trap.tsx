@@ -1,4 +1,5 @@
 import "./Trap.css";
+import "../Elements.css";
 
 type Props = {
   label?: string;
@@ -9,7 +10,7 @@ export default function Trap({
 }: Props) {
 
   return (
-    <div className="trap">
+    <div className="map-element trap">
       {label}
     </div>
   );

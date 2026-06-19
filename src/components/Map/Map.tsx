@@ -12,6 +12,7 @@ type Props = {
   editorMode: boolean;
 };
 
+
 export default function Map({
   selectedSeat,
   setSelectedSeat,
@@ -58,6 +59,7 @@ export default function Map({
   }, [selectedSeat]);
 
   function handleSeatClick(seat: string) {
+    
     if (
       editorMode &&
       selectedSeat === seat
@@ -98,23 +100,19 @@ export default function Map({
         >
           <ElementRenderer
             element={element}
-
             occupant={
               element.type === "seat"
                 ? allocations[element.seat]
                 : undefined
             }
-
             selected={
               element.type === "seat" &&
               selectedSeat === element.seat
             }
-
             editing={
               element.type === "seat" &&
               editingSeat === element.seat
             }
-
             onClick={
               element.type === "seat"
                 ? handleSeatClick

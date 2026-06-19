@@ -1,4 +1,5 @@
 import "./Seat.css";
+import "../Elements.css";
 
 type SeatProps = {
   seat: string;
@@ -35,7 +36,7 @@ export default function Seat({
 
   return (
     <div
-      className={`seat
+      className={`map-element seat
         ${selected ? "selected" : ""}
         ${editing ? "editing" : ""}
       `}

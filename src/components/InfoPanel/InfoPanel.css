@@ -1,0 +1,42 @@
+/* src/components/InfoPanel/InfoPanel.css */
+
+.info-panel {
+    background: #1e293b;
+    color: #f8fafc;
+    border-radius: 16px;
+    margin: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.12);
+  }
+  
+  .occupant-name {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #f8fafc;
+  }
+  
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .info-label {
+    color: #666;
+  }
+  
+  .info-value {
+    font-weight: 600;
+  }
+  
+  .empty-selection {
+    text-align: center;
+    color: #666;
+  }
+  .seat-info {
+    font-size: 1.1rem;
+    
+    color: #94a3b8;
+  }
