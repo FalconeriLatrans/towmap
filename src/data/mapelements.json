@@ -1,38 +1,1343 @@
 [
     {
-        "id": "B1 101",
-        "type": "seat",
-        "seat": "B1 101",
-        "x": 21,
-        "y": 20,
-        "width": 2,
-        "height": 2
+      "id": "B1 101",
+      "type": "seat",
+      "seat": "B1 101",
+      "x": 21,
+      "y": 20,
+      "width": 2,
+      "height": 2
     },
     {
-        "id": "B1 102",
-        "type": "seat",
-        "seat": "B1 102",
+      "id": "B1 102",
+      "type": "seat",
+      "seat": "B1 102",
+      "x": 23,
+      "y": 21,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 103",
+      "type": "seat",
+      "seat": "B1 103",
+      "x": 23,
+      "y": 23,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 104",
+      "type": "seat",
+      "seat": "B1 104",
+      "x": 22,
+      "y": 25,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 105",
+      "type": "seat",
+      "seat": "B1 105",
+      "x": 20,
+      "y": 25,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 106",
+      "type": "seat",
+      "seat": "B1 106",
+      "x": 18,
+      "y": 24,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 107",
+      "type": "seat",
+      "seat": "B1 107",
+      "x": 18,
+      "y": 22,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 108",
+      "type": "seat",
+      "seat": "B1 108",
+      "x": 19,
+      "y": 20,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 201",
+      "type": "seat",
+      "seat": "B1 201",
+      "x": 21,
+      "y": 18,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 202",
+      "type": "seat",
+      "seat": "B1 202",
+      "x": 23,
+      "y": 19,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 203",
+      "type": "seat",
+      "seat": "B1 203",
+      "x": 25,
+      "y": 19,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 204",
+      "type": "seat",
+      "seat": "B1 204",
+      "x": 25,
+      "y": 21,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 205",
+      "type": "seat",
+      "seat": "B1 205",
+      "x": 25,
+      "y": 23,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 206",
+      "type": "seat",
+      "seat": "B1 206",
+      "x": 24,
+      "y": 25,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 207",
+      "type": "seat",
+      "seat": "B1 207",
+      "x": 24,
+      "y": 27,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 208",
+      "type": "seat",
+      "seat": "B1 208",
+      "x": 22,
+      "y": 27,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 209",
+      "type": "seat",
+      "seat": "B1 209",
+      "x": 20,
+      "y": 27,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 210",
+      "type": "seat",
+      "seat": "B1 210",
+      "x": 18,
+      "y": 26,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 211",
+      "type": "seat",
+      "seat": "B1 211",
+      "x": 16,
+      "y": 26,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 212",
+      "type": "seat",
+      "seat": "B1 212",
+      "x": 16,
+      "y": 24,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 213",
+      "type": "seat",
+      "seat": "B1 213",
+      "x": 16,
+      "y": 22,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 214",
+      "type": "seat",
+      "seat": "B1 214",
+      "x": 17,
+      "y": 20,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 215",
+      "type": "seat",
+      "seat": "B1 215",
+      "x": 17,
+      "y": 18,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 216",
+      "type": "seat",
+      "seat": "B1 216",
+      "x": 19,
+      "y": 18,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 301",
+      "type": "seat",
+      "seat": "B1 301",
+      "x": 21,
+      "y": 16,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 302",
+      "type": "seat",
+      "seat": "B1 302",
+      "x": 23,
+      "y": 17,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 303",
+      "type": "seat",
+      "seat": "B1 303",
+      "x": 25,
+      "y": 17,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 304",
+      "type": "seat",
+      "seat": "B1 304",
+      "x": 27,
+      "y": 17,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 305",
+      "type": "seat",
+      "seat": "B1 305",
+      "x": 27,
+      "y": 19,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 306",
+      "type": "seat",
+      "seat": "B1 306",
+      "x": 27,
+      "y": 21,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 307",
+      "type": "seat",
+      "seat": "B1 307",
+      "x": 27,
+      "y": 23,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 308",
+      "type": "seat",
+      "seat": "B1 308",
+      "x": 27,
+      "y": 25,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 309",
+      "type": "seat",
+      "seat": "B1 309",
+      "x": 26,
+      "y": 27,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 310",
+      "type": "seat",
+      "seat": "B1 310",
+      "x": 26,
+      "y": 29,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 311",
+      "type": "seat",
+      "seat": "B1 311",
+      "x": 24,
+      "y": 29,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 312",
+      "type": "seat",
+      "seat": "B1 312",
+      "x": 22,
+      "y": 29,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 313",
+      "type": "seat",
+      "seat": "B1 313",
+      "x": 20,
+      "y": 29,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 314",
+      "type": "seat",
+      "seat": "B1 314",
+      "x": 18,
+      "y": 29,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 315",
+      "type": "seat",
+      "seat": "B1 315",
+      "x": 16,
+      "y": 28,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 316",
+      "type": "seat",
+      "seat": "B1 316",
+      "x": 14,
+      "y": 28,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 317",
+      "type": "seat",
+      "seat": "B1 317",
+      "x": 14,
+      "y": 26,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 318",
+      "type": "seat",
+      "seat": "B1 318",
+      "x": 14,
+      "y": 22,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 319",
+      "type": "seat",
+      "seat": "B1 319",
+      "x": 15,
+      "y": 19,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 320",
+      "type": "seat",
+      "seat": "B1 320",
+      "x": 15,
+      "y": 17,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 321",
+      "type": "seat",
+      "seat": "B1 321",
+      "x": 17,
+      "y": 16,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 322",
+      "type": "seat",
+      "seat": "B1 322",
+      "x": 19,
+      "y": 16,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 401",
+      "type": "seat",
+      "seat": "B1 401",
+      "x": 21,
+      "y": 14,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 402",
+      "type": "seat",
+      "seat": "B1 402",
+      "x": 26,
+      "y": 15,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 403",
+      "type": "seat",
+      "seat": "B1 403",
+      "x": 28,
+      "y": 15,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 404",
+      "type": "seat",
+      "seat": "B1 404",
+      "x": 29,
+      "y": 18,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 405",
+      "type": "seat",
+      "seat": "B1 405",
+      "x": 29,
+      "y": 20,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 406",
+      "type": "seat",
+      "seat": "B1 406",
+      "x": 24,
+      "y": 31,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 407",
+      "type": "seat",
+      "seat": "B1 407",
+      "x": 22,
+      "y": 31,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 408",
+      "type": "seat",
+      "seat": "B1 408",
+      "x": 20,
+      "y": 31,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 409",
+      "type": "seat",
+      "seat": "B1 409",
+      "x": 18,
+      "y": 31,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 410",
+      "type": "seat",
+      "seat": "B1 410",
+      "x": 16,
+      "y": 30,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 411",
+      "type": "seat",
+      "seat": "B1 411",
+      "x": 14,
+      "y": 30,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 412",
+      "type": "seat",
+      "seat": "B1 412",
+      "x": 12,
+      "y": 30,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 413",
+      "type": "seat",
+      "seat": "B1 413",
+      "x": 12,
+      "y": 27,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 414",
+      "type": "seat",
+      "seat": "B1 414",
+      "x": 12,
+      "y": 25,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 415",
+      "type": "seat",
+      "seat": "B1 415",
+      "x": 12,
+      "y": 23,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 416",
+      "type": "seat",
+      "seat": "B1 416",
+      "x": 13,
+      "y": 20,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 417",
+      "type": "seat",
+      "seat": "B1 417",
+      "x": 13,
+      "y": 16,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 418",
+      "type": "seat",
+      "seat": "B1 418",
+      "x": 15,
+      "y": 15,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 419",
+      "type": "seat",
+      "seat": "B1 419",
+      "x": 17,
+      "y": 14,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B1 420",
+      "type": "seat",
+      "seat": "B1 420",
+      "x": 19,
+      "y": 14,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 101",
+      "type": "seat",
+      "seat": "B2 101",
+      "x": 33,
+      "y": 26,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 102",
+      "type": "seat",
+      "seat": "B2 102",
+      "x": 35,
+      "y": 27,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 103",
+      "type": "seat",
+      "seat": "B2 103",
+      "x": 35,
+      "y": 29,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 104",
+      "type": "seat",
+      "seat": "B2 104",
+      "x": 34,
+      "y": 31,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 105",
+      "type": "seat",
+      "seat": "B2 105",
+      "x": 32,
+      "y": 31,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 106",
+      "type": "seat",
+      "seat": "B2 106",
+      "x": 30,
+      "y": 30,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 107",
+      "type": "seat",
+      "seat": "B2 107",
+      "x": 30,
+      "y": 28,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 108",
+      "type": "seat",
+      "seat": "B2 108",
+      "x": 31,
+      "y": 26,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 201",
+      "type": "seat",
+      "seat": "B2 201",
+      "x": 33,
+      "y": 24,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 202",
+      "type": "seat",
+      "seat": "B2 202",
+      "x": 35,
+      "y": 25,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 203",
+      "type": "seat",
+      "seat": "B2 203",
+      "x": 37,
+      "y": 25,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 204",
+      "type": "seat",
+      "seat": "B2 204",
+      "x": 37,
+      "y": 27,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 205",
+      "type": "seat",
+      "seat": "B2 205",
+      "x": 37,
+      "y": 29,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 206",
+      "type": "seat",
+      "seat": "B2 206",
+      "x": 36,
+      "y": 31,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 207",
+      "type": "seat",
+      "seat": "B2 207",
+      "x": 36,
+      "y": 33,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 208",
+      "type": "seat",
+      "seat": "B2 208",
+      "x": 34,
+      "y": 33,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 209",
+      "type": "seat",
+      "seat": "B2 209",
+      "x": 32,
+      "y": 33,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 210",
+      "type": "seat",
+      "seat": "B2 210",
+      "x": 30,
+      "y": 32,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 211",
+      "type": "seat",
+      "seat": "B2 211",
+      "x": 28,
+      "y": 32,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 212",
+      "type": "seat",
+      "seat": "B2 212",
+      "x": 28,
+      "y": 30,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 213",
+      "type": "seat",
+      "seat": "B2 213",
+      "x": 28,
+      "y": 28,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 214",
+      "type": "seat",
+      "seat": "B2 214",
+      "x": 29,
+      "y": 26,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 215",
+      "type": "seat",
+      "seat": "B2 215",
+      "x": 29,
+      "y": 24,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 216",
+      "type": "seat",
+      "seat": "B2 216",
+      "x": 31,
+      "y": 24,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 301",
+      "type": "seat",
+      "seat": "B2 301",
+      "x": 33,
+      "y": 22,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 302",
+      "type": "seat",
+      "seat": "B2 302",
+      "x": 35,
+      "y": 22,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 303",
+      "type": "seat",
+      "seat": "B2 303",
+      "x": 39,
+      "y": 23,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 304",
+      "type": "seat",
+      "seat": "B2 304",
+      "x": 39,
+      "y": 25,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 305",
+      "type": "seat",
+      "seat": "B2 305",
+      "x": 39,
+      "y": 27,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 306",
+      "type": "seat",
+      "seat": "B2 306",
+      "x": 39,
+      "y": 29,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 307",
+      "type": "seat",
+      "seat": "B2 307",
+      "x": 38,
+      "y": 33,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 308",
+      "type": "seat",
+      "seat": "B2 308",
+      "x": 37,
+      "y": 35,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 309",
+      "type": "seat",
+      "seat": "B2 309",
+      "x": 35,
+      "y": 35,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 310",
+      "type": "seat",
+      "seat": "B2 310",
+      "x": 33,
+      "y": 35,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 311",
+      "type": "seat",
+      "seat": "B2 311",
+      "x": 31,
+      "y": 35,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 312",
+      "type": "seat",
+      "seat": "B2 312",
+      "x": 29,
+      "y": 34,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 313",
+      "type": "seat",
+      "seat": "B2 313",
+      "x": 27,
+      "y": 34,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 314",
+      "type": "seat",
+      "seat": "B2 314",
+      "x": 26,
+      "y": 31,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 315",
+      "type": "seat",
+      "seat": "B2 315",
+      "x": 29,
+      "y": 22,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 316",
+      "type": "seat",
+      "seat": "B2 316",
+      "x": 31,
+      "y": 22,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 401",
+      "type": "seat",
+      "seat": "B2 401",
+      "x": 34,
+      "y": 20,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 402",
+      "type": "seat",
+      "seat": "B2 402",
+      "x": 37,
+      "y": 21,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 403",
+      "type": "seat",
+      "seat": "B2 403",
+      "x": 39,
+      "y": 21,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 404",
+      "type": "seat",
+      "seat": "B2 404",
+      "x": 41,
+      "y": 22,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 405",
+      "type": "seat",
+      "seat": "B2 405",
+      "x": 41,
+      "y": 25,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 406",
+      "type": "seat",
+      "seat": "B2 406",
+      "x": 41,
+      "y": 27,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 407",
+      "type": "seat",
+      "seat": "B2 407",
+      "x": 41,
+      "y": 29,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 408",
+      "type": "seat",
+      "seat": "B2 408",
+      "x": 40,
+      "y": 33,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 409",
+      "type": "seat",
+      "seat": "B2 409",
+      "x": 39,
+      "y": 35,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 410",
+      "type": "seat",
+      "seat": "B2 410",
+      "x": 39,
+      "y": 37,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 411",
+      "type": "seat",
+      "seat": "B2 411",
+      "x": 35,
+      "y": 37,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 412",
+      "type": "seat",
+      "seat": "B2 412",
+      "x": 33,
+      "y": 37,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 413",
+      "type": "seat",
+      "seat": "B2 413",
+      "x": 31,
+      "y": 37,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 414",
+      "type": "seat",
+      "seat": "B2 414",
+      "x": 29,
+      "y": 36,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 415",
+      "type": "seat",
+      "seat": "B2 415",
+      "x": 27,
+      "y": 36,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 416",
+      "type": "seat",
+      "seat": "B2 416",
+      "x": 25,
+      "y": 35,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 417",
+      "type": "seat",
+      "seat": "B2 417",
+      "x": 25,
+      "y": 33,
+      "width": 2,
+      "height": 2
+    },
+    {
+      "id": "B2 418",
+      "type": "seat",
+      "seat": "B2 418",
+      "x": 31,
+      "y": 20,
+      "width": 2,
+      "height": 2
+    },
+    {
+        "id": "BEAR 1",
+        "type": "trap",
+        "label": "🐻1",
+        "x": 20,
+        "y": 22,
+        "width": 3,
+        "height": 3
+      },
+      {
+        "id": "BEAR 2",
+        "type": "trap",
+        "label": "🐻2",
+        "x": 32,
+        "y": 28,
+        "width": 3,
+        "height": 3
+      },
+      {
+        "id": "HQ",
+        "type": "trap",
+        "label": "HQ",
         "x": 23,
+        "y": 14,
+        "width": 3,
+        "height": 3
+      },
+      {
+        "id": "Alliance Resource",
+        "type": "trap",
+        "label": "Alliance Resource",
+        "x": 22,
+        "y": 33,
+        "width": 3,
+        "height": 3
+      },
+      {
+        "id": "Flag 001",
+        "type": "trap",
+        "label": "🚩",
+        "x": 13,
+        "y": 14,
+        "width": 1,
+        "height": 1
+      },
+      {
+        "id": "Flag 002",
+        "type": "trap",
+        "label": "🚩",
+        "x": 16,
+        "y": 21,
+        "width": 1,
+        "height": 1
+      },
+      {
+        "id": "Flag 003",
+        "type": "trap",
+        "label": "🚩",
+        "x": 12,
+        "y": 29,
+        "width": 1,
+        "height": 1
+      },
+      {
+        "id": "Flag 004",
+        "type": "trap",
+        "label": "🚩",
+        "x": 19,
+        "y": 28,
+        "width": 1,
+        "height": 1
+      },
+      {
+        "id": "Flag 005",
+        "type": "trap",
+        "label": "🚩",
+        "x": 20,
+        "y": 35,
+        "width": 1,
+        "height": 1
+      },
+      {
+        "id": "Flag 006",
+        "type": "trap",
+        "label": "🚩",
+        "x": 26,
+        "y": 26,
+        "width": 1,
+        "height": 1
+      },
+      {
+        "id": "Flag 007",
+        "type": "trap",
+        "label": "🚩",
+        "x": 27,
+        "y": 33,
+        "width": 1,
+        "height": 1
+      },
+      {
+        "id": "Flag 008",
+        "type": "trap",
+        "label": "🚩",
+        "x": 28,
+        "y": 27,
+        "width": 1,
+        "height": 1
+      },
+      {
+        "id": "Flag 009",
+        "type": "trap",
+        "label": "🚩",
+        "x": 31,
+        "y": 34,
+        "width": 1,
+        "height": 1
+      },
+      {
+        "id": "Flag 010",
+        "type": "trap",
+        "label": "🚩",
+        "x": 33,
         "y": 20,
+        "width": 1,
+        "height": 1
+      },
+      {
+        "id": "Flag 011",
+        "type": "trap",
+        "label": "🚩",
+        "x": 35,
+        "y": 10,
+        "width": 1,
+        "height": 1
+      },
+      {
+        "id": "Flag 012",
+        "type": "trap",
+        "label": "🚩",
+        "x": 35,
+        "y": 17,
+        "width": 1,
+        "height": 1
+      },
+      {
+        "id": "Flag 013",
+        "type": "trap",
+        "label": "🚩",
+        "x": 35,
+        "y": 24,
+        "width": 1,
+        "height": 1
+      },
+      {
+        "id": "Flag 014",
+        "type": "trap",
+        "label": "🚩",
+        "x": 38,
+        "y": 31,
+        "width": 1,
+        "height": 1
+      },
+      {
+        "id": "Flag 015",
+        "type": "trap",
+        "label": "🚩",
+        "x": 38,
+        "y": 38,
+        "width": 1,
+        "height": 1
+      },
+      {
+        "id": "Flag 016",
+        "type": "trap",
+        "label": "🚩",
+        "x": 42,
+        "y": 17,
+        "width": 1,
+        "height": 1
+      },
+      {
+        "id": "Flag 017",
+        "type": "trap",
+        "label": "🚩",
+        "x": 42,
+        "y": 24,
+        "width": 1,
+        "height": 1
+      },
+      {
+        "id": "Obstacle 001",
+        "type": "trap",
+        "label": "",
+        "x": 12,
+        "y": 18,
         "width": 2,
         "height": 2
-    },
-    {
-        "id": "stage-main",
+      },
+      {
+        "id": "Obstacle 002",
         "type": "trap",
-        "label": "BEAR TRAP 1",
-        "x": 30,
-        "y": 5,
-        "width": 20,
-        "height": 8
-    },
-    {
-        "id": "trap-2",
+        "label": "",
+        "x": 14,
+        "y": 24,
+        "width": 2,
+        "height": 2
+      },
+      {
+        "id": "Obstacle 003",
         "type": "trap",
-        "label": "TRAP 2",
-        "x": 10,
-        "y": 10,
-        "width": 10,
-        "height": 4
+        "label": "",
+        "x": 37,
+        "y": 23,
+        "width": 2,
+        "height": 2
+      },
+      {
+        "id": "Obstacle 004",
+        "type": "trap",
+        "label": "",
+        "x": 39,
+        "y": 31,
+        "width": 2,
+        "height": 2
       }
-]
+    ]
