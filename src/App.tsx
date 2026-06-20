@@ -18,6 +18,7 @@ export default function App() {
         setSelectedOccupant={setSelectedOccupant}
         selectedSeat={selectedSeat}
         editingSeat={editingSeat}
+        setEditingSeat={setEditingSeat}
         setSelectedSeat={setSelectedSeat}
         editorMode={editorMode}
         setEditorMode={setEditorMode}

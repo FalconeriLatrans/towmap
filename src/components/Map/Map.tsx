@@ -101,7 +101,7 @@ export default function Map({
           <ElementRenderer
             element={element}
             occupant={
-              element.type === "seat"
+              element.type === "seat" && element.seat
                 ? allocations[element.seat]
                 : undefined
             }
