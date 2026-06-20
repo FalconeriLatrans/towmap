@@ -83,7 +83,7 @@ export default function Map({
       >
         {elements.map((element) => (<div
           id={
-            element.type === "seat"
+            element.type === "seat" && element.seat
               ? `seat-${element.seat}`
               : undefined
           }

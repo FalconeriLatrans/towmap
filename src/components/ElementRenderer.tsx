@@ -2,11 +2,6 @@ import Seat from "./Elements/Seat/Seat";
 import Trap from "./Elements/Trap/Trap";
 //import Flag from "./Elements/Banner/Banner";
 
-type Props = {
-  element: any;
-};
-
-
 export default function ElementRenderer({
   element,
   occupant,

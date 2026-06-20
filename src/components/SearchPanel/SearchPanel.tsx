@@ -1,5 +1,5 @@
 import participants from "../../data/participants.json";
-import { allocate, getAllocations, exportBackup } from "../../services/AllocationService";
+import { allocate, getAllocations } from "../../services/AllocationService";
 import type { Allocation } from "../../types/Allocation";
 import "./SearchPanel.css";
 import { useEffect, useState } from "react";
@@ -73,7 +73,7 @@ export default function SearchPanel({
     participants.filter(
       participant =>
         !allocatedNames.includes(
-          participant.name
+          String(participant.name)
         )
     );
   
@@ -82,9 +82,6 @@ export default function SearchPanel({
       ? availableParticipants
       : participants;
   
-  const allocatedCount = allocatedNames.length;
-  const totalCount = participants.length;
-
   return (
     <div className="search-panel">
       <h2>TOW Map</h2>
@@ -146,7 +143,7 @@ export default function SearchPanel({
                       if (editingSeat) {
                         await allocate(
                           editingSeat,
-                          participant.name
+                          String(participant.name)
                         );
                         const data = await getAllocations();
                         setAllocations(data);

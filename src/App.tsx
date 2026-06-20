@@ -10,9 +10,8 @@ export default function App() {
   const [selectedOccupant, setSelectedOccupant] = useState("");
   const [editingSeat, setEditingSeat] = useState<string | null>(null);
   const [editorMode, setEditorMode] = useState(false);
-  const [showParticipants, setShowParticipants] = useState(false);
-  const [seatSelectionVersion, setSeatSelectionVersion] = useState(0);
-
+//  const [setShowParticipants] = useState(false);
+ 
   return (
     <div className="app">
       <SearchPanel
@@ -22,7 +21,6 @@ export default function App() {
         setSelectedSeat={setSelectedSeat}
         editorMode={editorMode}
         setEditorMode={setEditorMode}
-        setShowParticipants={setShowParticipants}
       />
       <MapViewport
         selectedSeat={selectedSeat}
@@ -30,7 +28,6 @@ export default function App() {
         editingSeat={editingSeat}
         setEditingSeat={setEditingSeat}
         editorMode={editorMode}
-        setShowParticipants={setShowParticipants}
       />
       <InfoPanel
         seat={selectedSeat}
