@@ -104,7 +104,10 @@ export default function SearchPanel({
             } else {
               const password =
                 prompt("Password");
-              if (password === "R4towR5") { setEditorMode(true) }
+              if (password?.trim() === "R4towR5") { 
+                setEditorMode(true);
+                alert("Editor mode enabled.\n\nTap a seat twice to change its occupant.")
+              }
             }
           }}
         >
