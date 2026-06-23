@@ -1,7 +1,8 @@
-import elements from "../../data/mapelements.json";
+//import elements from "../../data/mapelements.json";
 import ElementRenderer from "../ElementRenderer";
 import "./Map.css";
 import { subscribeAllocations } from "../../services/AllocationService";
+import { loadElements } from "../../services/loadElements";
 import { useEffect, useState } from "react";
 
 type Props = {
@@ -12,7 +13,6 @@ type Props = {
   editorMode: boolean;
 };
 
-
 export default function Map({
   selectedSeat,
   setSelectedSeat,
@@ -21,6 +21,8 @@ export default function Map({
   editorMode,
 }: Props) {
 
+  const elements = loadElements();
+  
   const [allocations, setAllocations] = useState<
     Record<string, string>
   >({});
