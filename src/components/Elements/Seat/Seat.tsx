@@ -2,7 +2,9 @@ import "./Seat.css";
 import "../Elements.css";
 
 type SeatProps = {
-  seat: string;
+  id: string;
+  label: string;
+  color: string;
   occupant?: string;
   selected?: boolean;
   editing?: boolean;
@@ -10,29 +12,14 @@ type SeatProps = {
 };
 
 export default function Seat({
-  seat,
+  id,
+  label,
+  color,
   occupant,
   selected,
   editing,
   onClick,
 }: SeatProps) {
-
-  const seatNumber =
-    parseInt(
-      seat.split(" ")[1]
-    );
-
-  const category =
-    Math.floor(
-      seatNumber / 100
-    );
-
-  const colors: Record<number, string> = {
-    1: "#2d5fb8",
-    2: "#7c95b6",
-    3: "#d0d4da",
-    4: "#efe4c3",
-  };
 
   return (
     <div
@@ -40,13 +27,10 @@ export default function Seat({
         ${selected ? "selected" : ""}
         ${editing ? "editing" : ""}
       `}
-      onClick={() => onClick?.(seat)}
-      style={{
-        backgroundColor:
-          colors[category] || "#ffffff",
-      }}
+      onClick={() => onClick?.(id)}
+      style={{ backgroundColor: color }}
     >
-      {occupant || seat}
+      {occupant || label}
     </div>
   );
 }

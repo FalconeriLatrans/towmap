@@ -2,7 +2,7 @@
 import ElementRenderer from "../ElementRenderer";
 import "./Map.css";
 import { subscribeAllocations } from "../../services/AllocationService";
-import { loadElements } from "../../services/loadElements";
+import loadElements from "../../services/loadElements";
 import { useEffect, useState } from "react";
 
 type Props = {
@@ -13,6 +13,8 @@ type Props = {
   editorMode: boolean;
 };
 
+//const elements = loadElements();
+
 export default function Map({
   selectedSeat,
   setSelectedSeat,
@@ -22,7 +24,8 @@ export default function Map({
 }: Props) {
 
   const elements = loadElements();
-  
+  console.log(elements);
+
   const [allocations, setAllocations] = useState<
     Record<string, string>
   >({});
@@ -85,8 +88,8 @@ export default function Map({
       >
         {elements.map((element) => (<div
           id={
-            element.type === "seat" && element.seat
-              ? `seat-${element.seat}`
+            element.type === "seat" && element.id
+              ? `seat-${element.id}`
               : undefined
           }
           key={element.id}
@@ -103,17 +106,17 @@ export default function Map({
           <ElementRenderer
             element={element}
             occupant={
-              element.type === "seat" && element.seat
-                ? allocations[element.seat]
+              element.type === "seat" && element.id
+                ? allocations[element.id]
                 : undefined
             }
             selected={
               element.type === "seat" &&
-              selectedSeat === element.seat
+              selectedSeat === element.id
             }
             editing={
               element.type === "seat" &&
-              editingSeat === element.seat
+              editingSeat === element.id
             }
             onClick={
               element.type === "seat"

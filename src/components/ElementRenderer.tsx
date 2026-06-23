@@ -14,17 +14,22 @@ export default function ElementRenderer({
     case "seat":
       return (
         <Seat
-          seat={element.seat}
+          id={element.id}
+          label={element.label}
+          color={element.color}
           occupant={occupant}
           selected={selected}
           editing={editing}
           onClick={onClick}
         />
       );
+    case "banner":
+    case "hq":
     case "trap":
       return (
         <Trap
           label={element.label}
+          color={element.color}
         />
       );
     default:
