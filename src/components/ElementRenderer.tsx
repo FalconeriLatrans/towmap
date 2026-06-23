@@ -30,6 +30,7 @@ export default function ElementRenderer({
         <Trap
           label={element.label}
           color={element.color}
+          onClick={onClick}
         />
       );
     default:

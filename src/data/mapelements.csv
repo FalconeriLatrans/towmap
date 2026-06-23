@@ -1,6 +1,6 @@
 type,x,y,label,color,number
-seat,21,20,B1 101,#3563b9,101
-seat,23,21,B1 102,#3563b9,102
+city,21,20,B1 101,#3563b9,101
+city,23,21,B1 102,#3563b9,102
 trap,20,22,TRAP 01,#aaaaaa,1
 banner,16,21,Banner,#aaaaaa,3
 hq,23,14,Alliance HQ,#8e44ad,144

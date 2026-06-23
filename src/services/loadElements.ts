@@ -24,7 +24,7 @@ export default function loadElements() {
 
       return {
         id: `${x.padStart(4, "0")} ${y.padStart(4, "0")}`,
-        type,
+        type: type === "city" ?"seat" :type,
         x: Number(x),
         y: Number(y),
         label,

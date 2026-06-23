@@ -64,11 +64,11 @@ export default function Map({
   }, [selectedSeat]);
 
   function handleSeatClick(seat: string) {
-    
+
     if (
       editorMode &&
       selectedSeat === seat
-    ) { setEditingSeat(seat);} 
+    ) { setEditingSeat(seat); }
     else {
       setSelectedSeat(seat);
       setEditingSeat(null);
