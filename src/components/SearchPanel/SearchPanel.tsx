@@ -3,6 +3,7 @@ import { allocate, getAllocations } from "../../services/AllocationService";
 import type { Allocation } from "../../types/Allocation";
 import "./SearchPanel.css";
 import { useEffect, useState } from "react";
+import { sha256 } from "../../services/hash";
 
 type Props = {
   selectedSeat: string | null;
@@ -12,6 +13,7 @@ type Props = {
   editorMode: boolean;
   setEditorMode: (value: boolean) => void;
   setSelectedOccupant: (occupant: string) => void;
+  setToast: (message: string) => void;
 };
 
 export default function SearchPanel({
@@ -22,6 +24,7 @@ export default function SearchPanel({
   setSelectedSeat,
   editorMode,
   setEditorMode,
+  setToast,
 }: Props) {
 
   const [showParticipants, setShowParticipants] = useState(false);
@@ -98,15 +101,17 @@ export default function SearchPanel({
         </button>
         <button
           className="lock-button"
-          onClick={() => {
+          onClick={async () => {
             if (editorMode) {
               setEditorMode(false);
             } else {
-              const password =
-                prompt("Password");
-              if (password?.trim() === "R4towR5") { 
+              const password = prompt("Editor password");
+              const hash = await sha256(password?.trim() ?? "");
+              if (hash === "71b4354a60c9f304ae9099650b537a63d3f10625873584be2580ef8da5c96361"){
                 setEditorMode(true);
-                alert("Editor mode enabled.\n\nTap a seat twice to change its occupant.")
+                setToast("🔓 Editor mode enabled");
+              } else {
+                setToast("❌ Invalid password");
               }
             }
           }}
