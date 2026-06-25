@@ -24,8 +24,6 @@ export default function Map({
 }: Props) {
 
   const elements = loadElements();
-  console.log(elements);
-
   const [allocations, setAllocations] = useState<
     Record<string, string>
   >({});
@@ -52,10 +50,8 @@ export default function Map({
   }, []);
 
   useEffect(() => {
-    if (!selectedSeat)
-      return;
-    const element =
-      document.getElementById(`seat-${selectedSeat}`);
+    if (!selectedSeat) return;
+    const element = document.getElementById(selectedSeat ?? "");
     element?.scrollIntoView({
       behavior: "smooth",
       block: "center",
@@ -75,6 +71,21 @@ export default function Map({
     }
   }
 
+  function handleElementClick(element: any) {
+
+    if (
+      element.type === "seat" &&
+      editorMode &&
+      selectedSeat === element.id
+    ) {
+      setEditingSeat(element.id);
+      return;
+    }
+
+    setSelectedSeat(element.id);
+    setEditingSeat(null);
+  }
+
   return (
     <div className="map-container">
       <div
@@ -87,11 +98,7 @@ export default function Map({
         }}
       >
         {elements.map((element) => (<div
-          id={
-            element.type === "seat" && element.id
-              ? `seat-${element.id}`
-              : undefined
-          }
+          id={element.id}
           key={element.id}
           style={{
             gridColumn:
@@ -110,19 +117,12 @@ export default function Map({
                 ? allocations[element.id]
                 : undefined
             }
-            selected={
-              element.type === "seat" &&
-              selectedSeat === element.id
-            }
+            selected={selectedSeat === element.id}
             editing={
               element.type === "seat" &&
               editingSeat === element.id
             }
-            onClick={
-              element.type === "seat"
-                ? handleSeatClick
-                : undefined
-            }
+            onClick={() => handleElementClick(element)}
           />
         </div>
         ))}

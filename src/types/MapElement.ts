@@ -1,18 +1,10 @@
 export type MapElement = {
-
-    id: string;
-      type:
-      | "seat"
-      | "HQ"
-      | "banner"
-      | "trap";
-      x: number;
-    y: number;
-  
-    width: number;
-    height: number;
-  
-    seat?: string;
-  
-    label?: string;
-  };
+  id: string;
+  type: string;
+  label: string;
+  color: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};

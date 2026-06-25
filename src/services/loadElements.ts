@@ -21,10 +21,14 @@ export default function loadElements() {
 
       const [type, x, y, label, color, number] = line.split(",");
       const size = dimensions[type as keyof typeof dimensions] ?? { width: 2, height: 2 };
+      const typeMap: Record<string, string> = {
+        city: "seat",
+        beartrap: "trap",
+      };
 
       return {
         id: `${x.padStart(4, "0")} ${y.padStart(4, "0")}`,
-        type: type === "city" ?"seat" :type,
+        type: typeMap[type] ?? type,
         x: Number(x),
         y: Number(y),
         label,
