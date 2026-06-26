@@ -1,9 +1,11 @@
 //import elements from "../../data/mapelements.json";
-import ElementRenderer from "../ElementRenderer";
+//import ElementRenderer from "../ElementRenderer";
+import Element from "../Elements/Element";
 import "./Map.css";
 import { subscribeAllocations } from "../../services/AllocationService";
 import loadElements from "../../services/loadElements";
 import { useEffect, useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 
 type Props = {
   selectedSeat: string | null;
@@ -11,6 +13,7 @@ type Props = {
   editingSeat: string | null;
   setEditingSeat: (seat: string | null) => void;
   editorMode: boolean;
+  setSelectedElement: React.Dispatch<React.SetStateAction<MapElement | null>>;
 };
 
 //const elements = loadElements();
@@ -21,6 +24,7 @@ export default function Map({
   editingSeat,
   setEditingSeat,
   editorMode,
+  setSelectedElement,
 }: Props) {
 
   const elements = loadElements();
@@ -81,8 +85,8 @@ export default function Map({
       setEditingSeat(element.id);
       return;
     }
-
     setSelectedSeat(element.id);
+    setSelectedElement(element);
     setEditingSeat(null);
   }
 
@@ -91,41 +95,36 @@ export default function Map({
       <div
         className="map"
         style={{
-          gridTemplateColumns: `repeat(${maxX - minX + 3}, 40px)`,
-          gridTemplateRows: `repeat(${maxY - minY + 3}, 40px)`,
+          gridTemplateColumns: `repeat(${maxX - minX + 1}, 40px)`,
+          gridTemplateRows: `repeat(${maxY - minY + 1}, 40px)`,
           gap: "4px",
           padding: "20px",
         }}
       >
-        {elements.map((element) => (<div
-          id={element.id}
-          key={element.id}
-          style={{
-            gridColumn:
-              `${element.x - minX + 1}
-       / span ${element.width}`,
+        {elements.map(element => {
 
-            gridRow:
-              `${element.y - minY + 1}
-       / span ${element.height}`,
-          }}
-        >
-          <ElementRenderer
-            element={element}
-            occupant={
-              element.type === "seat" && element.id
-                ? allocations[element.id]
-                : undefined
-            }
-            selected={selectedSeat === element.id}
-            editing={
-              element.type === "seat" &&
-              editingSeat === element.id
-            }
-            onClick={() => handleElementClick(element)}
-          />
-        </div>
-        ))}
+          const isSeat = element.type === "seat";
+          const occupant = isSeat ? allocations[element.id] : undefined;
+
+          return (
+            <div
+              key={element.id}
+              id={element.id}
+              style={{
+                gridColumn: `${element.x - minX + 1} / span ${element.width}`,
+                gridRow: `${element.y - minY + 1} / span ${element.height}`,
+              }}
+            >
+              <Element
+                element={element}
+                occupant={occupant}
+                selected={selectedSeat === element.id}
+                editing={isSeat && editingSeat === element.id}
+                onClick={() => handleElementClick(element)}
+              />
+            </div>
+          );
+        })}
       </div>
     </div>
   );

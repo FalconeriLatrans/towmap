@@ -2,6 +2,7 @@ import MapViewport from "./components/Map/MapViewport";
 import SearchPanel from "./components/SearchPanel/SearchPanel";
 import InfoPanel from "./components/InfoPanel/InfoPanel";
 import { useEffect, useState } from "react";
+import type { MapElement } from "../../types/MapElement";
 import "./App.css";
 
 export default function App() {
@@ -11,7 +12,8 @@ export default function App() {
   const [editingSeat, setEditingSeat] = useState<string | null>(null);
   const [editorMode, setEditorMode] = useState(false);
   const [toast, setToast] = useState("");
- 
+  const [selectedElement, setSelectedElement] =useState<MapElement | null>(null);
+    
   useEffect(() => {
     if (!toast)
       return;
@@ -47,10 +49,12 @@ export default function App() {
         editingSeat={editingSeat}
         setEditingSeat={setEditingSeat}
         editorMode={editorMode}
+        setSelectedElement={setSelectedElement}
       />
       <InfoPanel
-        seat={selectedSeat}
+        element={selectedElement}
         occupant={selectedOccupant}
+        editorMode={editorMode}
       />
     </div>
   );

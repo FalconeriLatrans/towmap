@@ -2,12 +2,14 @@ import "./Trap.css";
 import "../Elements.css";
 
 type Props = {
+  id: string;
   label?: string;
   color: string;
   onClick?: (trap: string) => void;
 };
 
 export default function Trap({
+  id,
   label,
   color,
   onClick,

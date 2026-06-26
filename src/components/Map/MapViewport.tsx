@@ -1,15 +1,8 @@
-import {
-    TransformWrapper,
-    TransformComponent,
-} from "react-zoom-pan-pinch";
-
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import type { Dispatch, SetStateAction } from "react";
 import Map from "./Map";
 
-type Props = 
-  React.ComponentProps<
-    typeof Map
-  >;
-;
+type Props = React.ComponentProps<typeof Map>;
 
 export default function MapViewport(props: Props) {
     return (
