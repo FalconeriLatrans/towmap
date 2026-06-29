@@ -567,7 +567,7 @@
     "lvl": 2
   },
   {
-    "name": 123456,
+    "name": "123456",
     "rank": "R3",
     "seat": "",
     "power": "84.1M",
@@ -669,6 +669,20 @@
     "rank": "R1",
     "seat": "",
     "power": "108.6M",
+    "lvl": 2
+  },
+  {
+    "name": "persistent",
+    "rank": "R2",
+    "seat": "",
+    "power": "95.1M",
+    "lvl": 2
+  },
+  {
+    "name": "ElthenorPL",
+    "rank": "R3",
+    "seat": "",
+    "power": "159.9M",
     "lvl": 2
   },
   {
