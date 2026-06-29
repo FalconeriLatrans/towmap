@@ -1,17 +1,19 @@
 // src/components/InfoPanel/InfoPanel.tsx
-import type {MapElement} from "../../types/MapElement";
+import type { MapElement } from "../../types/MapElement";
 import "./InfoPanel.css";
 
 type Props = {
   element: MapElement | null;
   occupant: string;
   editorMode: boolean;
+  participants: Participant[];
 };
 
 export default function InfoPanel({
   element,
   occupant,
   editorMode,
+
 }: Props) {
 
   if (!element) {
@@ -23,21 +25,40 @@ export default function InfoPanel({
       </div>
     );
   }
-  
+
   const title = occupant || element.label || "Empty";
-  
-  const code =
-    element.type === "seat"
+  const occupantName = occupant || "";
+
+  const code = element.type === "seat"
       ? element.label
       : "";
-  
-  const coords =
-    `x:${element.x} y:${element.y}`;
+
+  const coords = `x:${element.x} y:${element.y}`;
 
   return (
     <div className="info-panel">
       <div className="occupant-name">
-        {title}
+        {editorMode && element.type === "seat"
+          ? (
+            <select>
+              <>
+                <option value="">
+                  Empty
+                </option>
+                {participants.map(p => (
+                  <option
+                    key={p.id}
+                    value={p.id}
+                  >
+                    {p.name}
+                  </option>
+                ))}
+              </>
+            </select>
+          )
+          : (
+            title
+          )}
       </div>
       <div className="info-row">
         <span className="info-label">
