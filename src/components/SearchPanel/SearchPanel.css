@@ -3,6 +3,7 @@ body {
     Roboto,
     sans-serif;
 }
+
 .search-panel {
   background: #1e293b;
   border-radius: 16px;
@@ -47,8 +48,7 @@ body {
 }
 
 .search-panel button:hover {
-  transform:
-    translateY(-1px);
+  transform: translateY(-1px);
 }
 
 .editor-button {
@@ -90,7 +90,12 @@ body {
 
 .top-bar {
   display: flex;
+  align-items:center;
   gap: 8px;
+}
+
+.top-bar .dropdown{
+  flex:1;
 }
 
 .participant-selector {
@@ -107,4 +112,21 @@ body {
   height: 40px;
   min-width: 44px;
   padding: 0;
+  position:absolute;
+  right:0;
+}
+
+
+
+.panel-header{
+  position:relative;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  margin-bottom:16px;
+}
+
+.panel-header h2{
+  margin:0;
 }

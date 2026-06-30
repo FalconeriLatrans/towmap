@@ -1,14 +1,14 @@
 import participants from "../../data/participants.json";
-import { allocate, getAllocations } from "../../services/AllocationService";
+import { getAllocations } from "../../services/AllocationService";
 import type { Allocation } from "../../types/Allocation";
 import "./SearchPanel.css";
 import { useEffect, useState } from "react";
 import { sha256 } from "../../services/hash";
+import Dropdown from "../Dropdown/Dropdown";
+import type { DropdownItem } from "../Dropdown/Dropdown";
 
 type Props = {
   selectedSeat: string | null;
-  editingSeat: string | null;
-  setEditingSeat: (seat: string | null) => void;
   setSelectedSeat: (seat: string | null) => void;
   editorMode: boolean;
   setEditorMode: (value: boolean) => void;
@@ -19,8 +19,6 @@ type Props = {
 export default function SearchPanel({
   setSelectedOccupant,
   selectedSeat,
-  editingSeat,
-  setEditingSeat,
   setSelectedSeat,
   editorMode,
   setEditorMode,
@@ -56,12 +54,6 @@ export default function SearchPanel({
     setShowParticipants(false);
   }, [selectedSeat]);
 
-  const allocatedNames =
-    allocations.map(
-      allocation =>
-        allocation.participant
-    );
-
   const participantSeats =
     Object.fromEntries(
       allocations.map(
@@ -72,107 +64,89 @@ export default function SearchPanel({
       )
     );
 
-    const availableParticipants =
-    participants.filter(
-      participant =>
-        !allocatedNames.includes(
-          String(participant.name)
-        )
-    );
-  
-  const participantsToShow =
-    editingSeat
-      ? availableParticipants
-      : participants;
-  
+  console.log(participants[0]);
+  console.log(typeof participants[0].name);
+  console.log(participants[0].name);
+
+  const sortedParticipants = [...participants].sort(
+    (a, b) =>
+      String(a.name).localeCompare(String(b.name), "en")
+  );
+
+  const items: DropdownItem[] = sortedParticipants.map(participant => {
+    const allocated =
+      Boolean(
+        participantSeats[
+        participant.name
+        ]
+      );
+    return {
+      id: participant.name,
+      content: (
+        <>
+          {allocated ? "✓" : "○"}{" "}
+          {participant.name}
+        </>
+      ),
+    };
+  });
+
   return (
     <div className="search-panel">
+       <div className="panel-header">
       <h2>TOW Map</h2>
-      <div className="top-bar">
-        <button
-          className="participant-selector"
-          onClick={() => setShowParticipants(!showParticipants)}
-        >
-          {
-            editingSeat
-              ? "🎯 Select occupant"
-              : `🔍 ${occupant || "Select player"}`
-          }
-        </button>
-        <button
-          className="lock-button"
-          onClick={async () => {
-            if (editorMode) {
-              setEditorMode(false);
+      <button
+        className="lock-button"
+        onClick={async () => {
+          if (editorMode) {
+            setEditorMode(false);
+          } else {
+            const password = prompt("Editor password");
+            const hash = await sha256(password?.trim() ?? "");
+            if (hash === "71b4354a60c9f304ae9099650b537a63d3f10625873584be2580ef8da5c96361") {
+              setEditorMode(true);
+              setToast("🔓 Editor mode enabled");
             } else {
-              const password = prompt("Editor password");
-              const hash = await sha256(password?.trim() ?? "");
-              if (hash === "71b4354a60c9f304ae9099650b537a63d3f10625873584be2580ef8da5c96361"){
-                setEditorMode(true);
-                setToast("🔓 Editor mode enabled");
-              } else {
-                setToast("❌ Invalid password");
-              }
+              setToast("❌ Invalid password");
             }
-          }}
-        >
-          {editorMode ? "🔓" : "🔒"}
-        </button>
+          }
+        }}
+      >
+        {editorMode ? "🔓" : "🔒"}
+      </button>
       </div>
-
-      {
-        showParticipants && (
-          <div className="participant-list">
-            {editingSeat && (
-              <button
-                className="participant-button"
-                onClick={async () => { await allocate(editingSeat,"");
-                  const data =  await getAllocations();
-                  setAllocations(data);
-                  setEditingSeat(null);
-                  setShowParticipants(false);
-                }}
-              >
-                ⊘ Empty
-              </button>
-            )}
-            {participantsToShow.map(
-              participant => {
-                const seat =
-                  participantSeats[
-                  participant.name
-                  ];
-
-                return (
-                  <button
-                    className="participant-button"
-                    key={participant.name}
-                    onClick={async () => {
-                      if (editingSeat) {
-                        await allocate(
-                          editingSeat,
-                          String(participant.name)
-                        );
-                        const data = await getAllocations();
-                        setAllocations(data);
-                      } else {
-                        if (seat) { setSelectedSeat(seat) }
-                      }
-                      setShowParticipants(false);
-                    }}
-                  >
-                    {seat
-                      ? "✓"
-                      : "○"}
-                    {" "}
-                    {participant.name}
-                  </button>
-                );
-              }
-            )}
-          </div>
-        )
-      }
+      <div className="top-bar">
+        <Dropdown
+          button={
+            <>
+              🔍 {occupant || "Select player"}
+              <span>
+                {showParticipants ? "▲" : "▼"}
+              </span>
+            </>
+          }
+          open={showParticipants}
+          items={items}
+          selectedId={occupant}
+          onToggle={() =>
+            setShowParticipants(
+              !showParticipants
+            )
+          }
+          onSelect={id => {
+            const seat =
+              participantSeats[id];
+            if (seat) {
+              setSelectedSeat(seat);
+            } else {
+              setToast(
+                `${id} has not been assigned to a spot yet.`
+              );
+            }
+            setShowParticipants(false);
+          }}
+        />
+      </div>
     </div>
   )
 }
