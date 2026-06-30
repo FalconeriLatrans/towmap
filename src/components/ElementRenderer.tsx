@@ -1,5 +1,3 @@
-import Seat from "./Elements/Seat/Seat";
-import Trap from "./Elements/Trap/Trap";
 import Element from "./Elements/Element";
 //import Flag from "./Elements/Banner/Banner";
 

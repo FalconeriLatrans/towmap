@@ -1,21 +1,45 @@
-// src/components/InfoPanel/InfoPanel.tsx
+import { useEffect, useState } from "react";
+import Dropdown from "../Dropdown/Dropdown";
+import { getAvailableParticipants } from "../../services/ParticipantService";
+import type { DropdownItem } from "../Dropdown/Dropdown";
 import type { MapElement } from "../../types/MapElement";
+import type { Participant } from "../../types/Participant";
 import "./InfoPanel.css";
 
 type Props = {
   element: MapElement | null;
   occupant: string;
   editorMode: boolean;
-  participants: Participant[];
 };
 
 export default function InfoPanel({
   element,
   occupant,
   editorMode,
-
 }: Props) {
 
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [items, setItems] = useState<DropdownItem[]>([]);
+
+  useEffect(() => {
+    async function load() {
+      const participants =
+        await getAvailableParticipants();
+      setItems([
+        {
+          id: "",
+          content: "Empty",
+        },
+        ...participants.map(
+          participant => ({
+            id: participant.id,
+            content: participant.name,
+          })
+        )
+      ]);
+    }
+    load();
+  }, [element]);
   if (!element) {
     return (
       <div className="info-panel">
@@ -27,7 +51,6 @@ export default function InfoPanel({
   }
 
   const title = occupant || element.label || "Empty";
-  const occupantName = occupant || "";
 
   const code = element.type === "seat"
       ? element.label
@@ -38,27 +61,38 @@ export default function InfoPanel({
   return (
     <div className="info-panel">
       <div className="occupant-name">
-        {editorMode && element.type === "seat"
-          ? (
-            <select>
-              <>
-                <option value="">
-                  Empty
-                </option>
-                {participants.map(p => (
-                  <option
-                    key={p.id}
-                    value={p.id}
-                  >
-                    {p.name}
-                  </option>
-                ))}
-              </>
-            </select>
-          )
-          : (
-            title
-          )}
+        {
+          editorMode &&
+            element.type === "seat"
+            ? (
+              <Dropdown
+                button={
+                  <>
+                    {title}
+                    <span>
+                      {showDropdown ? "▲" : "▼"}
+                    </span>
+                  </>
+                }
+                open={showDropdown}
+                direction="up"
+                items={items}
+                selectedId={occupant}
+                onToggle={() =>
+                  setShowDropdown(
+                    !showDropdown
+                  )
+                }
+                onSelect={id => {
+                  console.log(id);
+                  setShowDropdown(false);
+                }}
+              />
+            )
+            : (
+              title
+            )
+        }
       </div>
       <div className="info-row">
         <span className="info-label">
