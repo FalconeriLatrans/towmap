@@ -8,6 +8,7 @@ import {
 
 import { db } from "./Firebase";
 import type { Allocation } from "../types/Allocation";
+import { Collections } from "../config/Collections";
 
 const STORAGE_KEY = "towmap_allocations";
 
@@ -17,7 +18,7 @@ export async function getAllocations() {
     await getDocs(
       collection(
         db,
-        "allocations"
+        Collections.allocations
       )
     );
 
@@ -50,7 +51,7 @@ export async function allocate(
   await setDoc(
     doc(
       db,
-      "allocations",
+      Collections.allocations,
       seat
     ),
     {
@@ -97,7 +98,7 @@ export function subscribeAllocations(
   return onSnapshot(
     collection(
       db,
-      "allocations"
+      Collections.allocations
     ),
     snapshot => {
       const allocations =

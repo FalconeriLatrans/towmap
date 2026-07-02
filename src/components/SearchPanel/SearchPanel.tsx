@@ -112,7 +112,7 @@ export default function SearchPanel({
           }
         }}
       >
-        {editorMode ? "🔓" : "🔒"}
+        {editorMode ? "⚙" : "🔒"}
       </button>
       </div>
       <div className="top-bar">

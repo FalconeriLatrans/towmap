@@ -9,20 +9,24 @@ type Props = {
   button: React.ReactNode;
   open: boolean;
   direction?: "up" | "down";
+  align?: "left" | "right";
   items: DropdownItem[];
   selectedId?: string;
   onToggle: () => void;
   onSelect: (id: string) => void;
+  compact?: boolean;
 };
 
 export default function Dropdown({
   button,
   open,
   direction = "down",
+  align = "left",
   items,
   selectedId,
   onToggle,
   onSelect,
+  compact,
 }: Props) {
 
   return (
