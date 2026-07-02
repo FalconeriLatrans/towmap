@@ -96,7 +96,7 @@ export default function Map({
         className="map"
         style={{
           gridTemplateColumns: `repeat(${maxX - minX + 1}, 40px)`,
-          gridTemplateRows: `repeat(${maxY - minY + 1}, 40px)`,
+          gridTemplateRows: `repeat(${maxY - minY+3}, 40px)`,
           gap: "4px",
           padding: "20px",
         }}
@@ -112,7 +112,7 @@ export default function Map({
               id={element.id}
               style={{
                 gridColumn: `${element.x - minX + 1} / span ${element.width}`,
-                gridRow: `${element.y - minY + 1} / span ${element.height}`,
+                gridRow: `${maxY - element.y - element.height +1} / span ${element.height}`,
               }}
             >
               <Element

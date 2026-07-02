@@ -2,7 +2,7 @@ import csvText from "../data/mapelements.csv?raw";
 
 const dimensions = {
   seat: { width: 2, height: 2 },
-  trap: { width: 3, height: 3 },
+  beartrap: { width: 3, height: 3 },
   banner: { width: 1, height: 1 },
   city: { width: 2, height: 2 },
   hq: { width: 3, height: 3 },
@@ -16,7 +16,7 @@ export default function loadElements() {
     .split("\n");
 
   return lines
-    .slice(1)
+
     .map(line => {
 
       const [type, x, y, label, color, number] = line.split(",");
