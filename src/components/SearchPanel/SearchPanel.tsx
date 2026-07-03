@@ -64,10 +64,6 @@ export default function SearchPanel({
       )
     );
 
-  console.log(participants[0]);
-  console.log(typeof participants[0].name);
-  console.log(participants[0].name);
-
   const sortedParticipants = [...participants].sort(
     (a, b) =>
       String(a.name).localeCompare(String(b.name), "en")

@@ -116,3 +116,38 @@ export function subscribeAllocations(
   );
 
 }
+
+export async function migrateAllocations() {
+
+  const participants = await getParticipants();
+  const allocations = await getAllocations();
+
+  const participantsByName = new Map(
+      participants.map(p => [p.name, p.id])
+  );
+
+  for (const allocation of allocations) {
+
+      const participantId =
+          participantsByName.get(
+              allocation.participant
+          );
+
+      if (!participantId) {
+
+          console.warn(
+              `Participant not found: ${allocation.participant}`
+          );
+
+          continue;
+
+      }
+
+      await allocate(
+          allocation.seat,
+          participantId
+      );
+
+  }
+
+}
