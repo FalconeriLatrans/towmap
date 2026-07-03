@@ -4,5 +4,6 @@ export interface Participant {
   level: number;
   power: number;
   order:number;
+  isMember:boolean;
   token:string;
 }

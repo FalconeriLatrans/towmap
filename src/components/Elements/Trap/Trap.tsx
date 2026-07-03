@@ -1,5 +1,5 @@
 import "./Trap.css";
-import "../Elements.css";
+import "../Element.css";
 
 type Props = {
   id: string;

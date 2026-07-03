@@ -1,4 +1,6 @@
 import MapViewport from "./components/Map/MapViewport";
+import {Environment} from "./config/Environment";
+import { importParticipants } from "./services/ParticipantService";
 import SearchPanel from "./components/SearchPanel/SearchPanel";
 import InfoPanel from "./components/InfoPanel/InfoPanel";
 import { useEffect, useState } from "react";
@@ -12,8 +14,8 @@ export default function App() {
   const [editingSeat, setEditingSeat] = useState<string | null>(null);
   const [editorMode, setEditorMode] = useState(false);
   const [toast, setToast] = useState("");
-  const [selectedElement, setSelectedElement] =useState<MapElement | null>(null);
-    
+  const [selectedElement, setSelectedElement] = useState<MapElement | null>(null);
+
   useEffect(() => {
     if (!toast)
       return;
@@ -25,6 +27,15 @@ export default function App() {
     return () =>
       clearTimeout(timer);
   }, [toast]);
+
+  useEffect(() => {
+    async function initialize() {
+      if (Environment.importParticipants && !Environment.production) {
+        await importParticipants();
+      }
+    }
+    initialize();
+  }, []);
 
   return (
     <div className="app">

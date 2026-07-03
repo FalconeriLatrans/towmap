@@ -1,5 +1,5 @@
 export interface Allocation {
   seat: string;
-  participant: string;
+  participantId: string;
   updatedAt: number;
 }

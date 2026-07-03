@@ -1,5 +1,5 @@
 import "./Seat.css";
-import "../Elements.css";
+import "../Element.css";
 
 type SeatProps = {
   id: string;

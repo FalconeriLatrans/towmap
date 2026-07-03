@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Dropdown from "../Dropdown/Dropdown";
-import { getAvailableParticipants } from "../../services/ParticipantService";
+import { getUnallocatedParticipants } from "../../services/ParticipantService";
 import type { DropdownItem } from "../Dropdown/Dropdown";
 import type { MapElement } from "../../types/MapElement";
 import type { Participant } from "../../types/Participant";
@@ -24,7 +24,7 @@ export default function InfoPanel({
   useEffect(() => {
     async function load() {
       const participants =
-        await getAvailableParticipants();
+        await getUnallocatedParticipants();
       setItems([
         {
           id: "",
