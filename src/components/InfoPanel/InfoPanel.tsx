@@ -4,6 +4,7 @@ import { getUnallocatedParticipants } from "../../services/ParticipantService";
 import type { DropdownItem } from "../Dropdown/Dropdown";
 import type { MapElement } from "../../types/MapElement";
 import type { Participant } from "../../types/Participant";
+import { allocate } from "../../services/AllocationService";
 import "./InfoPanel.css";
 
 type Props = {
@@ -53,8 +54,8 @@ export default function InfoPanel({
   const title = occupant || element.label || "Empty";
 
   const code = element.type === "seat"
-      ? element.label
-      : "";
+    ? element.label
+    : "";
 
   const coords = `x:${element.x} y:${element.y}`;
 
@@ -83,8 +84,12 @@ export default function InfoPanel({
                     !showDropdown
                   )
                 }
-                onSelect={id => {
+                onSelect={async(id) => {
                   console.log(id);
+                  await allocate(
+                    element.id,
+                    id
+                  );
                   setShowDropdown(false);
                 }}
               />

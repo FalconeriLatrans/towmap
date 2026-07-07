@@ -9,6 +9,8 @@ import {
 import { db } from "./Firebase";
 import type { Allocation } from "../types/Allocation";
 import { Collections } from "../config/Collections";
+import { getParticipants } from "./ParticipantService";
+import loadElements from "./loadElements";
 
 const STORAGE_KEY = "towmap_allocations";
 
@@ -45,9 +47,8 @@ export function saveAllocations(
 
 export async function allocate(
   seat: string,
-  participant: string
+  participantId: string
 ) {
-
   await setDoc(
     doc(
       db,
@@ -55,11 +56,10 @@ export async function allocate(
       seat
     ),
     {
-      participant,
+      participantId,
       updatedAt: Date.now()
     }
   );
-
 }
 
 export async function getAllocation(
@@ -119,34 +119,53 @@ export function subscribeAllocations(
 
 export async function migrateAllocations() {
 
+
+  const snapshot = await getDocs(
+    collection(
+      db,
+      "allocations"
+    )
+  );
   const participants = await getParticipants();
-  const allocations = await getAllocations();
+  const allocations = snapshot.docs.map(doc => ({
+    seat: doc.id,
+    ...(doc.data() as any)
+  }));
+  const elements = loadElements();
+  const seatsByLabel = new Map(
+    elements
+      .filter(e => e.type === "seat")
+      .map(e => [e.label, e.id])
+  );
 
   const participantsByName = new Map(
-      participants.map(p => [p.name, p.id])
+    participants.map(p => [p.name, p.id])
   );
 
   for (const allocation of allocations) {
 
-      const participantId =
-          participantsByName.get(
-              allocation.participant
-          );
+    console.log(allocation);
 
-      if (!participantId) {
+    const participantId =
+    participantsByName.get(
+        allocation.participant
+    );
+    const seatId = seatsByLabel.get(allocation.seat);
 
-          console.warn(
-              `Participant not found: ${allocation.participant}`
-          );
+    if (!participantId) {
+      console.warn(`Participant not found: ${allocation.participant}`);
+      continue;
+    }
+    if (!seatId) {
+      console.warn("Seat not found:", allocation.seat);
+      continue;
+    }
+    console.log(seatId);
 
-          continue;
-
-      }
-
-      await allocate(
-          allocation.seat,
-          participantId
-      );
+    await allocate(
+      seatId,
+      participantId
+    );
 
   }
 

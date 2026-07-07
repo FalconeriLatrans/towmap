@@ -42,10 +42,9 @@ export async function getUnallocatedParticipants(): Promise<Participant[]> {
 
 }
 
-export async function subscribeParticipants(
+export function subscribeParticipants(
   callback: (participants: Participant[]) => void
 ) {
-
   return onSnapshot(
     collection(db, Collections.participants),
     snapshot => {

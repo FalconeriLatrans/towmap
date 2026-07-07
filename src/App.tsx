@@ -1,6 +1,7 @@
 import MapViewport from "./components/Map/MapViewport";
 import {Environment} from "./config/Environment";
 import { importParticipants } from "./services/ParticipantService";
+import { migrateAllocations } from "./services/AllocationService";
 import SearchPanel from "./components/SearchPanel/SearchPanel";
 import InfoPanel from "./components/InfoPanel/InfoPanel";
 import { useEffect, useState } from "react";
@@ -32,6 +33,10 @@ export default function App() {
     async function initialize() {
       if (Environment.importParticipants && !Environment.production) {
         await importParticipants();
+      }
+      if (Environment.migrate && !Environment.production) {
+        console.log("Migrando");
+        await migrateAllocations();
       }
     }
     initialize();
