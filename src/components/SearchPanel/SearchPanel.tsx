@@ -1,6 +1,7 @@
-import participants from "../../data/participants.json";
-import { getAllocations } from "../../services/AllocationService";
+import { subscribeAllocations, getAllocations } from "../../services/AllocationService";
+import { subscribeParticipants } from "../../services/ParticipantService";
 import type { Allocation } from "../../types/Allocation";
+import type { Participant } from "../../types/Participant";
 import "./SearchPanel.css";
 import { useEffect, useState } from "react";
 import { sha256 } from "../../services/hash";
@@ -27,21 +28,36 @@ export default function SearchPanel({
 
   const [showParticipants, setShowParticipants] = useState(false);
   const [allocations, setAllocations] = useState<Allocation[]>([]);
+  const [participants, setParticipants] = useState<Participant[]>([]);
 
   useEffect(() => {
-    async function load() {
-      const data =
-        await getAllocations();
-      setAllocations(data);
-    }
-    load();
-  }, [selectedSeat]);
+    return subscribeAllocations(
+      setAllocations
+    );
+  }, []);
+
+  useEffect(() => {
+    return subscribeParticipants(
+      setParticipants
+    );
+  }, []);
+
+  const participantsById =
+    Object.fromEntries(
+      participants.map(
+        p => [p.id, p]
+      )
+    );
+
+  const allocation =
+    allocations.find(
+      a => a.seat === selectedSeat
+    );
 
   const occupant =
-    allocations.find(
-      allocation =>
-        allocation.seat === selectedSeat
-    )?.participant ?? "";
+    participantsById[
+      allocation?.participantId ?? ""
+    ]?.name ?? "";
 
   useEffect(() => {
     setSelectedOccupant(occupant);
@@ -58,26 +74,28 @@ export default function SearchPanel({
     Object.fromEntries(
       allocations.map(
         allocation => [
-          allocation.participant,
+          allocation.participantId,
           allocation.seat,
         ]
       )
     );
 
-  const sortedParticipants = [...participants].sort(
-    (a, b) =>
-      String(a.name).localeCompare(String(b.name), "en")
-  );
+  const sortedParticipants =
+    [...participants]
+      .filter(p => p.isMember)
+      .sort((a, b) => a.name.localeCompare(b.name));
+
+
 
   const items: DropdownItem[] = sortedParticipants.map(participant => {
     const allocated =
       Boolean(
         participantSeats[
-        participant.name
+        participant.id
         ]
       );
     return {
-      id: participant.name,
+      id: participant.id,
       content: (
         <>
           {allocated ? "✓" : "○"}{" "}
@@ -89,27 +107,27 @@ export default function SearchPanel({
 
   return (
     <div className="search-panel">
-       <div className="panel-header">
-      <h2>TOW Map</h2>
-      <button
-        className="lock-button"
-        onClick={async () => {
-          if (editorMode) {
-            setEditorMode(false);
-          } else {
-            const password = prompt("Editor password");
-            const hash = await sha256(password?.trim() ?? "");
-            if (hash === "71b4354a60c9f304ae9099650b537a63d3f10625873584be2580ef8da5c96361") {
-              setEditorMode(true);
-              setToast("🔓 Editor mode enabled");
+      <div className="panel-header">
+        <h2>TOW Map</h2>
+        <button
+          className="lock-button"
+          onClick={async () => {
+            if (editorMode) {
+              setEditorMode(false);
             } else {
-              setToast("❌ Invalid password");
+              const password = prompt("Editor password");
+              const hash = await sha256(password?.trim() ?? "");
+              if (hash === "71b4354a60c9f304ae9099650b537a63d3f10625873584be2580ef8da5c96361") {
+                setEditorMode(true);
+                setToast("🔓 Editor mode enabled");
+              } else {
+                setToast("❌ Invalid password");
+              }
             }
-          }
-        }}
-      >
-        {editorMode ? "⚙" : "🔒"}
-      </button>
+          }}
+        >
+          {editorMode ? "⚙" : "🔒"}
+        </button>
       </div>
       <div className="top-bar">
         <Dropdown
@@ -130,13 +148,14 @@ export default function SearchPanel({
             )
           }
           onSelect={id => {
-            const seat =
-              participantSeats[id];
+            const seat = participantSeats[id];
+            const name = participantsById[id]?.name;
+
             if (seat) {
               setSelectedSeat(seat);
             } else {
               setToast(
-                `${id} has not been assigned to a spot yet.`
+                `${name} has not been assigned to a spot yet.`
               );
             }
             setShowParticipants(false);
