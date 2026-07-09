@@ -1,4 +1,5 @@
 import "./Dropdown.css";
+import { useEffect, useRef } from "react";
 
 export type DropdownItem = {
   id: string;
@@ -29,8 +30,26 @@ export default function Dropdown({
   compact,
 }: Props) {
 
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(
+          event.target as Node
+        )
+      ) { onToggle(); }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [open, onToggle]);
+
   return (
-    <div className="dropdown">
+    <div className="dropdown" ref={dropdownRef}>
       <button
         className="dropdown-trigger"
         onClick={onToggle}
