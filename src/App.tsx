@@ -5,7 +5,7 @@ import { migrateAllocations } from "./services/AllocationService";
 import SearchPanel from "./components/SearchPanel/SearchPanel";
 import InfoPanel from "./components/InfoPanel/InfoPanel";
 import { useEffect, useState } from "react";
-import type { MapElement } from "../../types/MapElement";
+import type { MapElement } from "./types/MapElement";
 import "./App.css";
 
 export default function App() {
@@ -47,8 +47,6 @@ export default function App() {
       <SearchPanel
         setSelectedOccupant={setSelectedOccupant}
         selectedSeat={selectedSeat}
-        editingSeat={editingSeat}
-        setEditingSeat={setEditingSeat}
         setSelectedSeat={setSelectedSeat}
         editorMode={editorMode}
         setEditorMode={setEditorMode}

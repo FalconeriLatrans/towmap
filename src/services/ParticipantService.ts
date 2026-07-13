@@ -7,7 +7,7 @@ import { Collections } from "../config/Collections";
 import {
   collection,
   getDocs,
-  getDoc,
+  //getDoc,
   setDoc,
   doc,
   deleteDoc,
@@ -98,7 +98,9 @@ export async function deleteParticipant(id) {
   return console.log("deleteParticipant");
 }
 
-export async function moveParticipant(id, newOrder) {
+export async function moveParticipant(
+  //id:string, newOrder
+  ) {
   return console.log("moveParticipant");
 }
 

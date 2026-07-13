@@ -1,4 +1,4 @@
-import { subscribeAllocations, getAllocations } from "../../services/AllocationService";
+import { subscribeAllocations } from "../../services/AllocationService";
 import { subscribeParticipants } from "../../services/ParticipantService";
 import type { Allocation } from "../../types/Allocation";
 import type { Participant } from "../../types/Participant";

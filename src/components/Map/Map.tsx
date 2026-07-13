@@ -79,6 +79,7 @@ export default function Map({
     });
   }, [selectedSeat]);
 
+/*
   function handleSeatClick(seat: string) {
 
     if (
@@ -90,7 +91,7 @@ export default function Map({
       setEditingSeat(null);
     }
   }
-
+*/
   function handleElementClick(element: any) {
 
     if (

@@ -1,5 +1,6 @@
 import "./Element.css";
-import "./Seat/Seat.css";
+import "./Seat/Seat";
+import type {MapElement} from "../MapElement";
 
 type Props = {
   element: MapElement;

@@ -3,7 +3,7 @@ import Dropdown from "../Dropdown/Dropdown";
 import { getUnallocatedParticipants } from "../../services/ParticipantService";
 import type { DropdownItem } from "../Dropdown/Dropdown";
 import type { MapElement } from "../../types/MapElement";
-import type { Participant } from "../../types/Participant";
+//import type { Participant } from "../../types/Participant";
 import { allocate } from "../../services/AllocationService";
 import "./InfoPanel.css";
 

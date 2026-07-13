@@ -10,24 +10,24 @@ type Props = {
   button: React.ReactNode;
   open: boolean;
   direction?: "up" | "down";
-  align?: "left" | "right";
+  //align?: "left" | "right";
   items: DropdownItem[];
   selectedId?: string;
   onToggle: () => void;
   onSelect: (id: string) => void;
-  compact?: boolean;
+  //compact?: boolean;
 };
 
 export default function Dropdown({
   button,
   open,
   direction = "down",
-  align = "left",
+  //align = "left",
   items,
   selectedId,
   onToggle,
   onSelect,
-  compact,
+  //compact,
 }: Props) {
 
   const dropdownRef = useRef<HTMLDivElement>(null);
