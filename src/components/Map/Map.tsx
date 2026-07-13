@@ -14,7 +14,7 @@ type Props = {
   editingSeat: string | null;
   setEditingSeat: (seat: string | null) => void;
   editorMode: boolean;
-  setSelectedElement: React.Dispatch<React.SetStateAction<MapElement | null>>;
+  setSelectedElement: React.Dispatch<React.SetStateAction<Element | null>>;
 };
 
 //const elements = loadElements();
