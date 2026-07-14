@@ -147,9 +147,9 @@ export default function SearchPanel({
               !showParticipants
             )
           }
-          onSelect={item => {
-            const seat = participantSeats[item.id];
-            const name = participantsById[item.id]?.name;
+          onSelect={id => {
+            const seat = participantSeats[id];
+            const name = participantsById[id]?.name;
             if (seat) {
               setSelectedSeat(seat);
             } else {

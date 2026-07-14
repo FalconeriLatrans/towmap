@@ -26,6 +26,11 @@ export async function getParticipants() {
     .sort((a, b) => a.order - b.order) as Participant[];
 }
 
+export async function getParticipant(id: string): Promise<Participant | null> {
+  const participants = await getParticipants();
+  return participants.find(p => p.id === id) ?? null;
+}
+
 export async function getUnallocatedParticipants(): Promise<Participant[]> {
 
   const participants = await getParticipants();

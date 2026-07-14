@@ -14,7 +14,7 @@ type Props = {
   items: DropdownItem[];
   selectedId?: string;
   onToggle: () => void;
-  onSelect: (item: DropdownItem) => void;
+  onSelect: (id:string) => void;
   //compact?: boolean;
 };
 
@@ -68,7 +68,7 @@ export default function Dropdown({
                   ? "selected"
                   : ""
               }`}
-              onClick={() => onSelect(item)}
+              onClick={() => onSelect(item.id)}
             >
               {item.content}
             </button>
