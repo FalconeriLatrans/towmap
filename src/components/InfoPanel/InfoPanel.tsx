@@ -90,7 +90,7 @@ export default function InfoPanel({
                     element.id,
                     element.label,
                     item.id,
-                    item.content,
+                    string(item.content),
                   );
                   setShowDropdown(false);
                 }}
