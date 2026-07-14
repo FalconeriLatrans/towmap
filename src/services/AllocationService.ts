@@ -186,8 +186,7 @@ export async function migrateAllocations() {
     await allocate(
       seatId,
       allocation.seat,
-      participantId,
-      allocation.participant,
+      participantId
     );
 
   }
