@@ -5,7 +5,7 @@ import { migrateAllocations } from "./services/AllocationService";
 import SearchPanel from "./components/SearchPanel/SearchPanel";
 import InfoPanel from "./components/InfoPanel/InfoPanel";
 import { useEffect, useState } from "react";
-import Element from "./components/Elements/Element";
+import type { MapElement } from "./types/MapElement";
 import "./App.css";
 
 export default function App() {
@@ -15,7 +15,7 @@ export default function App() {
   const [editingSeat, setEditingSeat] = useState<string | null>(null);
   const [editorMode, setEditorMode] = useState(false);
   const [toast, setToast] = useState("");
-  const [selectedElement, setSelectedElement] = useState<Element | null>(null);
+  const [selectedElement, setSelectedElement] = useState<MapElement | null>(null);
 
   useEffect(() => {
     if (!toast)
