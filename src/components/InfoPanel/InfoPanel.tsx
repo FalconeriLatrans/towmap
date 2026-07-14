@@ -84,11 +84,13 @@ export default function InfoPanel({
                     !showDropdown
                   )
                 }
-                onSelect={async(id) => {
-                  console.log(id);
+                onSelect={async(item) => {
+                  console.log(item.id);
                   await allocate(
                     element.id,
-                    id
+                    element.label,
+                    item.id,
+                    item.content,
                   );
                   setShowDropdown(false);
                 }}

@@ -68,7 +68,7 @@ export default function Dropdown({
                   ? "selected"
                   : ""
               }`}
-              onClick={() => onSelect(item.id)}
+              onClick={() => onSelect(item)}
             >
               {item.content}
             </button>
