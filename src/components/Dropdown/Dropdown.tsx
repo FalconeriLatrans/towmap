@@ -14,7 +14,7 @@ type Props = {
   items: DropdownItem[];
   selectedId?: string;
   onToggle: () => void;
-  onSelect: (item: DropdownItem[]) => void;
+  onSelect: (item: DropdownItem) => void;
   //compact?: boolean;
 };
 
