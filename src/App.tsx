@@ -31,10 +31,10 @@ export default function App() {
 
   useEffect(() => {
     async function initialize() {
-      if (Environment.importParticipants && !Environment.production) {
+      if (Environment.importParticipants) {
         await importParticipants();
       }
-      if (Environment.migrate && !Environment.production) {
+      if (Environment.migrate) {
         console.log("Migrando");
         await migrateAllocations();
       }

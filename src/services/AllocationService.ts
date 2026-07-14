@@ -47,7 +47,9 @@ export function saveAllocations(
 
 export async function allocate(
   seat: string,
-  participantId: string
+  seatlabel: string,
+  participantId: string,
+  participantName: string
 ) {
   await setDoc(
     doc(
@@ -56,7 +58,9 @@ export async function allocate(
       seat
     ),
     {
+      seatlabel,
       participantId,
+      participantName,
       updatedAt: Date.now()
     }
   );
@@ -164,7 +168,9 @@ export async function migrateAllocations() {
 
     await allocate(
       seatId,
-      participantId
+      allocation.seat,
+      participantId,
+      allocation.participant,
     );
 
   }
