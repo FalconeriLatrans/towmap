@@ -22,7 +22,7 @@ export async function getParticipants() {
     .map(doc => ({
       id: doc.id,
       ...doc.data(),
-    }))
+    }as Participant))
     .sort((a, b) => a.order - b.order) as Participant[];
 }
 
@@ -53,7 +53,7 @@ export function subscribeParticipants(
           .map(doc => ({
             id: doc.id,
             ...doc.data(),
-          }))
+          }as Participant))
           .sort((a, b) => a.order - b.order);
       callback(
         participants as Participant[]
@@ -87,12 +87,12 @@ export async function updateParticipant(participant: Participant) {
   return console.log("updateParticipant");
 }
 
-export async function deleteParticipant(id) {
+export async function deleteParticipant(id:string) {
   await deleteDoc(
     doc(
       db,
       Collections.participants,
-      id
+      id,
     )
   );
   return console.log("deleteParticipant");

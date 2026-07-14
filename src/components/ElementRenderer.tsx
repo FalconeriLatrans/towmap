@@ -1,5 +1,4 @@
 import Element from "./Elements/Element";
-//import Flag from "./Elements/Banner/Banner";
 
 export default function ElementRenderer({
   element,

@@ -6,4 +6,5 @@ export interface MapElement {
     width: number;
     height: number;
     type: string;
+    color: string;
   }
