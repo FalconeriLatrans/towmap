@@ -4,6 +4,7 @@ import { subscribeAllocations } from "../../services/AllocationService";
 import { subscribeParticipants } from "../../services/ParticipantService";
 import loadElements from "../../services/loadElements";
 import { useEffect, useState } from "react";
+import type { MapElement } from "../../types/MapElement";
 //import type { Dispatch, SetStateAction } from "react";
 
 type Props = {
@@ -12,7 +13,7 @@ type Props = {
   editingSeat: string | null;
   setEditingSeat: (seat: string | null) => void;
   editorMode: boolean;
-  setSelectedElement: React.Dispatch<React.SetStateAction<Element | null>>;
+  setSelectedElement: React.Dispatch<React.SetStateAction<MapElement | null>>;
 };
 
 export default function Map({
