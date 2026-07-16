@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import Dropdown from "../Dropdown/Dropdown";
-import { getUnallocatedParticipants } from "../../services/ParticipantService";
-import type { DropdownItem } from "../Dropdown/Dropdown";
-import type { MapElement } from "../../types/MapElement";
-//import type { Participant } from "../../types/Participant";
-import { allocate } from "../../services/AllocationService";
+import Dropdown from "../../Dropdown/Dropdown";
+import { getUnallocatedParticipants } from "../../../services/ParticipantService";
+import type { DropdownItem } from "../../Dropdown/Dropdown";
+import type { MapElement } from "../../../types/MapElement";
+import type { Participant } from "../../../types/Participant";
+import { allocate } from "../../../services/AllocationService";
 import "./InfoPanel.css";
 
 type Props = {
@@ -88,8 +88,7 @@ export default function InfoPanel({
                   console.log(id);
                   await allocate(
                     element.id,
-                    element.label,
-                    id,
+                    id
                   );
                   setShowDropdown(false);
                 }}

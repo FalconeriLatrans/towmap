@@ -1,5 +1,4 @@
 import "./Element.css";
-import type {MapElement} from "../../types/MapElement";
 
 type Props = {
   element: MapElement;
@@ -9,13 +8,13 @@ type Props = {
   onClick?: (id: string) => void;
 };
 
-export default function Element({
+export default function Seat({
   element,
   occupant,
   selected,
   editing,
   onClick,
-}: Props) {
+}: SeatProps) {
 
   const isSeat = element.type === "seat";
   const text = isSeat ? (occupant || element.label) : element.label;

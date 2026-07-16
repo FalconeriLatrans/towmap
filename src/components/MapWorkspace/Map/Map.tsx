@@ -1,11 +1,12 @@
-import Element from "../Elements/Element";
+//import elements from "../../data/mapelements.json";
+//import ElementRenderer from "../ElementRenderer";
+import Element from "../../Elements/Element";
 import "./Map.css";
-import { subscribeAllocations } from "../../services/AllocationService";
-import { subscribeParticipants } from "../../services/ParticipantService";
-import loadElements from "../../services/loadElements";
+import { subscribeAllocations } from "../../../services/AllocationService";
+import { subscribeParticipants } from "../../../services/ParticipantService";
+import loadElements from "../../../services/loadElements";
 import { useEffect, useState } from "react";
-import type { MapElement } from "../../types/MapElement";
-//import type { Dispatch, SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from "react";
 
 type Props = {
   selectedSeat: string | null;
@@ -15,6 +16,8 @@ type Props = {
   editorMode: boolean;
   setSelectedElement: React.Dispatch<React.SetStateAction<MapElement | null>>;
 };
+
+//const elements = loadElements();
 
 export default function Map({
   selectedSeat,
@@ -76,7 +79,6 @@ export default function Map({
     });
   }, [selectedSeat]);
 
-/*
   function handleSeatClick(seat: string) {
 
     if (
@@ -88,7 +90,7 @@ export default function Map({
       setEditingSeat(null);
     }
   }
-*/
+
   function handleElementClick(element: any) {
 
     if (

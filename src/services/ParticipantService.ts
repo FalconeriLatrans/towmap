@@ -7,7 +7,7 @@ import { Collections } from "../config/Collections";
 import {
   collection,
   getDocs,
-  //getDoc,
+  getDoc,
   setDoc,
   doc,
   deleteDoc,
@@ -22,22 +22,8 @@ export async function getParticipants() {
     .map(doc => ({
       id: doc.id,
       ...doc.data(),
-    }as Participant))
+    }))
     .sort((a, b) => a.order - b.order) as Participant[];
-}
-
-export async function getParticipant(id: string): Promise<Participant> {
-
-  const participant =
-    (await getParticipants()).find(
-      p => p.id === id
-    );
-
-  if (!participant) {
-    throw new Error(`Participant ${id} not found.`);
-  }
-
-  return participant;
 }
 
 export async function getUnallocatedParticipants(): Promise<Participant[]> {
@@ -67,7 +53,7 @@ export function subscribeParticipants(
           .map(doc => ({
             id: doc.id,
             ...doc.data(),
-          }as Participant))
+          }))
           .sort((a, b) => a.order - b.order);
       callback(
         participants as Participant[]
@@ -101,20 +87,18 @@ export async function updateParticipant(participant: Participant) {
   return console.log("updateParticipant");
 }
 
-export async function deleteParticipant(id:string) {
+export async function deleteParticipant(id) {
   await deleteDoc(
     doc(
       db,
       Collections.participants,
-      id,
+      id
     )
   );
   return console.log("deleteParticipant");
 }
 
-export async function moveParticipant(
-  //id:string, newOrder
-  ) {
+export async function moveParticipant(id, newOrder) {
   return console.log("moveParticipant");
 }
 

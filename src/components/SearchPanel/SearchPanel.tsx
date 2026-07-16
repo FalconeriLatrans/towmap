@@ -1,4 +1,4 @@
-import { subscribeAllocations } from "../../services/AllocationService";
+import { subscribeAllocations, getAllocations } from "../../services/AllocationService";
 import { subscribeParticipants } from "../../services/ParticipantService";
 import type { Allocation } from "../../types/Allocation";
 import type { Participant } from "../../types/Participant";
@@ -150,6 +150,7 @@ export default function SearchPanel({
           onSelect={id => {
             const seat = participantSeats[id];
             const name = participantsById[id]?.name;
+
             if (seat) {
               setSelectedSeat(seat);
             } else {
