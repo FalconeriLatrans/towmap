@@ -1,0 +1,76 @@
+import type { Workspace } from "./types/Workspace";
+import MapViewport from "./components/MapWorkspace/Map/MapViewport";
+import ParticipantsWorkspace from "./components/ParticipantsWorkspace/ParticipantsWorkspace";
+import { Environment } from "./config/Environment";
+import { importParticipants } from "./services/ParticipantService";
+import { migrateAllocations } from "./services/AllocationService";
+import SearchPanel from "./components/SearchPanel/SearchPanel";
+import InfoPanel from "./components/MapWorkspace/InfoPanel/InfoPanel";
+import { useEffect, useState } from "react";
+import type { MapElement } from "./types/MapElement";
+import "./App.css";
+
+type Props = {
+    setWorkspace: Dispatch<SetStateAction<Workspace>>;
+};
+
+export default function MapWorkspace({
+    setWorkspace,
+}: Props) {
+
+    const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
+    const [selectedOccupant, setSelectedOccupant] = useState("");
+    const [editingSeat, setEditingSeat] = useState<string | null>(null);
+    const [editorMode, setEditorMode] = useState(false);
+    const [toast, setToast] = useState("");
+    const [selectedElement, setSelectedElement] = useState<MapElement | null>(null);
+
+    useEffect(() => {
+        if (!toast)
+            return;
+        const timer = setTimeout(() => setToast(""), 2000);
+        return () =>
+            clearTimeout(timer);
+    }, [toast]);
+
+    return (
+        <div className="app">
+            {
+                workspace === "map"
+                    ? (
+                        <>
+                            <SearchPanel
+                                setSelectedOccupant={setSelectedOccupant}
+                                selectedSeat={selectedSeat}
+                                setSelectedSeat={setSelectedSeat}
+                                editorMode={editorMode}
+                                setEditorMode={setEditorMode}
+                                setToast={setToast}
+                            />
+                            {toast && (
+                                <div className="toast">
+                                    {toast}
+                                </div>
+                            )}
+                            <MapViewport
+                                selectedSeat={selectedSeat}
+                                setSelectedSeat={setSelectedSeat}
+                                editingSeat={editingSeat}
+                                setEditingSeat={setEditingSeat}
+                                editorMode={editorMode}
+                                setSelectedElement={setSelectedElement}
+                            />
+                            <InfoPanel
+                                element={selectedElement}
+                                occupant={selectedOccupant}
+                                editorMode={editorMode}
+                            />
+                        </>
+                    )
+                    : (
+                        <ParticipantsWorkspace />
+                    )
+            }
+        </div>
+    );
+}

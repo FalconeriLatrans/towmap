@@ -1,9 +1,12 @@
-import MapViewport from "./components/MapWorkspace/Map/MapViewport";
-import ParticipantsWorkspace from "./components/ParticipantsWorkspace/ParticipantsWorkspace";
-import {Environment} from "./config/Environment";
+import type { Workspace } from "./types/Workspace";
 import { importParticipants } from "./services/ParticipantService";
 import { migrateAllocations } from "./services/AllocationService";
 import SearchPanel from "./components/SearchPanel/SearchPanel";
+import MapViewport from "./components/MapWorkspace/Map/MapViewport";
+import ParticipantsWorkspace from "./components/ParticipantsWorkspace/ParticipantsWorkspace";
+import {Environment} from "./config/Environment";
+
+
 import InfoPanel from "./components/MapWorkspace/InfoPanel/InfoPanel";
 import { useEffect, useState } from "react";
 import type { MapElement } from "./types/MapElement";
@@ -19,9 +22,22 @@ export default function App() {
   const [selectedElement, setSelectedElement] = useState<MapElement | null>(null);
 
 //App novo
-//  const [workspace, setWorkspace] = useState<"map" | "participants">("map");
+//  const [workspace, setWorkspace] =  useState<Workspace>("map");
 
   const [workspace] = useState("participants");
+
+  useEffect(() => {
+    async function initialize() {
+      if (Environment.importParticipants && !Environment.production) {
+        await importParticipants();
+      }
+      if (Environment.migrate && !Environment.production) {
+        console.log("Migrando");
+        await migrateAllocations();
+      }
+    }
+    initialize();
+  }, []);
 
   return (
     <div className="app">
