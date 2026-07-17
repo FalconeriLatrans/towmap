@@ -5,7 +5,7 @@ import type { DropdownItem } from "../../Dropdown/Dropdown";
 import type { MapElement } from "../../../types/MapElement";
 import type { Participant } from "../../../types/Participant";
 import { allocate } from "../../../services/AllocationService";
-import "./InfoPanel.css";
+import "./ElementPropertiesPanel.css";
 
 type Props = {
   element: MapElement | null;
@@ -13,7 +13,7 @@ type Props = {
   editorMode: boolean;
 };
 
-export default function InfoPanel({
+export default function ElementPropertiesPanel({
   element,
   occupant,
   editorMode,

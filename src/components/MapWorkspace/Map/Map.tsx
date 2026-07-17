@@ -1,6 +1,4 @@
-//import elements from "../../data/mapelements.json";
-//import ElementRenderer from "../ElementRenderer";
-import Element from "../../Elements/Element";
+import Element from "../Elements/Element";
 import "./Map.css";
 import { subscribeAllocations } from "../../../services/AllocationService";
 import { subscribeParticipants } from "../../../services/ParticipantService";
@@ -16,8 +14,6 @@ type Props = {
   editorMode: boolean;
   setSelectedElement: React.Dispatch<React.SetStateAction<MapElement | null>>;
 };
-
-//const elements = loadElements();
 
 export default function Map({
   selectedSeat,

@@ -1,14 +1,9 @@
-import type { Workspace } from "./types/Workspace";
-import MapViewport from "./components/MapWorkspace/Map/MapViewport";
-import ParticipantsWorkspace from "./components/ParticipantsWorkspace/ParticipantsWorkspace";
-import { Environment } from "./config/Environment";
-import { importParticipants } from "./services/ParticipantService";
-import { migrateAllocations } from "./services/AllocationService";
-import SearchPanel from "./components/SearchPanel/SearchPanel";
-import InfoPanel from "./components/MapWorkspace/InfoPanel/InfoPanel";
+import TopBar from "../TopBar/TopBar";
+import MapViewport from "./Map/MapViewport";
+import ElementPropertiesPanel from "./ElementPropertiesPanel/ElementPropertiesPanel";
 import { useEffect, useState } from "react";
 import type { MapElement } from "./types/MapElement";
-import "./App.css";
+import "./MapWorkspace.css";
 
 type Props = {
     setWorkspace: Dispatch<SetStateAction<Workspace>>;
@@ -36,40 +31,34 @@ export default function MapWorkspace({
     return (
         <div className="app">
             {
-                workspace === "map"
-                    ? (
-                        <>
-                            <SearchPanel
-                                setSelectedOccupant={setSelectedOccupant}
-                                selectedSeat={selectedSeat}
-                                setSelectedSeat={setSelectedSeat}
-                                editorMode={editorMode}
-                                setEditorMode={setEditorMode}
-                                setToast={setToast}
-                            />
-                            {toast && (
-                                <div className="toast">
-                                    {toast}
-                                </div>
-                            )}
-                            <MapViewport
-                                selectedSeat={selectedSeat}
-                                setSelectedSeat={setSelectedSeat}
-                                editingSeat={editingSeat}
-                                setEditingSeat={setEditingSeat}
-                                editorMode={editorMode}
-                                setSelectedElement={setSelectedElement}
-                            />
-                            <InfoPanel
-                                element={selectedElement}
-                                occupant={selectedOccupant}
-                                editorMode={editorMode}
-                            />
-                        </>
-                    )
-                    : (
-                        <ParticipantsWorkspace />
-                    )
+                <>
+                    <TopBar
+                        setSelectedOccupant={setSelectedOccupant}
+                        selectedSeat={selectedSeat}
+                        setSelectedSeat={setSelectedSeat}
+                        editorMode={editorMode}
+                        setEditorMode={setEditorMode}
+                        setToast={setToast}
+                    />
+                    {toast && (
+                        <div className="toast">
+                            {toast}
+                        </div>
+                    )}
+                    <MapViewport
+                        selectedSeat={selectedSeat}
+                        setSelectedSeat={setSelectedSeat}
+                        editingSeat={editingSeat}
+                        setEditingSeat={setEditingSeat}
+                        editorMode={editorMode}
+                        setSelectedElement={setSelectedElement}
+                    />
+                    <ElementPropertiesPanel
+                        element={selectedElement}
+                        occupant={selectedOccupant}
+                        editorMode={editorMode}
+                    />
+                </>
             }
         </div>
     );

@@ -2,7 +2,7 @@ import { subscribeAllocations, getAllocations } from "../../services/AllocationS
 import { subscribeParticipants } from "../../services/ParticipantService";
 import type { Allocation } from "../../types/Allocation";
 import type { Participant } from "../../types/Participant";
-import "./SearchPanel.css";
+import "./TopBar.css";
 import { useEffect, useState } from "react";
 import { sha256 } from "../../services/hash";
 import Dropdown from "../Dropdown/Dropdown";
@@ -17,7 +17,7 @@ type Props = {
   setToast: (message: string) => void;
 };
 
-export default function SearchPanel({
+export default function TopBar({
   setSelectedOccupant,
   selectedSeat,
   setSelectedSeat,

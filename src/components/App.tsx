@@ -1,30 +1,20 @@
-import type { Workspace } from "./types/Workspace";
-import { importParticipants } from "./services/ParticipantService";
-import { migrateAllocations } from "./services/AllocationService";
-import SearchPanel from "./components/SearchPanel/SearchPanel";
-import MapViewport from "./components/MapWorkspace/Map/MapViewport";
-import ParticipantsWorkspace from "./components/ParticipantsWorkspace/ParticipantsWorkspace";
-import {Environment} from "./config/Environment";
-
-
-import InfoPanel from "./components/MapWorkspace/InfoPanel/InfoPanel";
+import type { Workspace } from "../types/Workspace";
+import {Environment} from "../config/Environment";
+import { importParticipants } from "../services/ParticipantService";
+import { migrateAllocations } from "../services/AllocationService";
+import ParticipantsWorkspace from "./ParticipantsWorkspace/ParticipantsWorkspace";
+import MapWorkspace from "./MapWorkspace/MapWorkspace";
 import { useEffect, useState } from "react";
-import type { MapElement } from "./types/MapElement";
 import "./App.css";
 
 export default function App() {
 
-  const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
-  const [selectedOccupant, setSelectedOccupant] = useState("");
-  const [editingSeat, setEditingSeat] = useState<string | null>(null);
-  const [editorMode, setEditorMode] = useState(false);
-  const [toast, setToast] = useState("");
-  const [selectedElement, setSelectedElement] = useState<MapElement | null>(null);
-
+const [toast, setToast] = useState("");
+  
 //App novo
 //  const [workspace, setWorkspace] =  useState<Workspace>("map");
 
-  const [workspace] = useState("participants");
+  const [workspace] = useState("map"); //Participants
 
   useEffect(() => {
     async function initialize() {
@@ -39,45 +29,28 @@ export default function App() {
     initialize();
   }, []);
 
+  useEffect(() => {
+    if (!toast)
+      return;
+    const timer =
+      setTimeout(
+        () => setToast(""),
+        2000
+      );
+    return () =>
+      clearTimeout(timer);
+  }, [toast]);
+
   return (
-    <div className="app">
-      {
+    <div className="app">{
         workspace === "map"
-        ? (
-          <>
-            <SearchPanel
-              setSelectedOccupant={setSelectedOccupant}
-              selectedSeat={selectedSeat}
-              setSelectedSeat={setSelectedSeat}
-              editorMode={editorMode}
-              setEditorMode={setEditorMode}
-              setToast={setToast}
-            />
-            {toast && (
-              <div className="toast">
-                {toast}
-              </div>
-            )}
-            <MapViewport
-              selectedSeat={selectedSeat}
-              setSelectedSeat={setSelectedSeat}
-              editingSeat={editingSeat}
-              setEditingSeat={setEditingSeat}
-              editorMode={editorMode}
-              setSelectedElement={setSelectedElement}
-            />
-            <InfoPanel
-              element={selectedElement}
-              occupant={selectedOccupant}
-              editorMode={editorMode}
-            />
-          </>
-        )
-        : (
-          <ParticipantsWorkspace />
-        )
-      }
-    </div>
+        ? (<MapWorkspace
+
+            />)
+        : (<ParticipantsWorkspace 
+        
+        />)
+      }</div>
   );
 
 /* App antigo
@@ -115,7 +88,7 @@ export default function App() {
 
   return (
     <div className="app">
-      <SearchPanel
+      <TopBar
         setSelectedOccupant={setSelectedOccupant}
         selectedSeat={selectedSeat}
         setSelectedSeat={setSelectedSeat}
@@ -136,7 +109,7 @@ export default function App() {
         editorMode={editorMode}
         setSelectedElement={setSelectedElement}
       />
-      <InfoPanel
+      <ElementPropertiesPanel
         element={selectedElement}
         occupant={selectedOccupant}
         editorMode={editorMode}
