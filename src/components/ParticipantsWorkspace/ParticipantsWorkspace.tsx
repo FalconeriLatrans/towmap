@@ -3,7 +3,7 @@ import ParticipantsList from "./ParticipantsList/ParticipantsList";
 import ParticipantPropertiesPanel from "./ParticipantPropertiesPanel/ParticipantPropertiesPanel";
 import { useEffect, useState } from "react";
 import type { MapElement } from "./types/MapElement";
-import "./MapWorkspace.css";
+import "./ParticipantsWorkspace.css";
 
 export default function ParticipantsWorkspace() {
 

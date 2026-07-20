@@ -14,7 +14,7 @@ const [toast, setToast] = useState("");
 //App novo
 //  const [workspace, setWorkspace] =  useState<Workspace>("map");
 
-  const [workspace] = useState("map"); //Participants
+  const [workspace] = useState("participants"); //participants map
 
   useEffect(() => {
     async function initialize() {
