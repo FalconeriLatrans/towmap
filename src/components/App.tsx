@@ -1,18 +1,18 @@
 import type { Workspace } from "../types/Workspace";
-import {Environment} from "../config/Environment";
+import { Environment } from "../config/Environment";
 import { importParticipants } from "../services/ParticipantService";
 import { migrateAllocations } from "../services/AllocationService";
-import ParticipantsWorkspace from "./ParticipantsWorkspace/ParticipantsWorkspace";
 import MapWorkspace from "./MapWorkspace/MapWorkspace";
+import ParticipantsWorkspace from "./ParticipantsWorkspace/ParticipantsWorkspace";
 import { useEffect, useState } from "react";
 import "./App.css";
 
 export default function App() {
 
-const [toast, setToast] = useState("");
-  
-//App novo
-//  const [workspace, setWorkspace] =  useState<Workspace>("map");
+  const [toast, setToast] = useState("");
+
+  //App novo
+  //  const [workspace, setWorkspace] =  useState<Workspace>("map");
 
   const [workspace] = useState("participants"); //participants map
 
@@ -42,14 +42,16 @@ const [toast, setToast] = useState("");
   }, [toast]);
 
   return (
-    <div className="app">{
+    <div className="app">
+      {
         workspace === "map"
-        ? (<MapWorkspace
+          ? (<MapWorkspace
 
-            />)
-        : (<ParticipantsWorkspace 
-        
-        />)
-      }</div>
+          />)
+          : (<ParticipantsWorkspace
+
+          />)
+      }
+    </div>
   );
 }
