@@ -7,14 +7,6 @@ import "./ParticipantsWorkspace.css";
 
 export default function ParticipantsWorkspace() {
 
-
-    const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
-    const [selectedOccupant, setSelectedOccupant] = useState("");
-    const [editingSeat, setEditingSeat] = useState<string | null>(null);
-    const [editorMode, setEditorMode] = useState(false);
-    const [toast, setToast] = useState("");
-    const [selectedElement, setSelectedElement] = useState<MapElement | null>(null);
-
     const [filter, setFilter] = useState("");
     const [participants, setParticipants] = useState<Participant[]>([]);
     const [selectedParticipant, setSelectedParticipant] = useState<Participant | null>(null);
@@ -23,12 +15,9 @@ export default function ParticipantsWorkspace() {
 
         <>
             <TopBar
-                setSelectedOccupant={setSelectedOccupant}
-                selectedSeat={selectedSeat}
-                setSelectedSeat={setSelectedSeat}
-                editorMode={editorMode}
-                setEditorMode={setEditorMode}
-                setToast={setToast}
+                title="TOW Members"
+                searchButton="calma"
+                actions="ja vai"
             />
             <ParticipantsList
                 participants={participants}

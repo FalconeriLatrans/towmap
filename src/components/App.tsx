@@ -14,7 +14,7 @@ export default function App() {
   //App novo
   //  const [workspace, setWorkspace] =  useState<Workspace>("map");
 
-  const [workspace] = useState("participants"); //participants map
+  const [workspace] = useState("map"); //participants map
 
   useEffect(() => {
     async function initialize() {
