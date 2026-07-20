@@ -16,8 +16,8 @@ export default function ParticipantsWorkspace() {
         <>
             <TopBar
                 title="TOW Members"
-                searchButton="calma"
-                actions="ja vai"
+                searchButton=""
+                actions=""
             />
             <ParticipantsList
                 participants={participants}

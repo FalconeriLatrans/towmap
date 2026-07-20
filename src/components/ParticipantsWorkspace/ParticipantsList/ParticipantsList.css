@@ -1,0 +1,49 @@
+.participants-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px;
+}
+
+.participant-card {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+    padding: 10px 12px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background: var(--panel-background);
+    cursor: pointer;
+    transition:
+        background-color .15s,
+        border-color .15s,
+        transform .15s;
+}
+
+.participant-card:hover {
+    background: var(--panel-hover);
+}
+
+.participant-card.selected {
+    border-color: #ffd54f;
+}
+
+.participant-order {
+    width: 48px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.participant-info {
+    flex: 1;
+}
+
+.participant-name {
+    font-weight: 600;
+}
+
+.participant-subtitle {
+    font-size: .85rem;
+    opacity: .7;
+}
