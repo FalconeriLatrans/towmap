@@ -1,25 +1,101 @@
-.properties-panel{
-    padding:16px;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    border-top:1px solid #444;
-    max-height: 35vh;
+.participant-properties-panel {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 16px;
+  
+    background: #1e2b40;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+  
     overflow-y: auto;
-    transition: max-height 0.25s ease;
-}
+  
+    transition:
+      max-height 0.25s ease,
+      padding 0.25s ease;
+  }
+  
+  .participant-properties-panel.collapsed {
+    max-height: 60px;
+  }
+  
+  .participant-properties-panel.expanded {
+    max-height: 35vh;
+  }
+  
+  .participant-properties-header {
+    margin-bottom: 12px;
+  }
+  
+  .participant-properties-header h3 {
+    margin: 0;
+  
+    color: white;
+    font-size: 1.2rem;
+  }
+  
+  .participant-properties-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  
+  .participant-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  
+    color: white;
+    font-size: 0.85rem;
+  }
+  
+  .participant-field input {
+    box-sizing: border-box;
+    width: 100%;
+  
+    padding: 8px 10px;
+  
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+  
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+  }
+  
+  .participant-token-field {
+    grid-column: 1 / -1;
+  }
+  
+  .participant-token-row {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .participant-token-row input {
+    flex: 1;
+  }
+  
+  .copy-token-button {
+    flex-shrink: 0;
+    padding: 0 14px;
+  }
+  
+  .participant-properties-actions {
+    display: flex;
+    justify-content: flex-end;
+  
+    margin-top: 14px;
+  }
+  
+  @media (max-width: 600px) {
+    .participant-properties-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .participant-token-field {
+      grid-column: auto;
+    }
+  }
 
-.properties-panel label{
-    display:flex;
-    flex-direction:column;
-    gap:4px;
-}
-
-.properties-panel input{
-    padding:8px;
-}
-
-.checkbox{
-    flex-direction:row!important;
-    align-items:center;
-}
+  .save-button {
+    background: #1e293b;
+    color: white;
+  }
