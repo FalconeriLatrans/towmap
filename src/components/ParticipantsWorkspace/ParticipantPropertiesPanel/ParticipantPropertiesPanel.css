@@ -95,7 +95,28 @@
     }
   }
 
-  .save-button{
+  .save-button {
     background: #1e293b;
     color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+  
+    transition:
+      background 0.2s ease,
+      opacity 0.2s ease;
+  }
+  
+  .save-button:hover:not(:disabled) {
+    background: #334155;
+  }
+  
+  .save-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  
+  .save-button:active:not(:disabled) {
+    transform: translateY(1px);
   }
