@@ -4,6 +4,9 @@
     flex-direction:column;
     gap:12px;
     border-top:1px solid #444;
+    max-height: 35vh;
+    overflow-y: auto;
+    transition: max-height 0.25s ease;
 }
 
 .properties-panel label{
