@@ -4,14 +4,21 @@ import ParticipantPropertiesPanel from "./ParticipantPropertiesPanel/Participant
 import { useEffect, useState } from "react";
 import type { MapElement } from "./types/MapElement";
 import "./ParticipantsWorkspace.css";
+import { subscribeParticipants } from "../../services/ParticipantService";
 
 export default function ParticipantsWorkspace() {
 
     const [filter, setFilter] = useState("");
     const [participants, setParticipants] = useState<Participant[]>([]);
-    const [selectedParticipant, setSelectedParticipant] = useState<Participant | null>(null);
+    const [selectedId, setSelectedId] = useState<Participant | null>(null);
+    const selectedParticipant = participants.find(p => p.id === selectedId) ?? null;
+
+    useEffect(() => {
+        return subscribeParticipants(setParticipants);
+    }, []);
 
     return (
+
 
         <>
             <TopBar
@@ -21,9 +28,8 @@ export default function ParticipantsWorkspace() {
             />
             <ParticipantsList
                 participants={participants}
-                filter={filter}
-                selectedParticipant={selectedParticipant}
-                setSelectedParticipant={setSelectedParticipant}
+                selectedId={selectedId}
+                onSelect={setSelectedId}
             />
             <ParticipantPropertiesPanel
                 participant={selectedParticipant}
