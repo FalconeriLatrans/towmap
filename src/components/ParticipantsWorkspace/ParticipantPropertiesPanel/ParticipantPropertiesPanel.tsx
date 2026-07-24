@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./ParticipantPropertiesPanel.css";
 import type { Participant } from "../../../types/Participant";
-import { updateParticipant } from "../../../services/ParticipantService";
+import { updateParticipant, changeParticipantId } from "../../../services/ParticipantService";
 
 type Props = {
   participant: Participant | null;
@@ -56,6 +56,7 @@ export default function ParticipantPropertiesPanel({
       console.log(
         `ID migration required: ${participant.id} -> ${trimmedId}`
       );
+      await changeParticipantId(participant.id, trimmedId);
 
       return;
     }

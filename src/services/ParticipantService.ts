@@ -12,6 +12,9 @@ import {
   doc,
   deleteDoc,
   onSnapshot,
+  writeBatch,
+  query,
+  where,
 } from "firebase/firestore";
 
 export async function getParticipants() {
@@ -32,13 +35,13 @@ export async function getUnallocatedParticipants(): Promise<Participant[]> {
   const allocations = await getAllocations();
 
   const allocatedIds = new Set(
-      allocations.map(a => a.participantId)
+    allocations.map(a => a.participantId)
   );
 
   return participants
-      .filter(p => p.isMember)
-      .filter(p => !allocatedIds.has(p.id))
-      .sort((a, b) => a.order - b.order);
+    .filter(p => p.isMember)
+    .filter(p => !allocatedIds.has(p.id))
+    .sort((a, b) => a.order - b.order);
 
 }
 
@@ -107,7 +110,7 @@ export async function generateToken() {
 }
 
 export async function importParticipants() {
-  
+
   const lines = participantscsv
     .trim()
     .split("\n")
@@ -128,10 +131,10 @@ export async function importParticipants() {
       .split(",")
       .map(v => v.trim());
 
-      console.log(`Importing ${name}...`);
+    console.log(`Importing ${name}...`);
 
     if (!id) {
-      console.warn("Invalid participant:", line );
+      console.warn("Invalid participant:", line);
       continue;
     }
 
@@ -152,4 +155,75 @@ export async function importParticipants() {
     );
   }
   console.log("Import completed.");
+}
+
+export async function changeParticipantId(
+  oldId: string,
+  newId: string
+) {
+  if (oldId === newId) return;
+
+  const oldParticipantRef = doc(
+    db,
+    Collections.participants,
+    oldId
+  );
+
+  const newParticipantRef = doc(
+    db,
+    Collections.participants,
+    newId
+  );
+
+  // Confirma que o participante antigo existe
+  const oldParticipantSnapshot =
+    await getDoc(oldParticipantRef);
+
+  if (!oldParticipantSnapshot.exists()) {
+    throw new Error(
+      `Participant ID "${oldId}" does not exist.`
+    );
+  }
+
+  // Impede sobrescrever outro participante
+  const newParticipantSnapshot =
+    await getDoc(newParticipantRef);
+
+  if (newParticipantSnapshot.exists()) {
+    throw new Error(
+      `Participant ID "${newId}" already exists.`
+    );
+  }
+
+  // Procura allocations ligadas ao ID antigo
+  const allocationsQuery = query(
+    collection(db, Collections.allocations),
+    where("participantId", "==", oldId)
+  );
+
+  const allocationsSnapshot =
+    await getDocs(allocationsQuery);
+
+  const batch = writeBatch(db);
+
+  // Copia o participante antigo para o novo documento
+  batch.set(
+    newParticipantRef,
+    oldParticipantSnapshot.data()
+  );
+
+  // Atualiza todas as allocations
+  allocationsSnapshot.docs.forEach(allocationDoc => {
+    batch.update(
+      allocationDoc.ref,
+      {
+        participantId: newId,
+      }
+    );
+  });
+
+  // Apaga o documento com ID antigo
+  batch.delete(oldParticipantRef);
+
+  await batch.commit();
 }
