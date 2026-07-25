@@ -1,21 +1,36 @@
 import TopBar from "../TopBar/TopBar";
 import ParticipantsList from "./ParticipantsList/ParticipantsList";
 import ParticipantPropertiesPanel from "./ParticipantPropertiesPanel/ParticipantPropertiesPanel";
-import { useEffect, useState } from "react";
-import type { MapElement } from "./types/MapElement";
+import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import "./ParticipantsWorkspace.css";
 import { subscribeParticipants } from "../../services/ParticipantService";
+import type { Workspace } from "../../types/Workspace";
+import type { Participant } from "../../types/Participant";
 
-export default function ParticipantsWorkspace() {
+type Props = {
+  setWorkspace: Dispatch<SetStateAction<Workspace>>;
+};
 
-    const [filter, setFilter] = useState("");
-    const [participants, setParticipants] = useState<Participant[]>([]);
-    const [selectedId, setSelectedId] = useState<Participant | null>(null);
-    const selectedParticipant = participants.find(p => p.id === selectedId) ?? null;
+export default function ParticipantsWorkspace({
+  setWorkspace,
+}: Props) {
 
-    useEffect(() => {
-        return subscribeParticipants(setParticipants);
-    }, []);
+  const [participants, setParticipants] =  useState<Participant[]>([]);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const selectedParticipant = participants.find(p => p.id === selectedId) ?? null;
+
+  useEffect(() => {
+    return subscribeParticipants(setParticipants);
+  }, []);
+  
+  const actions = (
+  <button
+    className="workspace-button"
+    onClick={() => setWorkspace("map")}
+  >
+    🗺
+  </button>
+);
 
     return (
 
@@ -23,8 +38,7 @@ export default function ParticipantsWorkspace() {
         <>
             <TopBar
                 title="TOW Members"
-                searchButton=""
-                actions=""
+                actions={actions}
             />
             <ParticipantsList
                 participants={participants}

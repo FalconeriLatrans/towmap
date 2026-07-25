@@ -12,9 +12,9 @@ export default function App() {
   const [toast, setToast] = useState("");
 
   //App novo
-  //  const [workspace, setWorkspace] =  useState<Workspace>("map");
+    const [workspace, setWorkspace] =  useState<Workspace>("map");
 
-  const [workspace] = useState("participants"); //participants map
+  //const [workspace] = useState("participants"); //participants map
 
   useEffect(() => {
     async function initialize() {
@@ -41,17 +41,17 @@ export default function App() {
       clearTimeout(timer);
   }, [toast]);
 
-  return (
-    <div className="app">
-      {
-        workspace === "map"
-          ? (<MapWorkspace
-
-          />)
-          : (<ParticipantsWorkspace
-
-          />)
-      }
-    </div>
-  );
+return (
+  <div className="app">
+    {workspace === "map" ? (
+      <MapWorkspace
+        setWorkspace={setWorkspace}
+      />
+    ) : (
+      <ParticipantsWorkspace
+        setWorkspace={setWorkspace}
+      />
+    )}
+  </div>
+);
 }
