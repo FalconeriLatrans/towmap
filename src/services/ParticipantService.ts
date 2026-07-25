@@ -9,6 +9,7 @@ import {
   getDocs,
   getDoc,
   setDoc,
+  addDoc,
   doc,
   deleteDoc,
   onSnapshot,
@@ -226,4 +227,31 @@ export async function changeParticipantId(
   batch.delete(oldParticipantRef);
 
   await batch.commit();
+}
+
+export async function createParticipant(
+  name: string
+): Promise<string> {
+  const participants = await getParticipants();
+
+  const lastOrder =
+    participants.length > 0
+      ? Math.max(...participants.map(p => p.order))
+      : 0;
+
+  const participantData = {
+    name: name.trim(),
+    token: "",
+    level: 0,
+    power: 0,
+    order: lastOrder + 1000,
+    isMember: true,
+  };
+
+  const participantRef = await addDoc(
+    collection(db, Collections.participants),
+    participantData
+  );
+
+  return participantRef.id;
 }

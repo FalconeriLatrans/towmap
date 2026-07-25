@@ -3,7 +3,7 @@ import ParticipantsList from "./ParticipantsList/ParticipantsList";
 import ParticipantPropertiesPanel from "./ParticipantPropertiesPanel/ParticipantPropertiesPanel";
 import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import "./ParticipantsWorkspace.css";
-import { subscribeParticipants } from "../../services/ParticipantService";
+import { subscribeParticipants, createParticipant } from "../../services/ParticipantService";
 import type { Workspace } from "../../types/Workspace";
 import type { Participant } from "../../types/Participant";
 
@@ -23,15 +23,38 @@ export default function ParticipantsWorkspace({
     return subscribeParticipants(setParticipants);
   }, []);
   
-  const actions = (
-  <button
-    className="workspace-button"
-    onClick={() => setWorkspace("map")}
-  >
-    🗺
-  </button>
+const actions = (
+  <div className="top-bar-actions">
+    <button
+      className="add-participant-button"
+      onClick={handleAddParticipant}
+    >
+      + Add
+    </button>
+    <button
+      className="workspace-button"
+      onClick={() => setWorkspace("map")}
+    >
+      🗺
+    </button>
+  </div>
 );
 
+async function handleAddParticipant() {
+  const name = prompt("Participant name");
+  if (!name?.trim()) return;
+  try {
+    const id = await createParticipant(
+      name.trim()
+    );
+    setSelectedId(id);
+  } catch (error) {
+    console.error(
+      "Error creating participant:",
+      error
+    );
+  }
+}
     return (
 
 
