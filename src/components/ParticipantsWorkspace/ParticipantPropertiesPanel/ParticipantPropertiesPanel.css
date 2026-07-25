@@ -120,3 +120,50 @@
   .save-button:active:not(:disabled) {
     transform: translateY(1px);
   }
+
+  .participant-field-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.field-warning {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #ef4444;
+  white-space: nowrap;
+}
+
+.participant-properties-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 14px;
+}
+
+.archive-button {
+  background: transparent;
+  color: #ef4444;
+
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  border-radius: 4px;
+
+  padding: 6px 12px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.archive-button:hover {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: #ef4444;
+}
+
+.archive-button:active {
+  transform: translateY(1px);
+}

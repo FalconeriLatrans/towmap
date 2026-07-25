@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import "./ParticipantPropertiesPanel.css";
 import type { Participant } from "../../../types/Participant";
-import { updateParticipant, changeParticipantId } from "../../../services/ParticipantService";
+import { archiveParticipant, updateParticipant, changeParticipantId } from "../../../services/ParticipantService";
 
 type Props = {
   participant: Participant | null;
+  onArchived?: () => void;
 };
 
 export default function ParticipantPropertiesPanel({
   participant,
+  onArchived,
 }: Props) {
   const [name, setName] = useState("");
   const [id, setId] = useState("");
@@ -73,6 +75,24 @@ export default function ParticipantPropertiesPanel({
       setSaving(false);
     }
   }
+  async function handleArchive() {
+    if (!participant) return;
+
+    const confirmed = window.confirm(
+      `Archive ${participant.name}?\n\n` +
+      "The participant will be removed from the active members list, " +
+      "but their data and seat allocation will be preserved."
+    );
+
+    if (!confirmed) return;
+
+    try {
+      await archiveParticipant(participant.id);
+      onArchived?.();
+    } catch (error) {
+      console.error("Error archiving participant:", error);
+    }
+  }
 
   if (!participant) {
     return (
@@ -107,7 +127,18 @@ export default function ParticipantPropertiesPanel({
         </label>
 
         <label className="participant-field">
-          <span>ID</span>
+          <span className="participant-field-label">
+            ID
+
+            {participant.id.startsWith("tmp_") && (
+              <span
+                className="field-warning"
+                title="Temporary ID — replace it with the player's Game ID"
+              >
+                ● Temporary ID
+              </span>
+            )}
+          </span>
 
           <input
             type="text"
@@ -142,6 +173,14 @@ export default function ParticipantPropertiesPanel({
       </div>
 
       <div className="participant-properties-actions">
+
+        <button
+          type="button"
+          className="archive-button"
+          onClick={handleArchive}
+        >
+          🗑 Remove
+        </button>
 
         <button
           type="button"

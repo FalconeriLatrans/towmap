@@ -69,6 +69,7 @@ async function handleAddParticipant() {
             />
             <ParticipantPropertiesPanel
                 participant={selectedParticipant}
+                onArchived={() => setSelectedId(null)}
             />
 
         </>
