@@ -240,6 +240,8 @@ export async function createParticipant(
       ? Math.max(...participants.map(p => p.order))
       : 0;
 
+  const id = `tmp_${crypto.randomUUID()}`;
+
   const participantData = {
     name: name.trim(),
     token: "",
@@ -249,12 +251,18 @@ export async function createParticipant(
     isMember: true,
   };
 
-  const participantRef = await addDoc(
-    collection(db, Collections.participants),
+  const participantRef = doc(
+    db,
+    Collections.participants,
+    id
+  );
+
+  await setDoc(
+    participantRef,
     participantData
   );
 
-  return participantRef.id;
+  return id;
 }
 
 export async function archiveParticipant(
