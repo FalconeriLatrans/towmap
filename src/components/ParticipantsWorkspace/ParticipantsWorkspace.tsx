@@ -18,6 +18,7 @@ export default function ParticipantsWorkspace({
   const [participants, setParticipants] =  useState<Participant[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const selectedParticipant = participants.find(p => p.id === selectedId) ?? null;
+  const activeParticipants = participants.filter(p => p.isMember);
 
   useEffect(() => {
     return subscribeParticipants(setParticipants);
@@ -56,15 +57,13 @@ async function handleAddParticipant() {
   }
 }
     return (
-
-
         <>
             <TopBar
                 title="TOW Members"
                 actions={actions}
             />
             <ParticipantsList
-                participants={participants}
+                participants={activeParticipants}
                 selectedId={selectedId}
                 onSelect={setSelectedId}
             />

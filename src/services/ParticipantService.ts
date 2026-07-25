@@ -12,6 +12,7 @@ import {
   addDoc,
   doc,
   deleteDoc,
+  updateDoc,
   onSnapshot,
   writeBatch,
   query,
@@ -254,4 +255,38 @@ export async function createParticipant(
   );
 
   return participantRef.id;
+}
+
+export async function archiveParticipant(
+  id: string
+) {
+  const participantRef = doc(
+    db,
+    Collections.participants,
+    id
+  );
+
+  await updateDoc(
+    participantRef,
+    {
+      isMember: false,
+    }
+  );
+}
+
+export async function restoreParticipant(
+  id: string
+) {
+  const participantRef = doc(
+    db,
+    Collections.participants,
+    id
+  );
+
+  await updateDoc(
+    participantRef,
+    {
+      isMember: true,
+    }
+  );
 }
