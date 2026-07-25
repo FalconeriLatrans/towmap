@@ -143,7 +143,7 @@
   margin-top: 14px;
 }
 
-.archive-button {
+.remove-button {
   background: transparent;
   color: #ef4444;
 
@@ -159,11 +159,11 @@
     border-color 0.2s ease;
 }
 
-.archive-button:hover {
+.remove-button:hover {
   background: rgba(239, 68, 68, 0.12);
   border-color: #ef4444;
 }
 
-.archive-button:active {
+.remove-button:active {
   transform: translateY(1px);
 }

@@ -5,11 +5,13 @@ import { archiveParticipant, updateParticipant, changeParticipantId } from "../.
 
 type Props = {
   participant: Participant | null;
+  mode: "active" | "trash";
   onArchived?: () => void;
 };
 
 export default function ParticipantPropertiesPanel({
   participant,
+  mode,
   onArchived,
 }: Props) {
   const [name, setName] = useState("");
@@ -173,24 +175,43 @@ export default function ParticipantPropertiesPanel({
       </div>
 
       <div className="participant-properties-actions">
-
-        <button
-          type="button"
-          className="archive-button"
-          onClick={handleArchive}
-        >
-          🗑 Remove
-        </button>
-
-        <button
-          type="button"
-          className="save-button"
-          onClick={handleSave}
-          disabled={!hasChanges || saving}
-        >
-          {saving ? "Saving..." : "Save Changes"}
-        </button>
-
+        {participant.isMember ? (
+          <button
+            className="remove-button"
+            onClick={handleSave
+              //handleRemove
+            }
+          >
+            Remove
+          </button>
+        ) : (
+          <button
+            className="remove-button"
+            onClick={handleSave
+              //handlePermanentDelete
+            }
+          >
+            Delete permanently
+          </button>
+        )}
+        {participant.isMember ? (
+          <button
+            className="save-button"
+            onClick={handleSave}
+            disabled={!hasChanges || saving}
+          >
+            {saving ? "Saving..." : "Save Changes"}
+          </button>
+        ) : (
+          <button
+            className="restore-button"
+            onClick={handleSave
+              //handleRestore
+            }
+          >
+            Restore
+          </button>
+        )}
       </div>
 
     </div>
