@@ -12,7 +12,7 @@ export default function App() {
   const [toast, setToast] = useState("");
 
   //App novo
-    const [workspace, setWorkspace] =  useState<Workspace>("participants");
+    const [workspace, setWorkspace] =  useState<Workspace>("map");
 
   //const [workspace] = useState("participants"); //participants map
 
