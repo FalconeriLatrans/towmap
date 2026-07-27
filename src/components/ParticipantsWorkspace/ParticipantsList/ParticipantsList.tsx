@@ -115,7 +115,7 @@ export default function ParticipantsList({
         <div className="participants-list">
           {items.map(participant => (
             <SortableParticipant
-              key={participant.id}
+              //key={participant.id}
               participant={participant}
               selected={participant.id === selectedId}
               onSelect={onSelect}
@@ -133,6 +133,7 @@ type SortableParticipantProps = {
   participant: Participant;
   selected: boolean;
   onSelect: (id: string) => void;
+  dragEnabled: boolean;
 };
 
 
