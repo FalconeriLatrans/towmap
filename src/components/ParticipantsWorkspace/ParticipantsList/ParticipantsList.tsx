@@ -26,6 +26,12 @@ type Props = {
   participants: Participant[];
   selectedId: string | null;
   onSelect: (id: string) => void;
+  onMove: (
+    participantId: string,
+    previousId: string | null,
+    nextId: string | null
+  ) => void;
+  dragEnabled?: boolean;
 };
 
 
@@ -33,6 +39,8 @@ export default function ParticipantsList({
   participants,
   selectedId,
   onSelect,
+  onMove,
+  dragEnabled,
 }: Props) {
 
   const [items, setItems] = useState(participants);
@@ -58,27 +66,41 @@ export default function ParticipantsList({
   function handleDragEnd(event: DragEndEvent) {
 
     const { active, over } = event;
-
+  
     if (!over || active.id === over.id) return;
-
+  
     setItems(currentItems => {
-
-      const oldIndex = currentItems.findIndex(
-        participant => participant.id === active.id
-      );
-
-      const newIndex = currentItems.findIndex(
-        participant => participant.id === over.id
-      );
-
-      return arrayMove(
+      const oldIndex = currentItems.findIndex(participant =>participant.id === active.id);
+      const newIndex = currentItems.findIndex(participant =>participant.id === over.id);
+  
+      if (oldIndex === -1 || newIndex === -1) {
+        return currentItems;
+      }
+  
+      const reorderedItems = arrayMove(
         currentItems,
         oldIndex,
         newIndex
       );
+  
+      const movedIndex =
+        reorderedItems.findIndex(
+          participant =>
+            participant.id === active.id
+        );
+  
+      const previousParticipant =reorderedItems[movedIndex - 1] ?? null;
+      const nextParticipant =reorderedItems[movedIndex + 1] ?? null;
+  
+      onMove(
+        String(active.id),
+        previousParticipant?.id ?? null,
+        nextParticipant?.id ?? null
+      );
+  
+      return reorderedItems;
     });
   }
-
 
   return (
     <DndContext
@@ -95,10 +117,9 @@ export default function ParticipantsList({
             <SortableParticipant
               key={participant.id}
               participant={participant}
-              selected={
-                participant.id === selectedId
-              }
+              selected={participant.id === selectedId}
               onSelect={onSelect}
+              dragEnabled = {dragEnabled}
             />
           ))}
         </div>
@@ -119,6 +140,7 @@ function SortableParticipant({
   participant,
   selected,
   onSelect,
+  dragEnabled,
 }: SortableParticipantProps) {
 
   const {
@@ -130,6 +152,7 @@ function SortableParticipant({
     isDragging,
   } = useSortable({
     id: participant.id,
+    disabled: !dragEnabled,
   });
 
   const style = {
@@ -149,6 +172,7 @@ function SortableParticipant({
       }
       onClick={() => onSelect(participant.id)}
     >
+      {dragEnabled && (
       <div
         className="drag-handle"
         {...attributes}
@@ -156,6 +180,7 @@ function SortableParticipant({
       >
         ⇅
       </div>
+      )}
 
       <span className="participant-name">
         {participant.name}

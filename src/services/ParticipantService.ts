@@ -103,8 +103,120 @@ export async function deleteParticipant(id) {
   return console.log("deleteParticipant");
 }
 
-export async function moveParticipant(id, newOrder) {
-  return console.log("moveParticipant");
+export async function moveParticipant(
+  participantId: string,
+  previousParticipant: Participant | null,
+  nextParticipant: Participant | null
+) {
+
+  // Movido para o início
+  if (!previousParticipant && nextParticipant) {
+    await updateDoc(
+      doc(
+        db,
+        Collections.participants,
+        participantId
+      ),
+      {
+        order: nextParticipant.order - 1000
+      }
+    );
+
+    return;
+  }
+
+
+  // Movido para o final
+  if (previousParticipant && !nextParticipant) {
+    await updateDoc(
+      doc(
+        db,
+        Collections.participants,
+        participantId
+      ),
+      {
+        order: previousParticipant.order + 1000
+      }
+    );
+    return;
+  }
+
+
+  // Movido entre dois participantes
+  if (previousParticipant && nextParticipant) {
+
+    const gap = nextParticipant.order - previousParticipant.order;
+
+    if (gap > 1) {
+
+      const newOrder = Math.floor((previousParticipant.order + nextParticipant.order) / 2);
+
+      await updateDoc(
+        doc(
+          db,
+          Collections.participants,
+          participantId
+        ),
+        {
+          order: newOrder
+        }
+      );
+
+      return;
+    }
+
+
+    // Acabaram os inteiros disponíveis.
+    // Hora da faxina.
+    await normalizeParticipantOrder();
+
+    const normalizedParticipants = await getParticipants();
+    const normalizedPrevious = normalizedParticipants.find(p => p.id === previousParticipant.id);
+    const normalizedNext = normalizedParticipants.find(p => p.id === nextParticipant.id);
+
+    if (!normalizedPrevious || !normalizedNext) {
+      throw new Error(
+        "Could not find participants after order normalization."
+      );
+    }
+
+    const newOrder = Math.floor(
+      (normalizedPrevious.order + normalizedNext.order) / 2);
+
+    await updateDoc(
+      doc(
+        db,
+        Collections.participants,
+        participantId
+      ),
+      {
+        order: newOrder
+      }
+    );
+  }
+}
+
+async function normalizeParticipantOrder() {
+
+  const participants = await getParticipants();
+  const batch = writeBatch(db);
+
+  participants.forEach(
+    (participant, index) => {
+      batch.update(
+        doc(
+          db,
+          Collections.participants,
+          participant.id
+        ),
+        {
+          order: (index + 1) * 1000
+        }
+      );
+    }
+  );
+
+  await batch.commit();
 }
 
 export async function generateToken() {
@@ -308,18 +420,17 @@ export async function permanentlyDeleteParticipant(
     Collections.participants,
     participantId
   );
-  
+
   const participantSnapshot =
     await getDoc(participantRef);
-  
+
   if (!participantSnapshot.exists()) {
     throw new Error("PARTICIPANT_NOT_FOUND");
   }
-  
+
   if (participantSnapshot.data().isMember) {
     throw new Error("PARTICIPANT_IS_ACTIVE");
   }
-  
   const allocationsQuery = query(
     collection(db, Collections.allocations),
     where("participantId", "==", participantId)

@@ -3,7 +3,7 @@ import ParticipantsList from "./ParticipantsList/ParticipantsList";
 import ParticipantPropertiesPanel from "./ParticipantPropertiesPanel/ParticipantPropertiesPanel";
 import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import "./ParticipantsWorkspace.css";
-import { subscribeParticipants, createParticipant } from "../../services/ParticipantService";
+import { subscribeParticipants, createParticipant, moveParticipant } from "../../services/ParticipantService";
 import type { Workspace } from "../../types/Workspace";
 import type { Participant } from "../../types/Participant";
 
@@ -91,6 +91,45 @@ export default function ParticipantsWorkspace({
       );
     }
   }
+
+  async function handleMoveParticipant(
+    participantId: string,
+    previousId: string | null,
+    nextId: string | null
+  ) {
+
+    const previousParticipant =
+      previousId
+        ? participants.find(
+          p => p.id === previousId
+        ) ?? null
+        : null;
+
+    const nextParticipant =
+      nextId
+        ? participants.find(
+          p => p.id === nextId
+        ) ?? null
+        : null;
+
+    try {
+
+      await moveParticipant(
+        participantId,
+        previousParticipant,
+        nextParticipant
+      );
+
+    } catch (error) {
+
+      console.error(
+        "Error moving participant:",
+        error
+      );
+
+    }
+  }
+
   return (
     <>
       <TopBar
@@ -107,9 +146,10 @@ export default function ParticipantsWorkspace({
       />
       <ParticipantsList
         participants={visibleParticipants}
-        mode={view}
         selectedId={selectedId}
         onSelect={setSelectedId}
+        onMove={handleMoveParticipant}
+        dragEnabled={view === "active"}
       />
       <ParticipantPropertiesPanel
         participant={selectedParticipant}
