@@ -3,7 +3,6 @@ import Dropdown from "../../Dropdown/Dropdown";
 import { getUnallocatedParticipants } from "../../../services/ParticipantService";
 import type { DropdownItem } from "../../Dropdown/Dropdown";
 import type { MapElement } from "../../../types/MapElement";
-import type { Participant } from "../../../types/Participant";
 import { allocate } from "../../../services/AllocationService";
 import "./ElementPropertiesPanel.css";
 
@@ -24,8 +23,9 @@ export default function ElementPropertiesPanel({
 
   useEffect(() => {
     async function load() {
-      const participants =
-        await getUnallocatedParticipants();
+
+      const participants = await getUnallocatedParticipants();
+
       setItems([
         {
           id: "",
@@ -52,11 +52,9 @@ export default function ElementPropertiesPanel({
   }
 
   const title = occupant || element.label || "Empty";
-
   const code = element.type === "seat"
     ? element.label
     : "";
-
   const coords = `x:${element.x} y:${element.y}`;
 
   return (

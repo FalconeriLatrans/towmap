@@ -1,6 +1,6 @@
 import "./ParticipantsList.css";
 import { useEffect, useState } from "react";
-import type { Participant } from "../../types/Participant";
+import type { Participant } from "../../../types/Participant";
 
 import {
   DndContext,
@@ -40,7 +40,7 @@ export default function ParticipantsList({
   selectedId,
   onSelect,
   onMove,
-  dragEnabled,
+  dragEnabled = true,
 }: Props) {
 
   const [items, setItems] = useState(participants);

@@ -27,8 +27,9 @@ export async function getParticipants() {
     .map(doc => ({
       id: doc.id,
       ...doc.data(),
-    }))
-    .sort((a, b) => a.order - b.order) as Participant[];
+    } as Participant))
+    .sort((a, b) => a.order - b.order);
+
 }
 
 export async function getUnallocatedParticipants(): Promise<Participant[]> {
@@ -53,16 +54,15 @@ export function subscribeParticipants(
   return onSnapshot(
     collection(db, Collections.participants),
     snapshot => {
-      const participants =
-        snapshot.docs
-          .map(doc => ({
-            id: doc.id,
-            ...doc.data(),
-          }))
-          .sort((a, b) => a.order - b.order);
-      callback(
-        participants as Participant[]
-      );
+const participants =
+  snapshot.docs
+    .map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    } as Participant))
+    .sort((a, b) => a.order - b.order);
+
+callback(participants);
     }
   );
 }
@@ -92,7 +92,7 @@ export async function updateParticipant(participant: Participant) {
   return console.log("updateParticipant");
 }
 
-export async function deleteParticipant(id) {
+export async function deleteParticipant(id: string) {
   await deleteDoc(
     doc(
       db,
