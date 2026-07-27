@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
 import "./ParticipantPropertiesPanel.css";
 import type { Participant } from "../../../types/Participant";
-import { archiveParticipant, updateParticipant, changeParticipantId } from "../../../services/ParticipantService";
+import { archiveParticipant, restoreParticipant, updateParticipant, changeParticipantId, permanentlyDeleteParticipant } from "../../../services/ParticipantService";
 
 type Props = {
   participant: Participant | null;
-  mode: "active" | "trash";
-  onArchived?: () => void;
+  onRemoved?: () => void;
+  onRestored?: () => void;
+  onDeleted?: () => void;
 };
 
 export default function ParticipantPropertiesPanel({
   participant,
-  mode,
-  onArchived,
+  onRemoved,
+  onRestored,
+  onDeleted,
 }: Props) {
   const [name, setName] = useState("");
   const [id, setId] = useState("");
@@ -35,11 +37,8 @@ export default function ParticipantPropertiesPanel({
 
   async function handleCopyToken() {
     if (!token) return;
-
     await navigator.clipboard.writeText(token);
-
     setCopied(true);
-
     setTimeout(() => {
       setCopied(false);
     }, 1500);
@@ -47,26 +46,20 @@ export default function ParticipantPropertiesPanel({
 
   async function handleSave() {
     if (!participant) return;
-
     const trimmedName = name.trim();
     const trimmedId = id.trim();
     const trimmedToken = token.trim();
-
     if (!trimmedName || !trimmedId) {
       return;
     }
-
     if (trimmedId !== participant.id) {
       console.log(
         `ID migration required: ${participant.id} -> ${trimmedId}`
       );
       await changeParticipantId(participant.id, trimmedId);
-
       return;
     }
-
     setSaving(true);
-
     try {
       await updateParticipant({
         ...participant,
@@ -77,7 +70,8 @@ export default function ParticipantPropertiesPanel({
       setSaving(false);
     }
   }
-  async function handleArchive() {
+
+  async function handleRemove() {
     if (!participant) return;
 
     const confirmed = window.confirm(
@@ -90,9 +84,47 @@ export default function ParticipantPropertiesPanel({
 
     try {
       await archiveParticipant(participant.id);
-      onArchived?.();
+      onRemoved?.();
     } catch (error) {
       console.error("Error archiving participant:", error);
+    }
+  }
+
+  async function handlePermanentDelete() {
+    if (!participant) return;
+
+    const confirmed = window.confirm(
+      `Permanently delete ${participant.name}?\n\n` +
+      "This action cannot be undone."
+    );
+
+    if (!confirmed) return;
+
+    try {
+      await permanentlyDeleteParticipant(participant.id);
+
+      onDeleted?.();
+
+    } catch (error) {
+      if (
+        error instanceof Error &&
+        error.message.startsWith(
+          "PARTICIPANT_HAS_ALLOCATION:"
+        )
+      ) {
+        const seatLabel = error.message.split(":")[1];
+
+        window.alert(
+          `${participant.name} is still assigned to ` +
+          `${seatLabel || "a seat"}.\n\n` +
+          "Clear the seat before permanently deleting this participant."
+        );
+        return;
+      }
+      console.error(
+        "Error permanently deleting participant:",
+        error
+      );
     }
   }
 
@@ -103,7 +135,16 @@ export default function ParticipantPropertiesPanel({
       </div>
     );
   }
+  async function handleRestore() {
+    if (!participant) return;
 
+    try {
+      await restoreParticipant(participant.id);
+      onRestored?.();
+    } catch (error) {
+      console.error("Error restoring participant:", error);
+    }
+  }
   const hasChanges =
     name.trim() !== participant.name ||
     id.trim() !== participant.id ||
@@ -115,23 +156,18 @@ export default function ParticipantPropertiesPanel({
       <div className="participant-properties-header">
         <h3>{participant.name}</h3>
       </div>
-
       <div className="participant-properties-grid">
-
         <label className="participant-field">
           <span>Name</span>
-
           <input
             type="text"
             value={name}
             onChange={e => setName(e.target.value)}
           />
         </label>
-
         <label className="participant-field">
           <span className="participant-field-label">
             ID
-
             {participant.id.startsWith("tmp_") && (
               <span
                 className="field-warning"
@@ -141,25 +177,20 @@ export default function ParticipantPropertiesPanel({
               </span>
             )}
           </span>
-
           <input
             type="text"
             value={id}
             onChange={e => setId(e.target.value)}
           />
         </label>
-
         <label className="participant-field participant-token-field">
           <span>Allocation Token</span>
-
           <div className="participant-token-row">
-
             <input
               type="text"
               value={token}
               onChange={e => setToken(e.target.value)}
             />
-
             <button
               type="button"
               className="copy-token-button"
@@ -168,52 +199,48 @@ export default function ParticipantPropertiesPanel({
             >
               {copied ? "Copied!" : "Copy"}
             </button>
-
           </div>
         </label>
-
       </div>
-
       <div className="participant-properties-actions">
+
         {participant.isMember ? (
-          <button
-            className="remove-button"
-            onClick={handleSave
-              //handleRemove
-            }
-          >
-            Remove
-          </button>
+          <>
+            <button
+              type="button"
+              className="remove-button"
+              onClick={handleRemove}
+            >
+              Remove
+            </button>
+            <button
+              type="button"
+              className="save-button"
+              onClick={handleSave}
+              disabled={!hasChanges || saving}
+            >
+              {saving ? "Saving..." : "Save Changes"}
+            </button>
+          </>
         ) : (
-          <button
-            className="remove-button"
-            onClick={handleSave
-              //handlePermanentDelete
-            }
-          >
-            Delete permanently
-          </button>
-        )}
-        {participant.isMember ? (
-          <button
-            className="save-button"
-            onClick={handleSave}
-            disabled={!hasChanges || saving}
-          >
-            {saving ? "Saving..." : "Save Changes"}
-          </button>
-        ) : (
-          <button
-            className="restore-button"
-            onClick={handleSave
-              //handleRestore
-            }
-          >
-            Restore
-          </button>
+          <>
+            <button
+              type="button"
+              className="remove-button"
+              onClick={handlePermanentDelete}
+            >
+              Delete permanently
+            </button>
+            <button
+              type="button"
+              className="restore-button"
+              onClick={handleRestore}
+            >
+              Restore
+            </button>
+          </>
         )}
       </div>
-
     </div>
   );
 }

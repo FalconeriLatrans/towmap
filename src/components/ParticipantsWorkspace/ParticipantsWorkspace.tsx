@@ -42,6 +42,12 @@ export default function ParticipantsWorkspace({
         🗑
       </button>
       <button
+        className="add-participant-button"
+        onClick={handleAddParticipant}
+      >
+        + Add
+      </button>
+      <button
         className="workspace-button"
         onClick={() => setWorkspace("map")}
       >
@@ -107,7 +113,9 @@ export default function ParticipantsWorkspace({
       />
       <ParticipantPropertiesPanel
         participant={selectedParticipant}
-        onArchived={() => setSelectedId(null)}
+        onRemoved={() => setSelectedId(null)}
+        onRestored={() => setSelectedId(null)}
+        onDeleted={() => setSelectedId(null)}
       />
 
     </>

@@ -298,3 +298,49 @@ export async function restoreParticipant(
     }
   );
 }
+
+export async function permanentlyDeleteParticipant(
+  participantId: string
+) {
+
+  const participantRef = doc(
+    db,
+    Collections.participants,
+    participantId
+  );
+  
+  const participantSnapshot =
+    await getDoc(participantRef);
+  
+  if (!participantSnapshot.exists()) {
+    throw new Error("PARTICIPANT_NOT_FOUND");
+  }
+  
+  if (participantSnapshot.data().isMember) {
+    throw new Error("PARTICIPANT_IS_ACTIVE");
+  }
+  
+  const allocationsQuery = query(
+    collection(db, Collections.allocations),
+    where("participantId", "==", participantId)
+  );
+
+  const allocationsSnapshot = await getDocs(allocationsQuery);
+
+  if (!allocationsSnapshot.empty) {
+    const allocation =
+      allocationsSnapshot.docs[0].data();
+
+    throw new Error(
+      `PARTICIPANT_HAS_ALLOCATION:${allocation.seatLabel ?? ""}`
+    );
+  }
+
+  await deleteDoc(
+    doc(
+      db,
+      Collections.participants,
+      participantId
+    )
+  );
+}
