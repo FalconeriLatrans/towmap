@@ -9,10 +9,14 @@ import type { Participant } from "../../types/Participant";
 
 type Props = {
   setWorkspace: Dispatch<SetStateAction<Workspace>>;
+  editorMode: boolean;
+  setEditorMode: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function ParticipantsWorkspace({
   setWorkspace,
+  //editorMode,
+  //setEditorMode,
 }: Props) {
 
   type ParticipantsView = "active" | "trash";

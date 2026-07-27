@@ -10,23 +10,26 @@ import { sha256 } from "../../services/hash";
 import type { Workspace } from "../../types/Workspace";
 import type { Allocation } from "../../types/Allocation";
 import type { Participant } from "../../types/Participant";
+import ParticipantSearch from "./ParticipantSearch/ParticipantSearch";
 
 type Props = {
     setWorkspace: Dispatch<SetStateAction<Workspace>>;
+    editorMode: boolean;
+    setEditorMode: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function MapWorkspace({
     setWorkspace,
+    editorMode,
+    setEditorMode,
 }: Props) {
 
     const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
     const [selectedOccupant, setSelectedOccupant] = useState("");
     const [editingSeat, setEditingSeat] = useState<string | null>(null);
-    const [editorMode, setEditorMode] = useState(false);
     const [toast, setToast] = useState("");
     const [selectedElement, setSelectedElement] = useState<MapElement | null>(null);
 
-    const [, setShowParticipants] = useState(false);
     const [allocations, setAllocations] = useState<Allocation[]>([]);
     const [participants, setParticipants] = useState<Participant[]>([]);
 
@@ -34,6 +37,14 @@ export default function MapWorkspace({
     const allocation = allocations.find(a => a.seat === selectedSeat);
     const occupant = participantsById[allocation?.participantId ?? ""]?.name ?? "";
 
+    const center = (
+        <ParticipantSearch
+            participants={participants.filter(
+                participant => participant.isMember
+            )}
+            onSelect={handleParticipantSelect}
+        />
+    );
 
     const actions = (
         <div className="top-bar-actions">
@@ -87,10 +98,6 @@ export default function MapWorkspace({
     }, [occupant]);
 
     useEffect(() => {
-        setShowParticipants(false);
-    }, [selectedSeat]);
-
-    useEffect(() => {
         if (!toast)
             return;
         const timer = setTimeout(() => setToast(""), 2000);
@@ -98,22 +105,26 @@ export default function MapWorkspace({
             clearTimeout(timer);
     }, [toast]);
 
+    function handleParticipantSelect( participantId: string ) {
+
+        const participantAllocation = allocations.find(allocation => allocation.participantId === participantId);
+
+        if (!participantAllocation) {
+            setToast("Participant has no assigned seat");
+            return;
+        }
+
+        setSelectedSeat(participantAllocation.seat);
+    }
+
     return (
         <div className="app">
             {
                 <>
                     <TopBar
                         title="TOW Map"
-                        //center={center}
+                        center={center}
                         actions={actions}
-                    /*
-                                            setSelectedOccupant={setSelectedOccupant}
-                                            selectedSeat={selectedSeat}
-                                            setSelectedSeat={setSelectedSeat}
-                                            editorMode={editorMode}
-                                            setEditorMode={setEditorMode}
-                                            setToast={setToast}
-                                            */
                     />
                     {toast && (
                         <div className="toast">

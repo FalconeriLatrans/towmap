@@ -10,10 +10,8 @@ import "./App.css";
 export default function App() {
 
   const [toast, setToast] = useState("");
-
-  //App novo
-    const [workspace, setWorkspace] =  useState<Workspace>("map");
-
+  const [workspace, setWorkspace] = useState<Workspace>("map");
+  const [editorMode, setEditorMode] = useState(false);
   //const [workspace] = useState("participants"); //participants map
 
   useEffect(() => {
@@ -41,17 +39,21 @@ export default function App() {
       clearTimeout(timer);
   }, [toast]);
 
-return (
-  <div className="app">
-    {workspace === "map" ? (
-      <MapWorkspace
-        setWorkspace={setWorkspace}
-      />
-    ) : (
-      <ParticipantsWorkspace
-        setWorkspace={setWorkspace}
-      />
-    )}
-  </div>
-);
+  return (
+    <div className="app">
+      {workspace === "map" ? (
+        <MapWorkspace
+          setWorkspace={setWorkspace}
+          editorMode={editorMode}
+          setEditorMode={setEditorMode}
+        />
+      ) : (
+        <ParticipantsWorkspace
+          setWorkspace={setWorkspace}
+          editorMode={editorMode}
+          setEditorMode={setEditorMode}
+        />
+      )}
+    </div>
+  );
 }
