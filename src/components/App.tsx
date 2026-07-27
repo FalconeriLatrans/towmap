@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 export default function App() {
-console.log("ESTE É O APP NOVO");
+
   const [toast, setToast] = useState("");
   const [workspace, setWorkspace] = useState<Workspace>("map");
   const [editorMode, setEditorMode] = useState(false);

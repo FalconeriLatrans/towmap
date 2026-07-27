@@ -10,6 +10,7 @@ import { sha256 } from "../../services/hash";
 import type { Workspace } from "../../types/Workspace";
 import type { Allocation } from "../../types/Allocation";
 import type { Participant } from "../../types/Participant";
+import ParticipantSearch from "./ParticipantSearch/ParticipantSearch";
 
 type Props = {
     setWorkspace: Dispatch<SetStateAction<Workspace>>;
@@ -36,6 +37,14 @@ export default function MapWorkspace({
     const allocation = allocations.find(a => a.seat === selectedSeat);
     const occupant = participantsById[allocation?.participantId ?? ""]?.name ?? "";
 
+    const center = (
+        <ParticipantSearch
+            participants={participants.filter(
+                participant => participant.isMember
+            )}
+            onSelect={handleParticipantSelect}
+        />
+    );
 
     const actions = (
         <div className="top-bar-actions">
@@ -96,13 +105,25 @@ export default function MapWorkspace({
             clearTimeout(timer);
     }, [toast]);
 
+    function handleParticipantSelect( participantId: string ) {
+
+        const participantAllocation = allocations.find(allocation => allocation.participantId === participantId);
+
+        if (!participantAllocation) {
+            setToast("Participant has no assigned seat");
+            return;
+        }
+
+        setSelectedSeat(participantAllocation.seat);
+    }
+
     return (
         <div className="app">
             {
                 <>
                     <TopBar
                         title="TOW Map"
-                        //center={center}
+                        center={center}
                         actions={actions}
                     />
                     {toast && (
