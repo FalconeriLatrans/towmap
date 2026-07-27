@@ -1,0 +1,29 @@
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+.app {
+  background: #0f172a;
+  min-height: 100dvh;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1e293b;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .3);
+  z-index: 9999;
+  text-align: center;
+}

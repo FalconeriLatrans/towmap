@@ -9,7 +9,7 @@ import {
 import { db } from "./Firebase";
 import type { Allocation } from "../types/Allocation";
 import { Collections } from "../config/Collections";
-import { getParticipants, getParticipant } from "./ParticipantService";
+import { getParticipants } from "./ParticipantService";
 import loadElements from "./loadElements";
 
 const STORAGE_KEY = "towmap_allocations";
@@ -47,27 +47,8 @@ export function saveAllocations(
 
 export async function allocate(
   seat: string,
-  seatlabel: string,
-  participantId: string,
+  participantId: string
 ) {
-
-  if (!participantId) {
-
-    await setDoc(
-      doc(db, Collections.allocations, seat),
-      {
-        participantId: "",
-        participantName: "",
-        seatlabel,
-        updatedAt: Date.now(),
-      }
-    );
-
-    return;
-  }
-
-  const participant = await getParticipant(participantId);
-
   await setDoc(
     doc(
       db,
@@ -75,9 +56,7 @@ export async function allocate(
       seat
     ),
     {
-      seatlabel,
       participantId,
-      participantName: participant.name,
       updatedAt: Date.now()
     }
   );
@@ -185,7 +164,6 @@ export async function migrateAllocations() {
 
     await allocate(
       seatId,
-      allocation.seat,
       participantId
     );
 

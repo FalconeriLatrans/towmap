@@ -1,0 +1,18 @@
+.participants-workspace {
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .participants-list {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  .participant-properties-panel {
+    flex-shrink: 0;
+    overflow: visible;
+  }

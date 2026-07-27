@@ -1,5 +1,5 @@
 import "./Element.css";
-import type {MapElement} from "../../types/MapElement";
+import type {MapElement} from "../../../types/MapElement"
 
 type Props = {
   element: MapElement;
@@ -9,7 +9,7 @@ type Props = {
   onClick?: (id: string) => void;
 };
 
-export default function Element({
+export default function Seat({
   element,
   occupant,
   selected,

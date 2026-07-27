@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import Dropdown from "../Dropdown/Dropdown";
-import { getUnallocatedParticipants } from "../../services/ParticipantService";
-import type { DropdownItem } from "../Dropdown/Dropdown";
-import type { MapElement } from "../../types/MapElement";
-//import type { Participant } from "../../types/Participant";
-import { allocate } from "../../services/AllocationService";
-import "./InfoPanel.css";
+import Dropdown from "../../Dropdown/Dropdown";
+import { getUnallocatedParticipants } from "../../../services/ParticipantService";
+import type { DropdownItem } from "../../Dropdown/Dropdown";
+import type { MapElement } from "../../../types/MapElement";
+import { allocate } from "../../../services/AllocationService";
+import "./ElementPropertiesPanel.css";
 
 type Props = {
   element: MapElement | null;
@@ -13,7 +12,7 @@ type Props = {
   editorMode: boolean;
 };
 
-export default function InfoPanel({
+export default function ElementPropertiesPanel({
   element,
   occupant,
   editorMode,
@@ -24,8 +23,9 @@ export default function InfoPanel({
 
   useEffect(() => {
     async function load() {
-      const participants =
-        await getUnallocatedParticipants();
+
+      const participants = await getUnallocatedParticipants();
+
       setItems([
         {
           id: "",
@@ -52,11 +52,9 @@ export default function InfoPanel({
   }
 
   const title = occupant || element.label || "Empty";
-
   const code = element.type === "seat"
     ? element.label
     : "";
-
   const coords = `x:${element.x} y:${element.y}`;
 
   return (
@@ -88,8 +86,7 @@ export default function InfoPanel({
                   console.log(id);
                   await allocate(
                     element.id,
-                    element.label,
-                    id,
+                    id
                   );
                   setShowDropdown(false);
                 }}

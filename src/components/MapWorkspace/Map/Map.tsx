@@ -1,10 +1,10 @@
 import Element from "../Elements/Element";
+import type { MapElement } from "../../../types/MapElement";
 import "./Map.css";
-import { subscribeAllocations } from "../../services/AllocationService";
-import { subscribeParticipants } from "../../services/ParticipantService";
-import loadElements from "../../services/loadElements";
+import { subscribeAllocations } from "../../../services/AllocationService";
+import { subscribeParticipants } from "../../../services/ParticipantService";
+import loadElements from "../../../services/loadElements";
 import { useEffect, useState } from "react";
-import type { MapElement } from "../../types/MapElement";
 //import type { Dispatch, SetStateAction } from "react";
 
 type Props = {
@@ -76,19 +76,6 @@ export default function Map({
     });
   }, [selectedSeat]);
 
-/*
-  function handleSeatClick(seat: string) {
-
-    if (
-      editorMode &&
-      selectedSeat === seat
-    ) { setEditingSeat(seat); }
-    else {
-      setSelectedSeat(seat);
-      setEditingSeat(null);
-    }
-  }
-*/
   function handleElementClick(element: any) {
 
     if (
