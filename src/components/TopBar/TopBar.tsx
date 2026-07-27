@@ -1,6 +1,3 @@
-import type { Allocation } from "../../types/Allocation";
-import type { Participant } from "../../types/Participant";
-import { useEffect, useState } from "react";
 import "./TopBar.css";
 
 type Props = {
@@ -15,16 +12,17 @@ export default function TopBar({
   actions,
 }: Props) {
 
-  const [showParticipants, setShowParticipants] = useState(false);
-  const [allocations, setAllocations] = useState<Allocation[]>([]);
-  const [participants, setParticipants] = useState<Participant[]>([]);
-
   return (
     <div className="search-panel">
       <div className="panel-header">
         <h2>{title}</h2>
-        {actions}
+        {actions && (
+          <div className="panel-actions">
+            {actions}
+          </div>
+        )}
       </div>
+
       {center && (
         <div className="top-bar">
           {center}

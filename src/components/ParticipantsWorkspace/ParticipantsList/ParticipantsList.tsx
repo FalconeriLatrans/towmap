@@ -48,7 +48,7 @@ export default function ParticipantsList({
           onClick={() => onSelect(participant.id)}
         >
           <div className="drag-handle">
-            ☰
+          ⇅
           </div>
 
           <span className="participant-name">
