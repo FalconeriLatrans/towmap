@@ -15,8 +15,8 @@ type Props = {
 
 export default function ParticipantsWorkspace({
   setWorkspace,
-  editorMode,
-  setEditorMode,
+  //editorMode,
+  //setEditorMode,
 }: Props) {
 
   type ParticipantsView = "active" | "trash";
