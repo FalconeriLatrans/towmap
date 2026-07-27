@@ -163,3 +163,16 @@ body {
   width: 36px;
   padding: 0;
 }
+
+@media (max-width: 600px) {
+  .panel-header {
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 4px;
+  }
+
+  .panel-actions {
+    position: static;
+  }
+
+}
