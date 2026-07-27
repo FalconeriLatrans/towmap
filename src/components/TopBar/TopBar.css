@@ -105,17 +105,6 @@ body {
   text-align: left;
 }
 
-.lock-button {
-  background: transparent;
-  color: white;
-  width: 44px;
-  height: 40px;
-  min-width: 44px;
-  padding: 0;
-  position:absolute;
-  right:0;
-}
-
 .panel-header {
   position: relative;
   display: flex;
@@ -169,7 +158,8 @@ body {
 
 .trash-button,
 .workspace-button,
-.back-button {
+.back-button,
+.lock-button {
   width: 36px;
   padding: 0;
 }

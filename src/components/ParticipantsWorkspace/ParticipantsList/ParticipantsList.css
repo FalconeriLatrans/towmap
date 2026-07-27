@@ -99,7 +99,11 @@
 
 .participant-card.dragging {
     opacity: 0.45;
-    transform: scale(0.98);
+    z-index: 10;
+}
+
+.drag-handle {
+    touch-action: none;
 }
 
 .participant-card.drag-over {
