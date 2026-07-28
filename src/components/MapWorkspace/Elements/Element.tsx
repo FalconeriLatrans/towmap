@@ -1,33 +1,48 @@
 import "./Element.css";
-import type {MapElement} from "../../../types/MapElement"
+import type { MapElement } from "../../../types/MapElement";
+import City from "./City/City";
+import type { CityStatus } from "./City/City";
 
 type Props = {
   element: MapElement;
   occupant?: string;
+  status?: CityStatus;
   selected?: boolean;
   editing?: boolean;
   onClick?: (id: string) => void;
 };
 
-export default function Seat({
+export default function Element({
   element,
   occupant,
+  status,
   selected,
   editing,
   onClick,
 }: Props) {
 
-  const isSeat = element.type === "seat";
-  const text = isSeat ? (occupant || element.label) : element.label;
+  if (element.type === "seat") {
+    return (
+      <City
+        element={element}
+        occupant={occupant}
+        status={status ?? "available"}
+        selected={selected}
+        editing={editing}
+        onClick={onClick}
+      />
+    );
+  }
 
   return (
-    <div className={`map-element ${element.type}
-    ${selected ? " selected" : ""}
-    ${editing ? " editing" : ""}`}
-      style={{ backgroundColor: element.color }}
+    <div
+      className={`map-element ${element.type}`}
+      style={{
+        backgroundColor: element.color,
+      }}
       onClick={() => onClick?.(element.id)}
     >
-      {text}
+      {element.label}
     </div>
   );
 }

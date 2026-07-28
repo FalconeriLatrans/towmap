@@ -5,6 +5,8 @@ import { subscribeAllocations } from "../../../services/AllocationService";
 import { subscribeParticipants } from "../../../services/ParticipantService";
 import loadElements from "../../../services/loadElements";
 import { useEffect, useState } from "react";
+import type { Participant } from "../../../types/Participant";
+import type { CityStatus } from "../Elements/City/City";
 //import type { Dispatch, SetStateAction } from "react";
 
 type Props = {
@@ -30,8 +32,8 @@ export default function Map({
     Record<string, string>
   >({});
   const [participants, setParticipants] = useState<
-    Record<string,string>
->({});
+    Record<string, Participant>
+  >({});
 
   const minX = Math.min(...elements.map((e) => e.x));
   const minY = Math.min(...elements.map((e) => e.y));
@@ -40,20 +42,21 @@ export default function Map({
 
   useEffect(() => {
     return subscribeParticipants(list => {
-//      console.log(list);
-        const map: Record<string,string> = {};
-        list.forEach(p => {
-            map[p.id] = p.name;
-        });
-        setParticipants(map);
+
+      const map: Record<string, Participant> = {};
+
+      list.forEach(participant => {
+        map[participant.id] = participant;
+      });
+      setParticipants(map);
     });
-}, []);
+  }, []);
 
   useEffect(() => {
     const unsubscribe =
       subscribeAllocations(
         allocations => {
-//        console.log(allocations);
+          //        console.log(allocations);
           const map:
             Record<string, string>
             = {};
@@ -65,16 +68,6 @@ export default function Map({
       );
     return unsubscribe;
   }, []);
-
-  useEffect(() => {
-    if (!selectedSeat) return;
-    const element = document.getElementById(selectedSeat ?? "");
-    element?.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-      inline: "center",
-    });
-  }, [selectedSeat]);
 
   function handleElementClick(element: any) {
 
@@ -97,16 +90,27 @@ export default function Map({
         className="map"
         style={{
           gridTemplateColumns: `repeat(${maxX - minX + 1}, 40px)`,
-          gridTemplateRows: `repeat(${maxY - minY+3}, 40px)`,
+          gridTemplateRows: `repeat(${maxY - minY + 3}, 40px)`,
           gap: "4px",
           padding: "20px",
         }}
       >
         {elements.map(element => {
 
-          const isSeat = element.type === "seat";
+          const isCity = element.type === "seat";
           const participantId = allocations[element.id];
-          const occupant = participantId ? participants[participantId] : undefined;
+          const participant = participantId
+              ? participants[participantId]
+              : undefined;
+          const occupant = participant?.name;
+
+          let cityStatus: CityStatus = "available";
+
+          if (participant) {
+            cityStatus = participant.isMember
+              ? "occupied"
+              : "former-member";
+          }
 
           return (
             <div
@@ -114,16 +118,22 @@ export default function Map({
               id={element.id}
               style={{
                 gridColumn: `${element.x - minX + 1} / span ${element.width}`,
-                gridRow: `${maxY - element.y - element.height +1} / span ${element.height}`,
+                gridRow: `${maxY - element.y - element.height + 1} / span ${element.height}`,
               }}
             >
-              <Element
-                element={element}
-                occupant={occupant}
-                selected={selectedSeat === element.id}
-                editing={isSeat && editingSeat === element.id}
-                onClick={() => handleElementClick(element)}
-              />
+<Element
+  element={element}
+  occupant={occupant}
+  status={isCity ? cityStatus : undefined}
+  selected={selectedSeat === element.id}
+  editing={
+    isCity &&
+    editingSeat === element.id
+  }
+  onClick={() =>
+    handleElementClick(element)
+  }
+/>
             </div>
           );
         })}
