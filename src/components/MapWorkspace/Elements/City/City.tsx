@@ -3,9 +3,15 @@ import "./City.css";
 
 import type { MapElement } from "../../../../types/MapElement";
 
+export type CityStatus =
+  | "available"
+  | "occupied"
+  | "former-member";
+
 type Props = {
   element: MapElement;
   occupant?: string;
+  status: CityStatus;
   selected?: boolean;
   editing?: boolean;
   onClick?: (id: string) => void;
@@ -14,6 +20,7 @@ type Props = {
 export default function City({
   element,
   occupant,
+  status,
   selected,
   editing,
   onClick,
@@ -21,7 +28,7 @@ export default function City({
   return (
     <div
       className={
-        "map-element city" +
+        `map-element city ${status}` +
         (selected ? " selected" : "") +
         (editing ? " editing" : "")
       }

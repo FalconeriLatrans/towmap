@@ -1,11 +1,12 @@
 import "./Element.css";
-
 import type { MapElement } from "../../../types/MapElement";
 import City from "./City/City";
+import type { CityStatus } from "./City/City";
 
 type Props = {
   element: MapElement;
   occupant?: string;
+  status?: CityStatus;
   selected?: boolean;
   editing?: boolean;
   onClick?: (id: string) => void;
@@ -14,6 +15,7 @@ type Props = {
 export default function Element({
   element,
   occupant,
+  status,
   selected,
   editing,
   onClick,
@@ -24,6 +26,7 @@ export default function Element({
       <City
         element={element}
         occupant={occupant}
+        status={status ?? "available"}
         selected={selected}
         editing={editing}
         onClick={onClick}
