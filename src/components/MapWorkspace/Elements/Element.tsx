@@ -1,5 +1,7 @@
 import "./Element.css";
-import type {MapElement} from "../../../types/MapElement"
+
+import type { MapElement } from "../../../types/MapElement";
+import City from "./City/City";
 
 type Props = {
   element: MapElement;
@@ -9,7 +11,7 @@ type Props = {
   onClick?: (id: string) => void;
 };
 
-export default function Seat({
+export default function Element({
   element,
   occupant,
   selected,
@@ -17,17 +19,27 @@ export default function Seat({
   onClick,
 }: Props) {
 
-  const isSeat = element.type === "seat";
-  const text = isSeat ? (occupant || element.label) : element.label;
+  if (element.type === "seat") {
+    return (
+      <City
+        element={element}
+        occupant={occupant}
+        selected={selected}
+        editing={editing}
+        onClick={onClick}
+      />
+    );
+  }
 
   return (
-    <div className={`map-element ${element.type}
-    ${selected ? " selected" : ""}
-    ${editing ? " editing" : ""}`}
-      style={{ backgroundColor: element.color }}
+    <div
+      className={`map-element ${element.type}`}
+      style={{
+        backgroundColor: element.color,
+      }}
       onClick={() => onClick?.(element.id)}
     >
-      {text}
+      {element.label}
     </div>
   );
 }
