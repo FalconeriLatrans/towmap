@@ -30,7 +30,7 @@ export default function City({
       }}
       onClick={() => onClick?.(element.id)}
     >
-      {occupant || element.label}
+      {occupant}
     </div>
   );
 }
