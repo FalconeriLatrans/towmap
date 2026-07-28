@@ -65,7 +65,7 @@ export default function Map({
       );
     return unsubscribe;
   }, []);
-
+/*
   useEffect(() => {
     if (!selectedSeat) return;
     const element = document.getElementById(selectedSeat ?? "");
@@ -75,7 +75,7 @@ export default function Map({
       inline: "center",
     });
   }, [selectedSeat]);
-
+*/
   function handleElementClick(element: any) {
 
     if (
