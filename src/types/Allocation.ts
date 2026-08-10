@@ -1,5 +1,6 @@
 export interface Allocation {
-  seat: string;
+  city: string;
   participantId: string;
   updatedAt: number;
+  currentOrderValue?: number;
 }

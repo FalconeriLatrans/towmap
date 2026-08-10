@@ -1,7 +1,6 @@
 import csvText from "../data/mapelements.csv?raw";
 
 const dimensions = {
-  seat: { width: 2, height: 2 },
   beartrap: { width: 3, height: 3 },
   banner: { width: 1, height: 1 },
   city: { width: 2, height: 2 },
@@ -22,7 +21,7 @@ export default function loadElements() {
       const [type, x, y, label, color, number] = line.split(",");
       const size = dimensions[type as keyof typeof dimensions] ?? { width: 2, height: 2 };
       const typeMap: Record<string, string> = {
-        city: "seat",
+        city: "city",
         beartrap: "trap",
       };
 
