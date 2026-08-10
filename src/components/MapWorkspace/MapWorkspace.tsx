@@ -24,9 +24,9 @@ export default function MapWorkspace({
     setEditorMode,
 }: Props) {
 
-    const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
+    const [selectedCity, setSelectedCity] = useState<string | null>(null);
     const [selectedOccupant, setSelectedOccupant] = useState("");
-    const [editingSeat, setEditingSeat] = useState<string | null>(null);
+    const [editingCity, setEditingCity] = useState<string | null>(null);
     const [toast, setToast] = useState("");
     const [selectedElement, setSelectedElement] = useState<MapElement | null>(null);
 
@@ -34,7 +34,7 @@ export default function MapWorkspace({
     const [participants, setParticipants] = useState<Participant[]>([]);
 
     const participantsById = Object.fromEntries(participants.map(p => [p.id, p]));
-    const allocation = allocations.find(a => a.seat === selectedSeat);
+    const allocation = allocations.find(a => a.city === selectedCity);
     const occupant = participantsById[allocation?.participantId ?? ""]?.name ?? "";
 
     const center = (
@@ -110,11 +110,11 @@ export default function MapWorkspace({
         const participantAllocation = allocations.find(allocation => allocation.participantId === participantId);
 
         if (!participantAllocation) {
-            setToast("Participant has no assigned seat");
+            setToast("Participant has no assigned spot");
             return;
         }
 
-        setSelectedSeat(participantAllocation.seat);
+        setSelectedCity(participantAllocation.city);
     }
 
     return (
@@ -132,10 +132,10 @@ export default function MapWorkspace({
                         </div>
                     )}
                     <MapViewport
-                        selectedSeat={selectedSeat}
-                        setSelectedSeat={setSelectedSeat}
-                        editingSeat={editingSeat}
-                        setEditingSeat={setEditingSeat}
+                        selectedCity={selectedCity}
+                        setSelectedCity={setSelectedCity}
+                        editingCity={editingCity}
+                        setEditingCity={setEditingCity}
                         editorMode={editorMode}
                         setSelectedElement={setSelectedElement}
                     />

@@ -21,7 +21,7 @@ export default function Element({
   onClick,
 }: Props) {
 
-  if (element.type === "seat") {
+  if (element.type === "city") {
     return (
       <City
         element={element}

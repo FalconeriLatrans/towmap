@@ -10,19 +10,19 @@ import type { CityStatus } from "../Elements/City/City";
 //import type { Dispatch, SetStateAction } from "react";
 
 type Props = {
-  selectedSeat: string | null;
-  setSelectedSeat: (seat: string | null) => void;
-  editingSeat: string | null;
-  setEditingSeat: (seat: string | null) => void;
+  selectedCity: string | null;
+  setSelectedCity: (city: string | null) => void;
+  editingCity: string | null;
+  setEditingCity: (city: string | null) => void;
   editorMode: boolean;
   setSelectedElement: React.Dispatch<React.SetStateAction<MapElement | null>>;
 };
 
 export default function Map({
-  selectedSeat,
-  setSelectedSeat,
-  editingSeat,
-  setEditingSeat,
+  selectedCity: selectedCity,
+  setSelectedCity: setSelectedCity,
+  editingCity: editingCity,
+  setEditingCity: setEditingCity,
   editorMode,
   setSelectedElement,
 }: Props) {
@@ -61,7 +61,7 @@ export default function Map({
             Record<string, string>
             = {};
           allocations.forEach(
-            allocation => { map[allocation.seat] = allocation.participantId; }
+            allocation => { map[allocation.city] = allocation.participantId; }
           );
           setAllocations(map);
         }
@@ -72,16 +72,16 @@ export default function Map({
   function handleElementClick(element: any) {
 
     if (
-      element.type === "seat" &&
+      element.type === "city" &&
       editorMode &&
-      selectedSeat === element.id
+      selectedCity === element.id
     ) {
-      setEditingSeat(element.id);
+      setEditingCity(element.id);
       return;
     }
-    setSelectedSeat(element.id);
+    setSelectedCity(element.id);
     setSelectedElement(element);
-    setEditingSeat(null);
+    setEditingCity(null);
   }
 
   return (
@@ -97,7 +97,7 @@ export default function Map({
       >
         {elements.map(element => {
 
-          const isCity = element.type === "seat";
+          const isCity = element.type === "city";
           const participantId = allocations[element.id];
           const participant = participantId
               ? participants[participantId]
@@ -125,10 +125,10 @@ export default function Map({
   element={element}
   occupant={occupant}
   status={isCity ? cityStatus : undefined}
-  selected={selectedSeat === element.id}
+  selected={selectedCity === element.id}
   editing={
     isCity &&
-    editingSeat === element.id
+    editingCity === element.id
   }
   onClick={() =>
     handleElementClick(element)

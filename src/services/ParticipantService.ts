@@ -442,7 +442,7 @@ export async function permanentlyDeleteParticipant(
       allocationsSnapshot.docs[0].data();
 
     throw new Error(
-      `PARTICIPANT_HAS_ALLOCATION:${allocation.seatLabel ?? ""}`
+      `PARTICIPANT_HAS_ALLOCATION:${allocation.cityLabel ?? ""}`
     );
   }
 

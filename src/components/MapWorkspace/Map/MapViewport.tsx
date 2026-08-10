@@ -16,17 +16,17 @@ function ViewportContent(props: Props) {
 
   useEffect(() => {
 
-    if (!props.selectedSeat) return;
+    if (!props.selectedCity) return;
 
     zoomToElement(
-      props.selectedSeat,
+      props.selectedCity,
       1,
       600,
       "easeOut"
     );
 
   }, [
-    props.selectedSeat,
+    props.selectedCity,
     zoomToElement,
   ]);
 

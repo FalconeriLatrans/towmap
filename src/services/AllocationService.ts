@@ -26,7 +26,7 @@ export async function getAllocations() {
 
   return snapshot.docs.map(
     doc => ({
-      seat: doc.id,
+      city: doc.id,
       ...doc.data()
     })
   ) as Allocation[];
@@ -46,14 +46,14 @@ export function saveAllocations(
 }
 
 export async function allocate(
-  seat: string,
+  city: string,
   participantId: string
 ) {
   await setDoc(
     doc(
       db,
       Collections.allocations,
-      seat
+      city
     ),
     {
       participantId,
@@ -63,14 +63,14 @@ export async function allocate(
 }
 
 export async function getAllocation(
-  seat: string
+  city: string
 ) {
 
   const allocations =
     await getAllocations();
 
   return allocations.find(
-    a => a.seat === seat
+    a => a.city === city
   );
 
 }
@@ -104,7 +104,7 @@ export function subscribeAllocations(
       const allocations =
         snapshot.docs.map(
           doc => ({
-            seat: doc.id,
+            city: doc.id,
             ...doc.data()
           })
         );
@@ -128,13 +128,13 @@ export async function migrateAllocations() {
   );
   const participants = await getParticipants();
   const allocations = snapshot.docs.map(doc => ({
-    seat: doc.id,
+    city: doc.id,
     ...(doc.data() as any)
   }));
   const elements = loadElements();
-  const seatsByLabel = new Map(
+  const citiesByLabel = new Map(
     elements
-      .filter(e => e.type === "seat")
+      .filter(e => e.type === "city")
       .map(e => [e.label, e.id])
   );
 
@@ -150,20 +150,20 @@ export async function migrateAllocations() {
     participantsByName.get(
         allocation.participant
     );
-    const seatId = seatsByLabel.get(allocation.seat);
+    const cityId = citiesByLabel.get(allocation.city);
 
     if (!participantId) {
       console.warn(`Participant not found: ${allocation.participant}`);
       continue;
     }
-    if (!seatId) {
-      console.warn("Seat not found:", allocation.seat);
+    if (!cityId) {
+      console.warn("City not found:", allocation.city);
       continue;
     }
-    console.log(seatId);
+    console.log(cityId);
 
     await allocate(
-      seatId,
+      cityId,
       participantId
     );
 

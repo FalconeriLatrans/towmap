@@ -52,7 +52,7 @@ export default function ElementPropertiesPanel({
   }
 
   const title = occupant || element.label || "Empty";
-  const code = element.type === "seat"
+  const code = element.type === "city"
     ? element.label
     : "";
   const coords = `x:${element.x} y:${element.y}`;
@@ -62,7 +62,7 @@ export default function ElementPropertiesPanel({
       <div className="occupant-name">
         {
           editorMode &&
-            element.type === "seat"
+            element.type === "city"
             ? (
               <Dropdown
                 button={

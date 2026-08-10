@@ -77,7 +77,7 @@ export default function ParticipantPropertiesPanel({
     const confirmed = window.confirm(
       `Archive ${participant.name}?\n\n` +
       "The participant will be removed from the active members list, " +
-      "but their data and seat allocation will be preserved."
+      "but their data and spot allocation will be preserved."
     );
 
     if (!confirmed) return;
@@ -112,12 +112,12 @@ export default function ParticipantPropertiesPanel({
           "PARTICIPANT_HAS_ALLOCATION:"
         )
       ) {
-        const seatLabel = error.message.split(":")[1];
+        const cityLabel = error.message.split(":")[1];
 
         window.alert(
           `${participant.name} is still assigned to ` +
-          `${seatLabel || "a seat"}.\n\n` +
-          "Clear the seat before permanently deleting this participant."
+          `${cityLabel || "a spot"}.\n\n` +
+          "Clear the spot before permanently deleting this participant."
         );
         return;
       }
