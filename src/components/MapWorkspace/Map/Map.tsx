@@ -16,6 +16,8 @@ type Props = {
   setEditingCity: (city: string | null) => void;
   editorMode: boolean;
   setSelectedElement: React.Dispatch<React.SetStateAction<MapElement | null>>;
+  player?: Participant | null;
+  blockedCities?: Set<string>;
 };
 
 export default function Map({
@@ -25,6 +27,8 @@ export default function Map({
   setEditingCity: setEditingCity,
   editorMode,
   setSelectedElement,
+  player,
+  blockedCities,
 }: Props) {
 
   const elements = loadElements();
@@ -103,6 +107,7 @@ export default function Map({
               ? participants[participantId]
               : undefined;
           const occupant = participant?.name;
+          const preference = player ? [player.preference1, player.preference2, player.preference3].indexOf(element.id) + 1 : 0;
 
           let cityStatus: CityStatus = "available";
 
@@ -133,6 +138,8 @@ export default function Map({
   onClick={() =>
     handleElementClick(element)
   }
+  preference={preference || undefined}
+  dimmed={Boolean(player && blockedCities?.has(element.id) && !preference)}
 />
             </div>
           );

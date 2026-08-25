@@ -13,6 +13,7 @@ import type { Participant } from "../../types/Participant";
 import ParticipantSearch from "./ParticipantSearch/ParticipantSearch";
 import PlayerAccess from "./PlayerAccess/PlayerAccess";
 import loadElements from "../../services/loadElements";
+import { simulateAllocationEvent } from "../../services/AllocationEventService";
 import AdminTools from "./AdminTools/AdminTools";
 
 type Props = {
@@ -41,6 +42,8 @@ export default function MapWorkspace({
     const allocation = allocations.find(a => a.city === selectedCity);
     const occupant = participantsById[allocation?.participantId ?? ""]?.name ?? "";
     const player = participantsById[playerId ?? ""] ?? null;
+    const cityIds = loadElements().filter(element => element.type === "city").map(element => element.id);
+    const blockedCities = new Set(Object.keys(player ? simulateAllocationEvent(participants.filter(p => p.isMember && p.order < player.order), cityIds).assignments : {}));
 
     const center = (
         <ParticipantSearch
@@ -155,6 +158,8 @@ export default function MapWorkspace({
                         setEditingCity={setEditingCity}
                         editorMode={editorMode}
                         setSelectedElement={setSelectedElement}
+                        player={player}
+                        blockedCities={blockedCities}
                     />
                     <ElementPropertiesPanel
                         element={selectedElement}
