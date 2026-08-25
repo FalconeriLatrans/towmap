@@ -14,6 +14,7 @@ import {
   updateDoc,
   onSnapshot,
   writeBatch,
+  deleteField,
   query,
   where,
 } from "firebase/firestore";
@@ -89,6 +90,17 @@ export async function updateParticipant(participant: Participant) {
     participant
   );
   return console.log("updateParticipant");
+}
+
+export async function updateParticipantPreferences(
+  participantId: string,
+  preferences: Array<string | undefined>
+) {
+  await updateDoc(doc(db, Collections.participants, participantId), {
+    preference1: preferences[0] ?? deleteField(),
+    preference2: preferences[1] ?? deleteField(),
+    preference3: preferences[2] ?? deleteField(),
+  });
 }
 
 export async function deleteParticipant(id: string) {

@@ -13,6 +13,7 @@ import type { Participant } from "../../types/Participant";
 import ParticipantSearch from "./ParticipantSearch/ParticipantSearch";
 import PlayerAccess from "./PlayerAccess/PlayerAccess";
 import loadElements from "../../services/loadElements";
+import AdminTools from "./AdminTools/AdminTools";
 
 type Props = {
     setWorkspace: Dispatch<SetStateAction<Workspace>>;
@@ -58,12 +59,14 @@ export default function MapWorkspace({
                     player={player}
                     onLogin={() => undefined}
                     onLogout={() => { localStorage.removeItem("towmap_player_id"); setPlayerId(null); }}
+                    onError={setToast}
                 />
             ) : (
                 <PlayerAccess
                     player={null}
                     onLogin={id => { localStorage.setItem("towmap_player_id", id); setPlayerId(id); }}
                     onLogout={() => undefined}
+                    onError={setToast}
                 />
             )}
 
@@ -76,12 +79,7 @@ export default function MapWorkspace({
                 </button>
             )}
 
-            <button
-                className="lock-button"
-                onClick={async () => {
-                    if (editorMode) {
-                        setEditorMode(false);
-                    } else {
+            {editorMode ? <AdminTools onLogout={() => { if (window.confirm("Leave administrator mode?")) setEditorMode(false); }} /> : <button className="lock-button" onClick={async () => {
                         const password = prompt("Editor password");
                         const hash = await sha256(password?.trim() ?? "");
 
@@ -94,11 +92,7 @@ export default function MapWorkspace({
                         } else {
                             setToast("❌ Invalid password");
                         }
-                    }
-                }}
-            >
-                {editorMode ? "⚙" : "🔒"}
-            </button>
+                    }} >🔒</button>}
 
         </div>
     );

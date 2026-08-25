@@ -6,16 +6,18 @@ type Props = {
   player: Participant | null;
   onLogin: (participantId: string) => void;
   onLogout: () => void;
+  onError: (message: string) => void;
 };
 
-export default function PlayerAccess({ player, onLogin, onLogout }: Props) {
+export default function PlayerAccess({ player, onLogin, onLogout, onError }: Props) {
   const [token, setToken] = useState("");
   const [error, setError] = useState("");
 
   async function handleLogin() {
     const participant = await getParticipantByToken(token.trim());
     if (!participant) {
-      setError("Invalid or inactive token");
+      setError("");
+      onError("Invalid or inactive token");
       return;
     }
     setError("");

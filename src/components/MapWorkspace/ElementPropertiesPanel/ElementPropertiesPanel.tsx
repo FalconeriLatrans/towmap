@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Dropdown from "../../Dropdown/Dropdown";
-import { getUnallocatedParticipants, updateParticipant } from "../../../services/ParticipantService";
+import { getUnallocatedParticipants, updateParticipantPreferences } from "../../../services/ParticipantService";
 import type { Participant } from "../../../types/Participant";
 import type { DropdownItem } from "../../Dropdown/Dropdown";
 import type { MapElement } from "../../../types/MapElement";
@@ -73,17 +73,10 @@ export default function ElementPropertiesPanel({
 
   async function setPreference(index: number) {
     if (!player || selectedElement.type !== "city") return;
-    const key = `preference${index + 1}` as "preference1" | "preference2" | "preference3";
     const preferences = [player.preference1, player.preference2, player.preference3]
       .map(preference => preference === selectedElement.id ? undefined : preference);
     preferences[index] = selectedElement.id;
-    await updateParticipant({
-      ...player,
-      preference1: preferences[0],
-      preference2: preferences[1],
-      preference3: preferences[2],
-      [key]: selectedElement.id,
-    });
+    await updateParticipantPreferences(player.id, preferences);
   }
 
   return (
@@ -136,11 +129,14 @@ export default function ElementPropertiesPanel({
       </div>
       {player && element.type === "city" && (
         <div className="player-preferences">
-          <p>{higherPriorityCount} higher-priority player(s) chose this seat.</p>
+          <div className="preference-demand" aria-label={`${higherPriorityCount} higher-priority players chose this seat`}>
+            <span style={{ width: `${Math.min(higherPriorityCount * 12, 100)}%` }} />
+            <b>{higherPriorityCount}</b>
+          </div>
           <div>
             {[0, 1, 2].map(index => (
-              <button key={index} onClick={() => setPreference(index)}>
-                {preferenceIndex === index ? `Preference ${index + 1} ✓` : `Set preference ${index + 1}`}
+              <button key={index} className={preferenceIndex === index ? "selected-preference" : ""} onClick={() => setPreference(index)}>
+                <span className={`medallion priority-${index + 1}`}>{index + 1}</span>
               </button>
             ))}
           </div>

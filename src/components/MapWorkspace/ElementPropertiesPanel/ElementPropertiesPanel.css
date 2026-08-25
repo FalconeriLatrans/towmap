@@ -40,6 +40,10 @@
     color: #94a3b8;
 }
 
-.player-preferences { margin-top: 14px; font-size: .9rem; }
-.player-preferences p { color: #cbd5e1; }
-.player-preferences button { margin: 3px; padding: 7px 9px; border-radius: 6px; border: 0; cursor: pointer; }
+.player-preferences { margin-top: 14px; }
+.player-preferences button { margin: 3px; padding: 2px; border: 0; border-radius: 50%; background: transparent; cursor: pointer; }
+.medallion { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; color: #172033; font-weight: 800; border: 2px solid rgba(255,255,255,.8); }
+.priority-1 { background: #facc15; }.priority-2 { background: #cbd5e1; }.priority-3 { background: #d97706; }
+.selected-preference .medallion { box-shadow: 0 0 14px 4px rgba(255,255,255,.7); transform: translateY(-3px); }
+.preference-demand { position: relative; height: 12px; border-radius: 8px; background: #334155; overflow: visible; margin-bottom: 10px; }
+.preference-demand span { display: block; height: 100%; border-radius: inherit; background: #60a5fa; min-width: 3px; }.preference-demand b { position: absolute; right: 5px; top: -4px; font-size: .75rem; }
