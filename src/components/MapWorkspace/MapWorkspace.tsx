@@ -11,6 +11,8 @@ import type { Workspace } from "../../types/Workspace";
 import type { Allocation } from "../../types/Allocation";
 import type { Participant } from "../../types/Participant";
 import ParticipantSearch from "./ParticipantSearch/ParticipantSearch";
+import PlayerAccess from "./PlayerAccess/PlayerAccess";
+import loadElements from "../../services/loadElements";
 
 type Props = {
     setWorkspace: Dispatch<SetStateAction<Workspace>>;
@@ -29,6 +31,7 @@ export default function MapWorkspace({
     const [editingCity, setEditingCity] = useState<string | null>(null);
     const [toast, setToast] = useState("");
     const [selectedElement, setSelectedElement] = useState<MapElement | null>(null);
+    const [playerId, setPlayerId] = useState<string | null>(() => localStorage.getItem("towmap_player_id"));
 
     const [allocations, setAllocations] = useState<Allocation[]>([]);
     const [participants, setParticipants] = useState<Participant[]>([]);
@@ -36,6 +39,7 @@ export default function MapWorkspace({
     const participantsById = Object.fromEntries(participants.map(p => [p.id, p]));
     const allocation = allocations.find(a => a.city === selectedCity);
     const occupant = participantsById[allocation?.participantId ?? ""]?.name ?? "";
+    const player = participantsById[playerId ?? ""] ?? null;
 
     const center = (
         <ParticipantSearch
@@ -48,6 +52,20 @@ export default function MapWorkspace({
 
     const actions = (
         <div className="top-bar-actions">
+
+            {player ? (
+                <PlayerAccess
+                    player={player}
+                    onLogin={() => undefined}
+                    onLogout={() => { localStorage.removeItem("towmap_player_id"); setPlayerId(null); }}
+                />
+            ) : (
+                <PlayerAccess
+                    player={null}
+                    onLogin={id => { localStorage.setItem("towmap_player_id", id); setPlayerId(id); }}
+                    onLogout={() => undefined}
+                />
+            )}
 
             {editorMode && (
                 <button
@@ -94,6 +112,8 @@ export default function MapWorkspace({
     }, []);
 
     useEffect(() => {
+        // The selected city is controlled by the map, while its occupant is live Firestore data.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setSelectedOccupant(occupant);
     }, [occupant]);
 
@@ -115,6 +135,7 @@ export default function MapWorkspace({
         }
 
         setSelectedCity(participantAllocation.city);
+        setSelectedElement(loadElements().find(element => element.id === participantAllocation.city) ?? null);
     }
 
     return (
@@ -122,7 +143,9 @@ export default function MapWorkspace({
             {
                 <>
                     <TopBar
-                        title="TOW Map"
+                        title={player ? (
+                            <button className="player-title" onClick={() => handleParticipantSelect(player.id)}>{player.name}</button>
+                        ) : "TOW Map"}
                         center={center}
                         actions={actions}
                     />
@@ -143,6 +166,8 @@ export default function MapWorkspace({
                         element={selectedElement}
                         occupant={selectedOccupant}
                         editorMode={editorMode}
+                        player={player}
+                        participants={participants}
                     />
                 </>
             }

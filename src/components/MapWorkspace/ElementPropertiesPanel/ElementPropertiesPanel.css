@@ -35,7 +35,11 @@
     text-align: center;
     color: #666;
   }
-  .city-info {
+.city-info {
     font-size: 1.1rem;
     color: #94a3b8;
-  }
+}
+
+.player-preferences { margin-top: 14px; font-size: .9rem; }
+.player-preferences p { color: #cbd5e1; }
+.player-preferences button { margin: 3px; padding: 7px 9px; border-radius: 6px; border: 0; cursor: pointer; }

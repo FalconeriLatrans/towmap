@@ -131,6 +131,10 @@ body {
   gap: 6px;
 }
 
+.player-access { display: flex; align-items: center; gap: 6px; }
+.player-access input { width: 130px; padding: 8px; border-radius: 8px; border: 1px solid #475569; }
+.player-access-error { color: #fca5a5; font-size: .75rem; }
+
 .top-bar-actions button {
   height: 36px;
   min-width: 36px;

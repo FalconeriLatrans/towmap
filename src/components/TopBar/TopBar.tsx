@@ -1,7 +1,7 @@
 import "./TopBar.css";
 
 type Props = {
-  title: string;
+  title: React.ReactNode;
   center?: React.ReactNode;
   actions?: React.ReactNode;
 };

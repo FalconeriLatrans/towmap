@@ -69,7 +69,7 @@ export default function Map({
     return unsubscribe;
   }, []);
 
-  function handleElementClick(element: any) {
+  function handleElementClick(element: MapElement) {
 
     if (
       element.type === "city" &&

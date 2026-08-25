@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./ParticipantPropertiesPanel.css";
 import type { Participant } from "../../../types/Participant";
-import { archiveParticipant, restoreParticipant, updateParticipant, changeParticipantId, permanentlyDeleteParticipant } from "../../../services/ParticipantService";
+import { archiveParticipant, restoreParticipant, updateParticipant, changeParticipantId, permanentlyDeleteParticipant, generateToken, setParticipantToken } from "../../../services/ParticipantService";
 
 type Props = {
   participant: Participant | null;
@@ -22,8 +22,20 @@ export default function ParticipantPropertiesPanel({
   const [copied, setCopied] = useState(false);
   const [saving, setSaving] = useState(false);
 
+  async function handleGenerateToken() {
+    if (!participant) return;
+    const generatedToken = await generateToken();
+    await setParticipantToken(participant.id, generatedToken, true);
+  }
+
+  async function handleRevokeToken() {
+    if (!participant) return;
+    await setParticipantToken(participant.id, participant.token ?? "", false);
+  }
+
   useEffect(() => {
     if (!participant) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setName("");
       setId("");
       setToken("");
@@ -200,6 +212,22 @@ export default function ParticipantPropertiesPanel({
               {copied ? "Copied!" : "Copy"}
             </button>
           </div>
+          <div className="participant-token-actions">
+            <button type="button" onClick={handleGenerateToken}>Generate token</button>
+            <button type="button" onClick={handleRevokeToken} disabled={!participant.tokenActive}>
+              Revoke token
+            </button>
+          </div>
+        </label>
+        <label className="participant-field">
+          <span>Alliance status</span>
+          <button
+            type="button"
+            className="blacklist-button"
+            onClick={() => updateParticipant({ ...participant, isBlacklisted: !participant.isBlacklisted })}
+          >
+            {participant.isBlacklisted ? "☠ Marked" : "Mark ☠"}
+          </button>
         </label>
       </div>
       <div className="participant-properties-actions">

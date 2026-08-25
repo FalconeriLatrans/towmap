@@ -219,7 +219,34 @@ async function normalizeParticipantOrder() {
 }
 
 export async function generateToken() {
-  return console.log("generateToken");
+  return crypto.randomUUID();
+}
+
+export async function setParticipantToken(
+  participantId: string,
+  token: string,
+  tokenActive: boolean
+) {
+  await updateDoc(doc(db, Collections.participants, participantId), {
+    token,
+    tokenActive,
+  });
+}
+
+export async function getParticipantByToken(token: string) {
+  const tokenQuery = query(
+    collection(db, Collections.participants),
+    where("token", "==", token)
+  );
+  const snapshot = await getDocs(tokenQuery);
+  const participant = snapshot.docs[0];
+
+  if (!participant || participant.data().tokenActive === false) return null;
+
+  return {
+    id: participant.id,
+    ...participant.data(),
+  } as Participant;
 }
 
 export async function importParticipants() {
