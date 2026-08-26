@@ -1,0 +1,32 @@
+.allocation-event-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, .65);
+}
+
+.allocation-event-panel {
+  width: min(100%, 620px);
+  max-height: min(80dvh, 700px);
+  overflow: auto;
+  border-radius: 16px;
+  padding: 20px;
+  color: #f8fafc;
+  background: #1e293b;
+}
+
+.allocation-event-header,
+.allocation-event-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.allocation-event-header h3 { margin: 0; }
+.allocation-event-warning { color: #facc15; }
+.allocation-event-ready { color: #86efac; }
+.allocation-event-actions { margin-top: 20px; justify-content: flex-end; }

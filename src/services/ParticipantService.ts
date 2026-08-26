@@ -14,6 +14,7 @@ import {
   updateDoc,
   onSnapshot,
   writeBatch,
+  deleteField,
   query,
   where,
 } from "firebase/firestore";
@@ -89,6 +90,17 @@ export async function updateParticipant(participant: Participant) {
     participant
   );
   return console.log("updateParticipant");
+}
+
+export async function updateParticipantPreferences(
+  participantId: string,
+  preferences: Array<string | undefined>
+) {
+  await updateDoc(doc(db, Collections.participants, participantId), {
+    preference1: preferences[0] ?? deleteField(),
+    preference2: preferences[1] ?? deleteField(),
+    preference3: preferences[2] ?? deleteField(),
+  });
 }
 
 export async function deleteParticipant(id: string) {
@@ -219,7 +231,34 @@ async function normalizeParticipantOrder() {
 }
 
 export async function generateToken() {
-  return console.log("generateToken");
+  return crypto.randomUUID();
+}
+
+export async function setParticipantToken(
+  participantId: string,
+  token: string,
+  tokenActive: boolean
+) {
+  await updateDoc(doc(db, Collections.participants, participantId), {
+    token,
+    tokenActive,
+  });
+}
+
+export async function getParticipantByToken(token: string) {
+  const tokenQuery = query(
+    collection(db, Collections.participants),
+    where("token", "==", token)
+  );
+  const snapshot = await getDocs(tokenQuery);
+  const participant = snapshot.docs[0];
+
+  if (!participant || participant.data().tokenActive === false) return null;
+
+  return {
+    id: participant.id,
+    ...participant.data(),
+  } as Participant;
 }
 
 export async function importParticipants() {

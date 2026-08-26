@@ -73,7 +73,7 @@
     flex: 1;
   }
   
-  .copy-token-button {
+.copy-token-button {
     flex-shrink: 0;
     padding: 0 14px;
   }
@@ -126,6 +126,16 @@
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+}
+
+.participant-token-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.blacklist-button {
+  width: fit-content;
 }
 
 .field-warning {

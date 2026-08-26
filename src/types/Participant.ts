@@ -6,6 +6,8 @@ export interface Participant {
   order: number;
   isMember: boolean;
   token: string;
+  tokenActive?: boolean;
+  isBlacklisted?: boolean;
   preference1?: string;
   preference2?: string;
   preference3?: string;

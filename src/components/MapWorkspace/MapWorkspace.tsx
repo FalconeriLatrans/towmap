@@ -11,6 +11,10 @@ import type { Workspace } from "../../types/Workspace";
 import type { Allocation } from "../../types/Allocation";
 import type { Participant } from "../../types/Participant";
 import ParticipantSearch from "./ParticipantSearch/ParticipantSearch";
+import PlayerAccess from "./PlayerAccess/PlayerAccess";
+import loadElements from "../../services/loadElements";
+import { simulateAllocationEvent } from "../../services/AllocationEventService";
+import AdminTools from "./AdminTools/AdminTools";
 
 type Props = {
     setWorkspace: Dispatch<SetStateAction<Workspace>>;
@@ -29,6 +33,7 @@ export default function MapWorkspace({
     const [editingCity, setEditingCity] = useState<string | null>(null);
     const [toast, setToast] = useState("");
     const [selectedElement, setSelectedElement] = useState<MapElement | null>(null);
+    const [playerId, setPlayerId] = useState<string | null>(() => localStorage.getItem("towmap_player_id"));
 
     const [allocations, setAllocations] = useState<Allocation[]>([]);
     const [participants, setParticipants] = useState<Participant[]>([]);
@@ -36,18 +41,40 @@ export default function MapWorkspace({
     const participantsById = Object.fromEntries(participants.map(p => [p.id, p]));
     const allocation = allocations.find(a => a.city === selectedCity);
     const occupant = participantsById[allocation?.participantId ?? ""]?.name ?? "";
+    const player = participantsById[playerId ?? ""] ?? null;
+    const cityIds = loadElements().filter(element => element.type === "city").map(element => element.id);
+    const blockedCities = new Set(Object.keys(player ? simulateAllocationEvent(participants.filter(p => p.isMember && p.order < player.order), cityIds).assignments : {}));
 
     const center = (
+      <>
         <ParticipantSearch
             participants={participants.filter(
                 participant => participant.isMember
             )}
             onSelect={handleParticipantSelect}
         />
+        {player && <div className="top-medallions">{[player.preference1, player.preference2, player.preference3].map((city, index) => <button key={index} className={city ? "used" : "free"} onClick={() => { if (city) { setSelectedCity(city); setSelectedElement(loadElements().find(element => element.id === city) ?? null); } }}>{index + 1}</button>)}</div>}
+      </>
     );
 
     const actions = (
         <div className="top-bar-actions">
+
+            {player ? (
+                <PlayerAccess
+                    player={player}
+                    onLogin={() => undefined}
+                    onLogout={() => { localStorage.removeItem("towmap_player_id"); setPlayerId(null); }}
+                    onError={setToast}
+                />
+            ) : (
+                <PlayerAccess
+                    player={null}
+                    onLogin={id => { localStorage.setItem("towmap_player_id", id); setPlayerId(id); }}
+                    onLogout={() => undefined}
+                    onError={setToast}
+                />
+            )}
 
             {editorMode && (
                 <button
@@ -58,12 +85,7 @@ export default function MapWorkspace({
                 </button>
             )}
 
-            <button
-                className="lock-button"
-                onClick={async () => {
-                    if (editorMode) {
-                        setEditorMode(false);
-                    } else {
+            {editorMode ? <AdminTools onLogout={() => { if (window.confirm("Leave administrator mode?")) setEditorMode(false); }} /> : <button className="lock-button" onClick={async () => {
                         const password = prompt("Editor password");
                         const hash = await sha256(password?.trim() ?? "");
 
@@ -76,11 +98,7 @@ export default function MapWorkspace({
                         } else {
                             setToast("❌ Invalid password");
                         }
-                    }
-                }}
-            >
-                {editorMode ? "⚙" : "🔒"}
-            </button>
+                    }} >🔒</button>}
 
         </div>
     );
@@ -94,6 +112,8 @@ export default function MapWorkspace({
     }, []);
 
     useEffect(() => {
+        // The selected city is controlled by the map, while its occupant is live Firestore data.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setSelectedOccupant(occupant);
     }, [occupant]);
 
@@ -115,6 +135,7 @@ export default function MapWorkspace({
         }
 
         setSelectedCity(participantAllocation.city);
+        setSelectedElement(loadElements().find(element => element.id === participantAllocation.city) ?? null);
     }
 
     return (
@@ -122,7 +143,9 @@ export default function MapWorkspace({
             {
                 <>
                     <TopBar
-                        title="TOW Map"
+                        title={player ? (
+                            <button className="player-title" onClick={() => handleParticipantSelect(player.id)}>{player.name}</button>
+                        ) : "TOW Map"}
                         center={center}
                         actions={actions}
                     />
@@ -138,11 +161,15 @@ export default function MapWorkspace({
                         setEditingCity={setEditingCity}
                         editorMode={editorMode}
                         setSelectedElement={setSelectedElement}
+                        player={player}
+                        blockedCities={blockedCities}
                     />
                     <ElementPropertiesPanel
                         element={selectedElement}
                         occupant={selectedOccupant}
                         editorMode={editorMode}
+                        player={player}
+                        participants={participants}
                     />
                 </>
             }

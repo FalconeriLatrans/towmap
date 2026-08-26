@@ -10,6 +10,8 @@ type Props = {
   selected?: boolean;
   editing?: boolean;
   onClick?: (id: string) => void;
+  preference?: number;
+  dimmed?: boolean;
 };
 
 export default function Element({
@@ -19,6 +21,8 @@ export default function Element({
   selected,
   editing,
   onClick,
+  preference,
+  dimmed,
 }: Props) {
 
   if (element.type === "city") {
@@ -30,6 +34,8 @@ export default function Element({
         selected={selected}
         editing={editing}
         onClick={onClick}
+        preference={preference}
+        dimmed={dimmed}
       />
     );
   }

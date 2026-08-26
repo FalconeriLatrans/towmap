@@ -15,6 +15,8 @@ type Props = {
   selected?: boolean;
   editing?: boolean;
   onClick?: (id: string) => void;
+  preference?: number;
+  dimmed?: boolean;
 };
 
 export default function City({
@@ -24,13 +26,15 @@ export default function City({
   selected,
   editing,
   onClick,
+  preference,
+  dimmed,
 }: Props) {
   return (
     <div
       className={
         `map-element city ${status}` +
         (selected ? " selected" : "") +
-        (editing ? " editing" : "")
+        (editing ? " editing" : "") + (dimmed ? " dimmed" : "")
       }
       style={{
         backgroundColor: element.color,
@@ -38,6 +42,7 @@ export default function City({
       onClick={() => onClick?.(element.id)}
     >
       {occupant}
+      {preference && <span className="map-medallion">{preference}</span>}
     </div>
   );
 }

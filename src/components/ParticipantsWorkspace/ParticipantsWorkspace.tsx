@@ -6,6 +6,7 @@ import "./ParticipantsWorkspace.css";
 import { subscribeParticipants, createParticipant, moveParticipant } from "../../services/ParticipantService";
 import type { Workspace } from "../../types/Workspace";
 import type { Participant } from "../../types/Participant";
+import AllocationEventPanel from "./AllocationEventPanel/AllocationEventPanel";
 
 type Props = {
   setWorkspace: Dispatch<SetStateAction<Workspace>>;
@@ -24,6 +25,7 @@ export default function ParticipantsWorkspace({
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [view, setView] = useState<ParticipantsView>("active");
+  const [eventOpen, setEventOpen] = useState(false);
   const selectedParticipant = participants.find(p => p.id === selectedId) ?? null;
   const visibleParticipants =
     view === "active"
@@ -50,6 +52,9 @@ export default function ParticipantsWorkspace({
         onClick={handleAddParticipant}
       >
         + Add
+      </button>
+      <button className="add-participant-button" onClick={() => setEventOpen(true)}>
+        Event preview
       </button>
       <button
         className="workspace-button"
@@ -161,6 +166,7 @@ export default function ParticipantsWorkspace({
         onRestored={() => setSelectedId(null)}
         onDeleted={() => setSelectedId(null)}
       />
+      {eventOpen && <AllocationEventPanel participants={participants} onClose={() => setEventOpen(false)} />}
 
     </>
 

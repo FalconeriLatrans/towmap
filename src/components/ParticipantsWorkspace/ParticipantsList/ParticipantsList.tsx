@@ -46,6 +46,8 @@ export default function ParticipantsList({
   const [items, setItems] = useState(participants);
 
   useEffect(() => {
+    // Keep the optimistic drag order synchronized with the live collection.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setItems(participants);
   }, [participants]);
 
@@ -183,9 +185,11 @@ function SortableParticipant({
       </div>
       )}
 
-      <span className="participant-name">
-        {participant.name}
-      </span>
+          <span className="participant-name">
+            {participant.name}
+          </span>
+
+          {participant.isBlacklisted && <span title="Blacklisted participant">☠</span>}
 
       {participant.id.startsWith("tmp_") && (
         <span

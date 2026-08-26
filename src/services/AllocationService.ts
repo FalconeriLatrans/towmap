@@ -4,6 +4,8 @@ import {
   getDocs,
   setDoc,
   onSnapshot
+  ,writeBatch,
+  deleteDoc
 } from "firebase/firestore";
 
 import { db } from "./Firebase";
@@ -11,6 +13,10 @@ import type { Allocation } from "../types/Allocation";
 import { Collections } from "../config/Collections";
 import { getParticipants } from "./ParticipantService";
 import loadElements from "./loadElements";
+
+type LegacyAllocation = {
+  participant: string;
+};
 
 const STORAGE_KEY = "towmap_allocations";
 
@@ -49,6 +55,10 @@ export async function allocate(
   city: string,
   participantId: string
 ) {
+  if (!participantId) {
+    await deleteDoc(doc(db, Collections.allocations, city));
+    return;
+  }
   await setDoc(
     doc(
       db,
@@ -60,6 +70,22 @@ export async function allocate(
       updatedAt: Date.now()
     }
   );
+}
+
+export async function replaceAllocations(assignments: Record<string, string>) {
+  const snapshot = await getDocs(collection(db, Collections.allocations));
+  const batch = writeBatch(db);
+
+  snapshot.docs.forEach(allocation => batch.delete(allocation.ref));
+
+  Object.entries(assignments).forEach(([city, participantId]) => {
+    batch.set(doc(db, Collections.allocations, city), {
+      participantId,
+      updatedAt: Date.now(),
+    });
+  });
+
+  await batch.commit();
 }
 
 export async function getAllocation(
@@ -129,7 +155,7 @@ export async function migrateAllocations() {
   const participants = await getParticipants();
   const allocations = snapshot.docs.map(doc => ({
     city: doc.id,
-    ...(doc.data() as any)
+    ...(doc.data() as LegacyAllocation)
   }));
   const elements = loadElements();
   const citiesByLabel = new Map(
