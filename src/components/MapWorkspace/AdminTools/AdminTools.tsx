@@ -23,7 +23,7 @@ export default function AdminTools({ onLogout }: { onLogout: () => void }) {
     await Promise.all(participants.map(participant => setParticipantToken(participant.id, participant.token, false)));
   }
   return <details className="admin-tools"><summary>⚙</summary><div>
-    <button onClick={async () => download("towmap-participants.csv", await getParticipants())}>⇩ Players CSV</button>
+    <button onClick={async () => download("towmap-participants.csv", (await getParticipants()).map(({ id, name, level, power, isMember, token, isBlacklisted }) => ({ id, name, level, power, isMember, token, isBlacklisted })))}>⇩ Players CSV</button>
     <button onClick={async () => download("towmap-allocations.csv", await getAllocations())}>⇩ Allocations CSV</button>
     <button onClick={generateAll}>🔑 Generate all</button><button onClick={revokeAll}>🚫 Revoke all</button>
     <button onClick={onLogout}>↪ Log out</button>

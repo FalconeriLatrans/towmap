@@ -70,6 +70,9 @@ export default function ElementPropertiesPanel({
     ? participants.filter(participant => participant.isMember && participant.order < player.order &&
         [participant.preference1, participant.preference2, participant.preference3].includes(selectedElement.id)).length
     : 0;
+  const contenders = player && selectedElement.type === "city" ? participants
+    .filter(participant => [participant.preference1, participant.preference2, participant.preference3].includes(selectedElement.id))
+    .sort((a, b) => a.order - b.order).slice(0, 12) : [];
 
   async function setPreference(index: number) {
     if (!player || selectedElement.type !== "city") return;
@@ -110,6 +113,10 @@ export default function ElementPropertiesPanel({
                     element.id,
                     id
                   );
+                  const participant = participants.find(candidate => candidate.id === id);
+                  if (participant && !participant.preference1 && !participant.preference2 && !participant.preference3) {
+                    await updateParticipantPreferences(id, [element.id]);
+                  }
                   setShowDropdown(false);
                 }}
               />
@@ -129,9 +136,8 @@ export default function ElementPropertiesPanel({
       </div>
       {player && element.type === "city" && (
         <div className="player-preferences">
-          <div className="preference-demand" aria-label={`${higherPriorityCount} higher-priority players chose this seat`}>
-            <span style={{ width: `${Math.min(higherPriorityCount * 12, 100)}%` }} />
-            <b>{higherPriorityCount}</b>
+          <div className="metro-line" aria-label={`${higherPriorityCount} higher-priority players chose this seat`}>
+            {contenders.map(contender => <span key={contender.id} className={contender.id === player.id ? "metro-self" : contender.order < player.order ? "metro-before" : "metro-after"} />)}
           </div>
           <div>
             {[0, 1, 2].map(index => (

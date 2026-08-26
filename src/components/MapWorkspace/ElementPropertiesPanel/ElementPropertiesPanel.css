@@ -43,7 +43,8 @@
 .player-preferences { margin-top: 14px; }
 .player-preferences button { margin: 3px; padding: 2px; border: 0; border-radius: 50%; background: transparent; cursor: pointer; }
 .medallion { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; color: #172033; font-weight: 800; border: 2px solid rgba(255,255,255,.8); }
-.priority-1 { background: #facc15; }.priority-2 { background: #cbd5e1; }.priority-3 { background: #d97706; }
+.priority-1,.priority-2,.priority-3 { background: #64748b; }.selected-preference .priority-1,.selected-preference .priority-2,.selected-preference .priority-3 { background:#facc15; }
 .selected-preference .medallion { box-shadow: 0 0 14px 4px rgba(255,255,255,.7); transform: translateY(-3px); }
 .preference-demand { position: relative; height: 12px; border-radius: 8px; background: #334155; overflow: visible; margin-bottom: 10px; }
 .preference-demand span { display: block; height: 100%; border-radius: inherit; background: #60a5fa; min-width: 3px; }.preference-demand b { position: absolute; right: 5px; top: -4px; font-size: .75rem; }
+.metro-line { display:flex; align-items:center; gap:4px; min-height:22px; max-width:100%; overflow:hidden; }.metro-line::before,.metro-line::after { content:""; height:2px; flex:1; min-width:8px; background:#64748b; }.metro-line span { width:12px; height:12px; flex:none; border-radius:50%; }.metro-before { background:#cbd5e1; }.metro-after { border:2px solid #94a3b8; }.metro-self { background:#facc15; box-shadow:0 0 7px #facc15; }

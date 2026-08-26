@@ -46,12 +46,15 @@ export default function MapWorkspace({
     const blockedCities = new Set(Object.keys(player ? simulateAllocationEvent(participants.filter(p => p.isMember && p.order < player.order), cityIds).assignments : {}));
 
     const center = (
+      <>
         <ParticipantSearch
             participants={participants.filter(
                 participant => participant.isMember
             )}
             onSelect={handleParticipantSelect}
         />
+        {player && <div className="top-medallions">{[player.preference1, player.preference2, player.preference3].map((city, index) => <button key={index} className={city ? "used" : "free"} onClick={() => { if (city) { setSelectedCity(city); setSelectedElement(loadElements().find(element => element.id === city) ?? null); } }}>{index + 1}</button>)}</div>}
+      </>
     );
 
     const actions = (
